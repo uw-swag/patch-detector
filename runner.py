@@ -17,16 +17,16 @@ import util
 
 
 class Color:
-   PURPLE = '\033[95m'
-   CYAN = '\033[96m'
-   DARKCYAN = '\033[36m'
-   BLUE = '\033[94m'
-   GREEN = '\033[92m'
-   YELLOW = '\033[93m'
-   RED = '\033[91m'
-   BOLD = '\033[1m'
-   UNDERLINE = '\033[4m'
-   END = '\033[0m'
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
 
 
 def error(message, fatal=False):
@@ -273,11 +273,11 @@ def main():
             {0}Project:{3} {2}
             {0}  Patch:{3} {1}
         '''.format(
-            Color.BOLD,
-            os.path.basename(config.patch.name),
-            os.path.abspath(config.project),
-            Color.END
-        )
+        Color.BOLD,
+        os.path.basename(config.patch.name),
+        os.path.abspath(config.project),
+        Color.END
+    )
     )
 
     version_results = run(config)
@@ -286,6 +286,7 @@ def main():
 
     if version_results:
         json.dump(version_results, config.results, sort_keys=True, indent=4)
+
 
 if __name__ == '__main__':
     main()

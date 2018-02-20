@@ -29,14 +29,18 @@ for key, value in languages.items():
     if 'extensions' in value:
         whitelist.update(value['extensions'])
 
+
 def whitelisted(name):
     return any(name.lower().endswith(item) for item in whitelist)
+
 
 def blacklisted(name):
     return any(item in name.lower() for item in blacklist)
 
+
 def compare(first, second):
     return all(token in second.strip().split() for token in first.strip().split())
+
 
 def run(config):
     total_patch_additions = 0
@@ -232,6 +236,7 @@ def main():
     config = process_arguments()
     config.patch = util.load_patch(config.patch.read())
     print(json.dumps(run(config), indent=4))
+
 
 if __name__ == '__main__':
     main()

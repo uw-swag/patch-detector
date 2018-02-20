@@ -7,27 +7,27 @@ import git
 
 def resolve_path(repo, first, second, path, debug=False):
     if first == second:
-        return (path, 'unchanged')
+        return path, 'unchanged'
 
     first = repo.commit(first)
-    second  = repo.commit(second)
+    second = repo.commit(second)
 
     def exists_in_tree(tree, path):
-        blob_path = True
+        exits_blob_path = True
         for path_element in path.split(os.path.sep):
             try:
                 tree = tree[path_element]
             except KeyError:
-                blob_path = False
+                exits_blob_path = False
                 break
 
-        if blob_path:
-            blob_path = tree.path
+        if exits_blob_path:
+            exits_blob_path = tree.path
 
-        return blob_path
+        return exits_blob_path
 
     if exists_in_tree(second.tree, path):
-        return (path, 'unchanged')
+        return path, 'unchanged'
     else:
         result = 'missing'
 
@@ -78,7 +78,7 @@ def resolve_path(repo, first, second, path, debug=False):
                     if debug:
                         print(': a : {1} :: b : {2}'.format(
                             commit.hexsha, diff.a_path, diff.b_path
-			))
+                        ))
 
                     if blob_path != diff.b_path:
                         result = 'updated'
@@ -119,7 +119,8 @@ def resolve_path(repo, first, second, path, debug=False):
     else:
         result = 'unknown'
 
-    return (blob_path, result)
+    return blob_path, result
+
 
 if __name__ == '__main__':
     import sys

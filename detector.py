@@ -3,11 +3,9 @@
 import argparse
 import json
 import os
-import string
 import sys
 
 import chardet
-import whatthepatch
 import yaml
 
 import util
@@ -77,49 +75,7 @@ def run(config):
 
         ratios[diff.header.path] = {}
 
-        raw_additions = []
-        raw_deletions = []
-
-        prev_line = None
-        next_line = None
-
-        for index, change in enumerate(diff.changes):
-            # Ignore empty or whitespace lines
-            if not change[2] or change[2].isspace():
-                continue
-            # line was unchanged
-            elif change[0] == change[1]:
-                continue
-            # line was changed, content is the same
-            elif change[0] and change[1] and change[0] != change[1]:
-                continue
-            # line was inserted
-            elif not change[0] and change[1]:
-                raw_additions.append(change[2])
-
-                # keep track of the lines before and after each change
-                if index > 0:
-                    prev_line = diff.changes[index - 1][2]
-                if index < len(diff.changes) - 1:
-                    next_line = diff.changes[index + 1][2]
-            # line was removed
-            elif change[0] and not change[1]:
-                raw_deletions.append(change[2])
-
-                # keep track of the lines before and after each change
-                if index > 0:
-                    prev_line = diff.changes[index - 1][2]
-                if index < len(diff.changes) - 1:
-                    next_line = diff.changes[index + 1][2]
-            # should never happen
-            else:
-                print('WARNING: Could not detect change type')
-                raise Exception(change)
-
-        additions = [_ for _ in filter(lambda x: x not in raw_deletions, raw_additions)]
-        deletions = [_ for _ in filter(lambda x: x not in raw_additions, raw_deletions)]
-
-        one_line_change = bool(len(raw_additions) == 1) ^ bool(len(raw_deletions) == 1)
+        additions, deletions, one_line_change, prev_line, next_line = split_changes(diff)
 
         if one_line_change and config.debug:
             print('One line change for {0}'.format(full_path))
@@ -202,6 +158,53 @@ def run(config):
     }
 
     return result
+
+
+def split_changes(diff):
+    raw_additions = []
+    raw_deletions = []
+    prev_line = None
+    next_line = None
+
+    for index, change in enumerate(diff.changes):
+        # Ignore empty or whitespace lines
+        if not change[2] or change[2].isspace():
+            continue
+        # line was unchanged
+        elif change[0] == change[1]:
+            continue
+        # line was changed, content is the same
+        elif change[0] and change[1] and change[0] != change[1]:
+            continue
+        # line was inserted
+        elif not change[0] and change[1]:
+            raw_additions.append(change[2])
+
+            # keep track of the lines before and after each change
+            if index > 0:
+                prev_line = diff.changes[index - 1][2]
+            if index < len(diff.changes) - 1:
+                next_line = diff.changes[index + 1][2]
+        # line was removed
+        elif change[0] and not change[1]:
+            raw_deletions.append(change[2])
+
+            # keep track of the lines before and after each change
+            if index > 0:
+                prev_line = diff.changes[index - 1][2]
+            if index < len(diff.changes) - 1:
+                next_line = diff.changes[index + 1][2]
+        # should never happen
+        else:
+            print('WARNING: Could not detect change type')
+            raise Exception(change)
+
+    additions = list(filter(lambda x: x not in raw_deletions, raw_additions))
+    deletions = list(filter(lambda x: x not in raw_additions, raw_deletions))
+
+    one_line_change = bool(len(raw_additions) == 1) ^ bool(len(raw_deletions) == 1)
+
+    return additions, deletions, one_line_change, prev_line, next_line
 
 
 def process_arguments():

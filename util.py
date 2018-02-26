@@ -21,6 +21,6 @@ def load_patch(patch_text):
             path=diff.header.new_path,
             status='unchanged'
         ))
-    for diff in patch]
+        for diff in patch]
 
     return patch

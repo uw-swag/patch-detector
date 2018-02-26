@@ -70,12 +70,12 @@ def run(config):
         if blacklisted(full_path) or not whitelisted(full_path):
             continue
 
-        detected_additions = 0
-        detected_deletions = 0
-
         ratios[diff.header.path] = {}
 
-        additions, deletions, one_line_change, prev_line, next_line = split_changes(diff)
+        detected_deletions = 0
+        detected_additions = 0
+
+        deletions, additions, one_line_change, prev_line, next_line = split_changes(diff)
 
         if one_line_change and config.debug:
             print('One line change for {0}'.format(full_path))
@@ -144,8 +144,11 @@ def run(config):
         assert detected_additions <= total_additions
         assert detected_deletions <= total_deletions
 
-        ratios[diff.header.path]['additions'] = detected_additions / total_additions if total_additions > 0 else None
-        ratios[diff.header.path]['deletions'] = detected_deletions / total_deletions if total_deletions > 0 else None
+        added = detected_additions / total_additions if total_additions > 0 else None
+        deleted = detected_deletions / total_deletions if total_deletions > 0 else None
+
+        ratios[diff.header.path]['additions'] = added
+        ratios[diff.header.path]['deletions'] = deleted
         ratios[diff.header.path]['status'] = diff.header.status
 
     result = {
@@ -160,7 +163,14 @@ def run(config):
     return result
 
 
-def split_changes(diff):
+def split_changes(diff, keep_unchanged=False):
+    """
+        Splits a diff object into deletions (or old code) and additions (or new code)
+    :param diff: the diff object (header, changes, text)
+    :param keep_unchanged: if True, returns the old and new blocks of code
+    :return: the tuple (deleted lines, added lines, one-line change?, previous line,, next line)
+    :rtype: (list of str, list of str, bool, str, str)
+    """
     raw_additions = []
     raw_deletions = []
     prev_line = None
@@ -172,9 +182,15 @@ def split_changes(diff):
             continue
         # line was unchanged
         elif change[0] == change[1]:
+            if keep_unchanged:
+                raw_deletions.append(change[2])
+                raw_additions.append(change[2])
             continue
         # line was changed, content is the same
         elif change[0] and change[1] and change[0] != change[1]:
+            if keep_unchanged:
+                raw_deletions.append(change[2])
+                raw_additions.append(change[2])
             continue
         # line was inserted
         elif not change[0] and change[1]:
@@ -199,12 +215,12 @@ def split_changes(diff):
             print('WARNING: Could not detect change type')
             raise Exception(change)
 
-    additions = list(filter(lambda x: x not in raw_deletions, raw_additions))
-    deletions = list(filter(lambda x: x not in raw_additions, raw_deletions))
+    deletions = list(filter(lambda x: x not in raw_additions, raw_deletions)) if not keep_unchanged else raw_deletions
+    additions = list(filter(lambda x: x not in raw_deletions, raw_additions)) if not keep_unchanged else raw_additions
 
     one_line_change = bool(len(raw_additions) == 1) ^ bool(len(raw_deletions) == 1)
 
-    return additions, deletions, one_line_change, prev_line, next_line
+    return deletions, additions, one_line_change, prev_line, next_line
 
 
 def process_arguments():

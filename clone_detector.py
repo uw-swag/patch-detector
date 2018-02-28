@@ -189,12 +189,32 @@ def evaluate_version(config):
                                                                                                            2] > 0 else 0
         scores[diff.header.path]['status'] = diff.header.status
 
+        if total_patch_deletions == 0:
+            version_deletions_score = 1.0
+            patch_deletions_score = 1.0
+        else:
+            version_deletions_score = total_common_deletions / total_version_deletions if total_version_deletions > 0 else 0.0
+            patch_deletions_score = total_common_deletions / total_patch_deletions
+
+        if total_patch_additions == 0:
+            versions_additions_score = 1.0
+            patch_additions_score = 1.0
+        else:
+            versions_additions_score = total_common_additions / total_version_additions if total_version_additions > 0 else 0.0
+            patch_additions_score = total_common_additions / total_patch_additions
+
     result = {
         'overall': {
-            'version_deletion_score': total_common_deletions / total_version_deletions if total_version_deletions > 0 else None,
-            'version_additions_score': total_common_additions / total_version_additions if total_version_additions > 0 else None,
-            'patch_deletion_score': total_common_deletions / total_patch_deletions if total_patch_deletions > 0 else None,
-            'patch_additions_score': total_common_additions / total_patch_additions if total_patch_additions > 0 else None,
+            'version_deletions': total_version_deletions,
+            'version_additions': total_version_additions,
+            'patch_deletions': total_patch_deletions,
+            'patch_additions': total_patch_additions,
+            'common_deletions': total_common_deletions,
+            'common_additions': total_common_additions,
+            'version_deletions_score': version_deletions_score,
+            'version_additions_score': versions_additions_score,
+            'patch_deletions_score': patch_deletions_score,
+            'patch_additions_score': patch_additions_score
         },
         'breakdown': scores
     }

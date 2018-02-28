@@ -40,18 +40,6 @@ class TestCloneDetector(unittest.TestCase):
         # Then
         self.assertListEqual(tokens, expected)
 
-    # def test_tokenizer_comment_block(self):
-    #
-    #     # Given
-    #     java_code = "    /**      * <p>      * </p>      *       */"
-    #     expected = ["/**", "*", "<p>", "*", "</p>", "*", "*/"]
-    #
-    #     # When
-    #     tokens = clone_detector.tokenize(java_code)
-    #
-    #     # Then
-    #     self.assertListEqual(tokens, expected)
-
     def test_get_n_grams(self):
         # Given
         java_code = ['System.out.println("Hello " + "world");']

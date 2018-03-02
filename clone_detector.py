@@ -20,7 +20,7 @@ def tokenize(java_code):
     :return: a list of tokens
     :rtype: list of str
     """
-    tokens = list(javalang.tokenizer.tokenize(java_code))
+    tokens = list(javalang.tokenizer.tokenize(java_code, ignore_errors=True))
     return list(map(lambda x: x.value, tokens))
 
 

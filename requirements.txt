@@ -7,4 +7,4 @@ whatthepatch>=0.0.4
 scikit-learn>=0.19.1
 numpy>=1.14.1
 scipy>=1.0.0
--e git://github.com/cassianomonteiro/javalang.git@331707e599fbcf7a942548308051f3adf4d4663a#egg=javalang
+-e git://github.com/cassianomonteiro/javalang.git@dd58acc9bd22f4d706747f7d0675016bfa82c0cb#egg=javalang

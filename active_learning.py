@@ -1,6 +1,10 @@
+import argparse
 import json
+import random
 import numpy
-from sklearn.naive_bayes import GaussianNB
+import sys
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 def determine_vulnerability_status(results, labels_file):
@@ -9,8 +13,8 @@ def determine_vulnerability_status(results, labels_file):
         Input dictionary is modified to add "vulnerable" key (bool)
     :param dictionary results: structured calculated features for all assessed versions
     :param {read} labels_file: the json file stream
-    :return: probabilities of each prediction
-    :rtype: numpy.array
+    :return: next version to be inserted in the training model (smaller certainty)
+    :rtype: str
     """
     # Read versions labels file
     golden_labels = get_versions_labels(labels_file)
@@ -18,19 +22,43 @@ def determine_vulnerability_status(results, labels_file):
     # Setup data for model
     features_train, labels_train, features_test, versions_test = preprocess_results(results, golden_labels)
 
-    # Train and fit model
-    clf = GaussianNB()
-    clf.fit(features_train, labels_train)
+    n_classifiers = 5  # number of classifiers
 
-    # Get predictions
-    prediction = clf.predict(features_test)
+    classifiers = []
+    predictions = []
+
+    for i in range(n_classifiers):
+        # Train and fit model
+        # clf = MultinomialNB()
+
+        # Train and fit model
+        clf = DecisionTreeClassifier(criterion="entropy", splitter="random", random_state=random.randint(0, 2**32-1))
+        clf.fit(features_train, labels_train)
+
+        # Get predictions
+        predictions.append(clf.predict(features_test).tolist())
+
+        classifiers.append(clf)
+
+    votes, entropies = calculate_entropies(numpy.array(predictions))
 
     # Evaluate results
+    next_train_version = None
     for index, version in enumerate(versions_test):
-        results[version]["vulnerable"] = bool(prediction[index])
+        results[version]["vulnerable"] = bool(votes[index])
+        results[version]["entropy"] = entropies[index]
 
-    # Return probabilities
-    return clf.predict_proba(features_test)
+        # Get version with highest entropy
+        if not next_train_version or results[version]["entropy"] > results[next_train_version]["entropy"]:
+            next_train_version = version
+
+    # Keep training labels in results too
+    for version_key, value in golden_labels.items():
+        results[version_key]["vulnerable"] = bool(value)
+        results[version_key]["entropy"] = 0.0
+
+    # Return next version to be inserted into the training model
+    return next_train_version
 
 
 def get_versions_labels(json_file):
@@ -40,7 +68,6 @@ def get_versions_labels(json_file):
     :return: A dictionary with versions and vulnerability state: 1 = vulnerable, 0 = not vulnerable
     :rtype: {str : int}
     """
-
     versions_labels = json.load(json_file)
 
     for version in versions_labels:
@@ -87,3 +114,82 @@ def preprocess_results(results, labels):
             versions_test.append(key)
 
     return numpy.array(features_train), labels_train, numpy.array(features_test), versions_test
+
+
+def calculate_entropies(predictions):
+    """
+        This entropy calculates the disagreement ratio between classifiers (entropy), and classifies with the majority
+        of votes from all classifiers.
+    :param numpy.array predictions: the numpy array with predictions form all classifiers in the shape (n_classifiers x data points)
+    :return: a tuple with the classification from the majority of classifiers and respective entropies
+    :rtype: (numpy.array, numpy.array)
+    """
+    n_classifiers = predictions.shape[0]
+    positive_counts = predictions.sum(axis=0)
+
+    positive_ratio = positive_counts * numpy.full(positive_counts.shape, 1/n_classifiers)
+    negative_ratio = numpy.ones(positive_counts.shape) - positive_ratio
+
+    # Using numpy.ma (Masked arrays) to avoid NaN with log2(0)
+    # Entropy formula: H(X) = -1 * sum(P(xi)*log2(Pxi))
+    # https://en.wikipedia.org/wiki/Entropy_(information_theory)
+    entropies = numpy.negative(positive_ratio * numpy.ma.log2(positive_ratio).filled(0) +
+                               negative_ratio * numpy.ma.log2(negative_ratio).filled(0))
+    votes = (positive_ratio > negative_ratio)
+
+    return votes, entropies
+
+
+def process_arguments():
+    parser = argparse.ArgumentParser(
+        description='''
+            From a results file with features, evaluates vulnerabilities using 
+            supervised machine learning.
+        '''
+    )
+
+    parser.add_argument(
+        '--features',
+        type=argparse.FileType('r'),
+        required=True,
+        metavar='path',
+        help='Features values to be evaluated'
+    )
+
+    parser.add_argument(
+        '--versions-labels',
+        default=None,
+        type=argparse.FileType('r'),
+        metavar='path',
+        help='Path to the json file with active learning training data with format { "version" : "vulnerable|not '
+             'vulnerable"} '
+    )
+
+    parser.add_argument(
+        '--results',
+        type=argparse.FileType('w+'),
+        default=sys.stdout,
+        help='Path to store the results'
+    )
+
+    return parser.parse_args()
+
+
+def main():
+    config = process_arguments()
+
+    print("Processing file {} with training versions {} ...".format(config.features, config.versions_labels))
+
+    processed_results = json.load(config.features)
+
+    next_version = determine_vulnerability_status(processed_results, config.versions_labels)
+
+    if processed_results:
+        json.dump(processed_results, config.results, sort_keys=True, indent=4)
+
+    print("\n\nNext version to be inserted in the training model: {}".format(next_version))
+
+
+if __name__ == '__main__':
+    main()
+

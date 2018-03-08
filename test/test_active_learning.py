@@ -89,15 +89,16 @@ class TestActiveLearning(unittest.TestCase):
 
     def test_preprocess_results(self):
         # Given
-        expected_features_train = numpy.array([[25, 0, 226, 0.11061946902654868, 0, 1.0, 30, 0.8333333333333334, 0, 1.0],
-                                               [226, 128, 226, 1.0, 155, 0.8258064516129032, 226, 1.0, 155, 0.8258064516129032]])
+        expected_features_train = numpy.array(
+            [[25, 0, 226, 0.11061946902654868, 0, 1.0, 30, 0.8333333333333334, 0, 1.0],
+             [226, 128, 226, 1.0, 155, 0.8258064516129032, 226, 1.0, 155, 0.8258064516129032]])
         expected_labels_train = ["vulnerable", "not vulnerable"]
         expected_features_test = numpy.array([[0, 0, 226, 0.0, 0, 1.0, 0, 0.0, 0, 1.0]])
         expected_versions_test = ["Acra-5.0.2"]
 
         # When
         features_train, labels_train, features_test, versions_test = active_learning.preprocess_results(self.results,
-                                                                                         self.labels)
+                                                                                                        self.labels)
 
         # Then
         self.assertTrue(numpy.array_equal(features_train, expected_features_train))
@@ -106,15 +107,33 @@ class TestActiveLearning(unittest.TestCase):
         self.assertListEqual(versions_test, expected_versions_test)
 
     def test_determine_vulnerability_status(self):
-
         # Given
         assessed_version = "Acra-5.0.2"
-        expected_probabilities = numpy.array([[0.0, 1.0]])  # 0% not vulnerable, 100% vulnerable
+        expected_next_train_version = "Acra-5.0.2"
 
         # When
         with open(self.test_file_path, 'r') as versions_file:
-            prediction = active_learning.determine_vulnerability_status(self.results, versions_file)
+            next_train_version = active_learning.determine_vulnerability_status(self.results, versions_file)
 
         # Then
-        self.assertTrue(numpy.array_equal(prediction, expected_probabilities))
         self.assertTrue(self.results[assessed_version]["vulnerable"])
+        self.assertEqual(self.results[assessed_version]["entropy"], 0.0)
+        self.assertEqual(next_train_version, expected_next_train_version)
+
+    def test_entropy_calculation(self):
+        # Given
+        # A list of predictions from 5 classifiers
+        predictions = numpy.array([[0, 0, 0, 0, 0, 1],
+                                   [0, 0, 0, 0, 1, 1],
+                                   [0, 0, 0, 1, 1, 1],
+                                   [0, 0, 1, 1, 1, 1],
+                                   [0, 1, 1, 1, 1, 1]])
+        expected_votes = numpy.array([0, 0, 0, 1, 1, 1])
+        expected_entropies = numpy.array([0, 0.721, 0.971, 0.971, 0.721, 0])
+
+        # When
+        calculated_votes, calculated_entropies = active_learning.calculate_entropies(predictions)
+
+        # Then
+        self.assertTrue(numpy.equal(expected_votes, calculated_votes).all())
+        self.assertTrue(numpy.isclose(expected_entropies, calculated_entropies, atol=0.001).all())

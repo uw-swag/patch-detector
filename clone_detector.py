@@ -61,6 +61,7 @@ def commonalities(old_code, new_code):
             common_n_grams = cv_old.transform(["\n".join(new_code)]).nnz
         except ValueError:
             # Maybe there are no valid java tokens in this code, so keep it as zero
+            print("Waning: error detecting java tokens.")
             pass
 
         # Common n-grams are shared between both old and new, it doesn't matter which one is transformed

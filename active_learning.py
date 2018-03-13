@@ -4,25 +4,25 @@ import random
 import numpy
 import sys
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
 
 
-def determine_vulnerability_status(results, labels_file):
+def determine_vulnerability_status(results, golden_labels, training_versions):
     """
         Using train labels from file, predicts if versions in results are vulnerable using calculated features.
         Input dictionary is modified to add "vulnerable" key (bool)
     :param dictionary results: structured calculated features for all assessed versions
-    :param {read} labels_file: the json file stream
+    :param {str : int} golden_labels: the version/vulnerability oracle dictionary
+    :param list of str training_versions: list of versions to be included on the training data
     :return: next version to be inserted in the training model (smaller certainty)
     :rtype: str
     """
-    # Read versions labels file
-    golden_labels = get_versions_labels(labels_file)
 
     # Setup data for model
-    features_train, labels_train, features_test, versions_test = preprocess_results(results, golden_labels)
+    features_train, labels_train, features_test, labels_test, versions_test = preprocess_features(results, golden_labels,
+                                                                                     training_versions)
 
-    n_classifiers = 5  # number of classifiers
+    n_classifiers = 5   # number of classifiers
+    k_sampling = 5      # number to get weighted sample
 
     classifiers = []
     predictions = []
@@ -43,22 +43,28 @@ def determine_vulnerability_status(results, labels_file):
     votes, entropies = calculate_entropies(numpy.array(predictions))
 
     # Evaluate results
-    next_train_version = None
+    correct_votes = 0
     for index, version in enumerate(versions_test):
         results[version]["vulnerable"] = bool(votes[index])
         results[version]["entropy"] = entropies[index]
 
-        # Get version with highest entropy
-        if not next_train_version or results[version]["entropy"] > results[next_train_version]["entropy"]:
-            next_train_version = version
+        # Compute correct votes for accuracy
+        correct_votes += 1 if votes[index] == bool(golden_labels[version]) else 0
+
+    # Get next training version from weighted sample
+    next_version_index = get_weighed_sample(entropies, k_sampling)
+    next_train_version = versions_test[next_version_index]
 
     # Keep training labels in results too
-    for version_key, value in golden_labels.items():
-        results[version_key]["vulnerable"] = bool(value)
-        results[version_key]["entropy"] = 0.0
+    for version in training_versions:
+        results[version]["vulnerable"] = bool(golden_labels[version])
+        results[version]["entropy"] = 0.0
+
+    # Consider training versions for accuracy calculation
+    accuracy = (correct_votes + len(training_versions)) / (len(versions_test) + len(training_versions))
 
     # Return next version to be inserted into the training model
-    return next_train_version
+    return accuracy, next_train_version
 
 
 def get_versions_labels(json_file):
@@ -79,41 +85,38 @@ def get_versions_labels(json_file):
     return versions_labels
 
 
-def preprocess_results(results, labels):
+def preprocess_features(features, labels, training_versions):
     """
         Get results into a numpy array of versions x features
-    :param {} results: dictionary structure with calculated feature values for assessed versions
+    :param {} features: dictionary structure with calculated feature values for assessed versions
     :param {} labels: labels for train data
-    :return: a tuple with train features, train labels, test features, test versions
-    :rtype: (numpy.array, list of str, numpy.array, list of str)
+    :param [str] training_versions: versions to collect features for the training model
+    :return: a tuple with train features, train labels, test features, test labels and test versions
+    :rtype: (numpy.array, list of str, numpy.array, list of str, list of str)
     """
 
     features_train = []
     labels_train = []
     features_test = []
+    labels_test = []
     versions_test = []
 
-    for key, value in results.items():
+    # Get all features keys to compose array of features values
+    feature_keys = sorted(features[training_versions[0]]["overall"].keys())
 
-        feature = [value["overall"]["common_additions"],
-                   value["overall"]["common_deletions"],
-                   value["overall"]["patch_additions"],
-                   value["overall"]["patch_additions_score"],
-                   value["overall"]["patch_deletions"],
-                   value["overall"]["patch_deletions_score"],
-                   value["overall"]["version_additions"],
-                   value["overall"]["version_additions_score"],
-                   value["overall"]["version_deletions"],
-                   value["overall"]["version_deletions_score"]]
+    for version, feature_item in features.items():
 
-        if key in labels:
-            features_train.append(feature)
-            labels_train.append(labels[key])
+        feature_values = [feature_item["overall"][key] for key in feature_keys]
+
+        if version in training_versions:
+            features_train.append(feature_values)
+            labels_train.append(labels[version])
         else:
-            features_test.append(feature)
-            versions_test.append(key)
+            features_test.append(feature_values)
+            labels_test.append(labels[version])
+            versions_test.append(version)
 
-    return numpy.array(features_train), labels_train, numpy.array(features_test), versions_test
+    return numpy.array(features_train), labels_train, numpy.array(features_test), labels_test, versions_test
 
 
 def calculate_entropies(predictions):
@@ -138,6 +141,24 @@ def calculate_entropies(predictions):
     votes = (positive_ratio > negative_ratio)
 
     return votes, entropies
+
+
+def get_weighed_sample(entropies, sampling_weight):
+    """
+        From a list of entropies, selects randomly a sample from the top sampling weight.
+    :param list of float entropies: a list of entropy values
+    :param int sampling_weight: the number of top samples to randomly select one
+    :return: the index in the entropies list to pick the value from
+    :rtype: int
+    """
+    max_entropies = sorted(entropies, reverse=True)[:sampling_weight]
+    indexes = []
+
+    for index, value in enumerate(entropies):
+        if value in max_entropies:
+            indexes.append(index)
+
+    return random.choice(indexes)
 
 
 def process_arguments():

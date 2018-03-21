@@ -1,0 +1,49 @@
+From e8d0ee5fc9af612d7abc9ab2c201434e7102d092 Mon Sep 17 00:00:00 2001
+From: Tsuyoshi Ozawa <ozawa@apache.org>
+Date: Sun, 3 May 2015 10:51:17 +0900
+Subject: [PATCH] YARN-1993. Cross-site scripting vulnerability in
+ TextView.java. Contributed byKenji Kikushima.
+
+---
+ hadoop-yarn-project/CHANGES.txt                                      | 4 ++++
+ .../src/main/java/org/apache/hadoop/yarn/webapp/view/TextView.java   | 5 ++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/hadoop-yarn-project/CHANGES.txt b/hadoop-yarn-project/CHANGES.txt
+index 899310e3eabc..684efc50185f 100644
+--- a/hadoop-yarn-project/CHANGES.txt
++++ b/hadoop-yarn-project/CHANGES.txt
+@@ -293,6 +293,10 @@ Release 2.8.0 - UNRELEASED
+     YARN-2454. Fix compareTo of variable UNBOUNDED in o.a.h.y.util.resource.Resources.
+     (Xu Yang via junping_du)
+ 
++    YARN-1993. Cross-site scripting vulnerability in TextView.java. (Kenji Kikushima
++    via ozawa)
++
++
+ Release 2.7.1 - UNRELEASED
+ 
+   INCOMPATIBLE CHANGES
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/webapp/view/TextView.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/webapp/view/TextView.java
+index 16efa4ea4810..4983dac2a88f 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/webapp/view/TextView.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/webapp/view/TextView.java
+@@ -20,6 +20,7 @@
+ 
+ import java.io.PrintWriter;
+ 
++import org.apache.commons.lang.StringEscapeUtils;
+ import org.apache.hadoop.classification.InterfaceAudience;
+ import org.apache.hadoop.yarn.webapp.View;
+ 
+@@ -45,7 +46,9 @@ protected TextView(ViewContext ctx, String contentType) {
+   public void echo(Object... args) {
+     PrintWriter out = writer();
+     for (Object s : args) {
+-      out.print(s);
++      String escapedString = StringEscapeUtils.escapeJavaScript(
++          StringEscapeUtils.escapeHtml(s.toString()));
++      out.print(escapedString);
+     }
+   }
+ 

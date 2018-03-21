@@ -1,0 +1,9 @@
+[submodule "experiments/hadoop"]
+	path = experiments/hadoop
+	url = git://git.apache.org/hadoop.git
+[submodule "experiments/httpd"]
+	path = experiments/httpd
+	url = https://github.com/apache/httpd.git
+[submodule "experiments/cloudstack"]
+	path = experiments/cloudstack
+	url = https://github.com/apache/cloudstack.git

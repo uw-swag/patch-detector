@@ -6,12 +6,11 @@ import os
 import pkg_resources
 import re
 import sys
-
 import git
 import tqdm
-import whatthepatch
-
 import detector
+import clone_detector
+import active_learning_rounds
 import resolver
 import util
 
@@ -82,9 +81,9 @@ def run_git(config):
     except TypeError:
         if len(repo.branches) == 1:
             active_branch = repo.branches[0]
-            repo.git.checkout(active_branch)
+            repo.git.checkout(active_branch, force=True)
         else:
-            error('Repository is in a detatched HEAD state ' +
+            error('Repository is in a detached HEAD state ' +
                   'and could not determine default branch.', True)
 
     if config.start_version:
@@ -133,7 +132,7 @@ def run_git(config):
                 raise ValueError('No such version "{}"'.format(version))
             repo.git.reset('--hard')
             repo.git.clean('-df')
-            repo.git.checkout(version)
+            repo.git.checkout(version, force=True)
 
             diffs = []
             for diff in patch:
@@ -150,8 +149,13 @@ def run_git(config):
                 diffs.append(adjusted_diff)
 
             config.patch = diffs
-            version_results[version] = detector.run(config)
-            repo.git.checkout(active_branch)
+
+            if config.method == 'line_ratios':
+                version_results[version] = detector.run(config)
+            elif config.method == 'active_learning':
+                version_results[version] = clone_detector.evaluate_version(config)
+
+            repo.git.checkout(active_branch, force=True)
 
             if config.debug:
                 print('Removing {0}'.format(version))
@@ -169,7 +173,7 @@ def run_git(config):
         print('\r', end='')
         repo.git.reset('--hard')
         repo.git.clean('-df')
-        repo.git.checkout(active_branch)
+        repo.git.checkout(active_branch, force=True)
 
     return version_results
 
@@ -253,6 +257,29 @@ def process_arguments():
     )
 
     parser.add_argument(
+        '--method',
+        default='active_learning',
+        option_strings=['line_ratios','active_learning'],
+        metavar='line_ratios|active_learning',
+        help='Which method to be applied for detecting patch deployment'
+    )
+
+    parser.add_argument(
+        '--vulnerable-versions',
+        type=argparse.FileType('r'),
+        metavar='path',
+        help='The file path with a list of vulnerable versions to be used in the active learning process'
+    )
+
+    parser.add_argument(
+        '--training-versions',
+        type=str,
+        nargs='+',
+        metavar='VERSION_1 VERSION_2 ... VERSION_N',
+        help='Versions to be used as training data from the oracle'
+    )
+
+    parser.add_argument(
         'patch',
         type=argparse.FileType('r'),
         help='Path to the patch to be tested'
@@ -273,16 +300,28 @@ def main():
             {0}Project:{3} {2}
             {0}  Patch:{3} {1}
         '''.format(
-        Color.BOLD,
-        os.path.basename(config.patch.name),
-        os.path.abspath(config.project),
-        Color.END
-    )
+            Color.BOLD,
+            os.path.basename(config.patch.name),
+            os.path.abspath(config.project),
+            Color.END
+        )
     )
 
-    version_results = run(config)
+    version_results = None
 
-    determine_vulnerability_status(config, version_results)
+    if config.method == 'line_ratios':
+        print("Running line ratios method")
+        version_results = run(config)
+        determine_vulnerability_status(config, version_results)
+    elif config.method == 'active_learning':
+        print("Running active learning method")
+        config.results = run(config)
+
+        if config.vulnerable_versions and config.training_versions:
+            active_learning_rounds.run_active_learning_rounds(config)
+
+    else:
+        print("Running method not correctly defined.")
 
     if version_results:
         json.dump(version_results, config.results, sort_keys=True, indent=4)

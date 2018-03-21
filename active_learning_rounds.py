@@ -8,28 +8,53 @@ import active_learning
 
 def run_active_learning_rounds(config):
 
-    # get oracle
-    # with open(config.oracle, 'r') as versions_file:
-    #     oracle = active_learning.get_versions_labels(versions_file)
-
-    #load results
+    # load results
     calculated_features = json.load(config.features)
-    oracle_versions = active_learning.get_versions_labels(config.oracle)
-    accuracy = 0
+    vulnerable_versions = active_learning.get_versions_from_file(config.vulnerable_versions)
+
+    # run active learning for all classifier types
+    for classifier in ["d_tree", "nb", "svm"]:
+        training_versions = list(config.training_versions)
+        run_active_learning_with_classifier(calculated_features, vulnerable_versions, training_versions, classifier)
+
+    # json.dump(calculated_features, config.results, sort_keys=True, indent=4)
+
+
+def run_active_learning_with_classifier(calculated_features, vulnerable_versions, training_versions, classifier):
+    """
+        Run active learning algorithm with specified parameters
+    :param dict calculated_features: dictionary with features to be used in the model
+    :param list of str vulnerable_versions: list of known vulnerable versions to be evaluated on active learning rounds
+    :param list of str training_versions: initial versions to be inserted into the training model
+    :param str classifier: what type of classifier to be run (d_tree, nb or svm)
+    """
     rounds = 0
 
-    while len(calculated_features) > len(config.training_versions) and accuracy < 0.9:
+    print("Classifier;Rounds;Precision;Recall;F-score;Support;Accuracy;Next version;")
 
-        accuracy, next_train_version = active_learning.determine_vulnerability_status(calculated_features,
-                                                                                      oracle_versions,
-                                                                                      config.training_versions)
+    while len(calculated_features) > len(training_versions) and rounds < 100:
+        not_vulnerable_metrics, vulnerable_metrics, next_train_version = \
+            active_learning.determine_vulnerability_status(calculated_features,
+                                                           vulnerable_versions,
+                                                           training_versions,
+                                                           classifier)
         rounds += 1
-        print("Rounds: {}; Accuracy: {}; Next: {}".format(rounds, accuracy, next_train_version))
-        config.training_versions.append(next_train_version)
+        precision = vulnerable_metrics[0]
+        recall = vulnerable_metrics[1]
+        fscore = vulnerable_metrics[2]
+        support = vulnerable_metrics[3]
+        accuracy = vulnerable_metrics[4]
+        print("{};{};{};{};{};{};{};{};".format(
+            classifier,
+            rounds,
+            precision,
+            recall,
+            fscore,
+            support,
+            accuracy,
+            next_train_version))
+        training_versions.append(next_train_version)
 
-    json.dump(calculated_features, config.results, sort_keys=True, indent=4)
-
-    pass
 
 def process_arguments():
     parser = argparse.ArgumentParser(
@@ -48,11 +73,11 @@ def process_arguments():
     )
 
     parser.add_argument(
-        '--oracle',
+        '--vulnerable-versions',
         type=argparse.FileType('r'),
         required=True,
         metavar='path',
-        help='The oracle to be used as truth values when calculating model accuracy'
+        help='The file path with a list of vulnerable versions to be used in the active learning process'
     )
 
     parser.add_argument(
@@ -77,17 +102,11 @@ def process_arguments():
 def main():
     config = process_arguments()
 
-    print("Processing file {} with training versions {} and oracle {} ...".format(config.features, config.training_versions, config.oracle))
+    print("Processing file {} with training versions {} and oracle {} ...".format(config.features,
+                                                                                  config.training_versions,
+                                                                                  config.vulnerable_versions))
 
     run_active_learning_rounds(config)
-    # processed_results = json.load(config.features)
-    #
-    # next_version = determine_vulnerability_status(processed_results, config.versions_labels)
-    #
-    # if processed_results:
-    #     json.dump(processed_results, config.results, sort_keys=True, indent=4)
-    #
-    # print("\n\nNext version to be inserted in the training model: {}".format(next_version))
 
 
 if __name__ == '__main__':

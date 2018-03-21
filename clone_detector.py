@@ -21,6 +21,7 @@ def tokenize(java_code):
     :rtype: list of str
     """
     tokens = list(javalang.tokenizer.tokenize(java_code, ignore_errors=True))
+
     return list(map(lambda x: x.value, tokens))
 
 
@@ -61,7 +62,7 @@ def commonalities(old_code, new_code):
             common_n_grams = cv_old.transform(["\n".join(new_code)]).nnz
         except ValueError:
             # Maybe there are no valid java tokens in this code, so keep it as zero
-            print("Waning: error detecting java tokens.")
+            print("Waning: error detecting java tokens.\nOld code:\n{}\nNew code:{}\n".format(old_code, new_code))
             pass
 
         # Common n-grams are shared between both old and new, it doesn't matter which one is transformed
@@ -76,6 +77,7 @@ def commonalities(old_code, new_code):
             new_n_grams = len(cv_new.get_feature_names())
         except ValueError:
             # Maybe there are no valid java tokens in this code, so keep it as zero
+            print("Waning: error detecting java tokens.\nOld code:\n{}\nNew code:{}\n".format(old_code, new_code))
             pass
 
     return common_n_grams, old_n_grams, new_n_grams
@@ -115,7 +117,8 @@ def evaluate_version(config):
         version_deleted_lines = []
         version_added_lines = []
 
-        patch_deletions, patch_additions, one_line_change, prev_line, next_line = split_changes(diff)
+        patch_deletions, patch_additions, one_line_change, prev_line, next_line = split_changes(diff,
+                                                                                                keep_unchanged=True)
 
         if os.path.exists(full_path):
 

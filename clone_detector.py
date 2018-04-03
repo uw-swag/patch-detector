@@ -172,7 +172,7 @@ def evaluate_version(config):
 
         total_common_deletions += deletion_scores[0]
         total_version_deletions += deletion_scores[1]
-        total_patch_deletions += deletion_scores[1]
+        total_patch_deletions += deletion_scores[2]
         total_common_additions += addition_scores[0]
         total_version_additions += addition_scores[1]
         total_patch_additions += addition_scores[2]

@@ -12,6 +12,8 @@ def run_active_learning_rounds(config):
     calculated_features = json.load(config.features)
     vulnerable_versions = active_learning.get_versions_from_file(config.vulnerable_versions)
 
+    print("Classifier;Rounds;Precision;Recall;F-score;Support;Accuracy;Next version;")
+
     # run active learning for all classifier types
     for classifier in ["d_tree", "nb", "svm"]:
         training_versions = list(config.training_versions)
@@ -29,8 +31,6 @@ def run_active_learning_with_classifier(calculated_features, vulnerable_versions
     :param str classifier: what type of classifier to be run (d_tree, nb or svm)
     """
     rounds = 0
-
-    print("Classifier;Rounds;Precision;Recall;F-score;Support;Accuracy;Next version;")
 
     while len(calculated_features) > len(training_versions) and rounds < 100:
         not_vulnerable_metrics, vulnerable_metrics, next_train_version = \
@@ -101,11 +101,6 @@ def process_arguments():
 
 def main():
     config = process_arguments()
-
-    print("Processing file {} with training versions {} and oracle {} ...".format(config.features,
-                                                                                  config.training_versions,
-                                                                                  config.vulnerable_versions))
-
     run_active_learning_rounds(config)
 
 

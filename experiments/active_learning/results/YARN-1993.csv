@@ -1,300 +1,301 @@
-Classifier: d_tree; Rounds: 1; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8248175182481752; Next: release-0.23.1-rc0
-Classifier: d_tree; Rounds: 2; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8241758241758241; Next: rel/release-3.0.0-beta1
-Classifier: d_tree; Rounds: 3; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8235294117647058; Next: release-1.1.2-rc1
-Classifier: d_tree; Rounds: 4; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8228782287822878; Next: release-1.2.0-rc1
-Classifier: d_tree; Rounds: 5; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8222222222222222; Next: release-0.21.0-rc1
-Classifier: d_tree; Rounds: 6; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8215613382899628; Next: release-1.1.2-rc3
-Classifier: d_tree; Rounds: 7; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8208955223880597; Next: YARN-7055-2018-03-02
-Classifier: d_tree; Rounds: 8; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8202247191011236; Next: release-2.0.3-alpha
-Classifier: d_tree; Rounds: 9; Precision: 0.8947368421052632; Recall: 1.0; F-score: 0.9444444444444444; Accuracy: 0.9774436090225563; Next: release-2.4.1
-Classifier: d_tree; Rounds: 10; Precision: 0.8928571428571429; Recall: 1.0; F-score: 0.9433962264150945; Accuracy: 0.9773584905660377; Next: release-1.1.0-rc2
-Classifier: d_tree; Rounds: 11; Precision: 0.8928571428571429; Recall: 1.0; F-score: 0.9433962264150945; Accuracy: 0.9772727272727273; Next: release-0.19.2
-Classifier: d_tree; Rounds: 12; Precision: 0.8928571428571429; Recall: 1.0; F-score: 0.9433962264150945; Accuracy: 0.9771863117870723; Next: release-2.7.2-RC2
-Classifier: d_tree; Rounds: 13; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9770992366412213; Next: release-0.10.1
-Classifier: d_tree; Rounds: 14; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9770114942528736; Next: release-1.2.1
-Classifier: d_tree; Rounds: 15; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9769230769230769; Next: release-0.20.3-rc1
-Classifier: d_tree; Rounds: 16; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9768339768339769; Next: release-2.8.2-RC0
-Classifier: d_tree; Rounds: 17; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9767441860465116; Next: release-0.20.0
-Classifier: d_tree; Rounds: 18; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9766536964980544; Next: release-0.22.0-rc0
-Classifier: d_tree; Rounds: 19; Precision: 0.8909090909090909; Recall: 1.0; F-score: 0.9423076923076923; Accuracy: 0.9765625; Next: release-2.7.2-RC0
-Classifier: d_tree; Rounds: 20; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9764705882352941; Next: release-0.21.0
-Classifier: d_tree; Rounds: 21; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9763779527559056; Next: release-0.20.205.0-rc1
-Classifier: d_tree; Rounds: 22; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9762845849802372; Next: release-0.23.8-rc0
-Classifier: d_tree; Rounds: 23; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9761904761904762; Next: release-2.8.0-RC1
-Classifier: d_tree; Rounds: 24; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9760956175298805; Next: release-1.2.0
-Classifier: d_tree; Rounds: 25; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.976; Next: release-1.0.2-rc1
-Classifier: d_tree; Rounds: 26; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9759036144578314; Next: release-1.1.0-rc3
-Classifier: d_tree; Rounds: 27; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9758064516129032; Next: release-1.2.1-rc0
-Classifier: d_tree; Rounds: 28; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9757085020242915; Next: release-2.6.3
-Classifier: d_tree; Rounds: 29; Precision: 0.8867924528301887; Recall: 1.0; F-score: 0.9400000000000001; Accuracy: 0.975609756097561; Next: release-0.20.204.0-rc2
-Classifier: d_tree; Rounds: 30; Precision: 0.8867924528301887; Recall: 1.0; F-score: 0.9400000000000001; Accuracy: 0.9755102040816327; Next: release-0.10.0
-Classifier: d_tree; Rounds: 31; Precision: 0.8867924528301887; Recall: 1.0; F-score: 0.9400000000000001; Accuracy: 0.9754098360655737; Next: release-2.9.0-RC0
-Classifier: d_tree; Rounds: 32; Precision: 0.8867924528301887; Recall: 1.0; F-score: 0.9400000000000001; Accuracy: 0.9753086419753086; Next: release-2.5.0-rc0
-Classifier: d_tree; Rounds: 33; Precision: 0.8846153846153846; Recall: 1.0; F-score: 0.9387755102040816; Accuracy: 0.9752066115702479; Next: rel/release-2.6.5
-Classifier: d_tree; Rounds: 34; Precision: 0.8823529411764706; Recall: 1.0; F-score: 0.9375; Accuracy: 0.975103734439834; Next: release-0.7.0
-Classifier: d_tree; Rounds: 35; Precision: 0.8823529411764706; Recall: 1.0; F-score: 0.9375; Accuracy: 0.975; Next: release-2.0.1-alpha
-Classifier: d_tree; Rounds: 36; Precision: 0.8823529411764706; Recall: 1.0; F-score: 0.9375; Accuracy: 0.9748953974895398; Next: YARN-5355-2017-08-31
-Classifier: d_tree; Rounds: 37; Precision: 0.8823529411764706; Recall: 1.0; F-score: 0.9375; Accuracy: 0.9747899159663865; Next: release-0.1.1
-Classifier: d_tree; Rounds: 38; Precision: 0.8823529411764706; Recall: 1.0; F-score: 0.9375; Accuracy: 0.9746835443037974; Next: release-2.4.1-rc1
-Classifier: d_tree; Rounds: 39; Precision: 0.88; Recall: 1.0; F-score: 0.9361702127659575; Accuracy: 0.9745762711864406; Next: release-2.0.5-alpha-rc0
-Classifier: d_tree; Rounds: 40; Precision: 0.88; Recall: 1.0; F-score: 0.9361702127659575; Accuracy: 0.9744680851063829; Next: release-1.0.3-rc1
-Classifier: d_tree; Rounds: 41; Precision: 0.88; Recall: 1.0; F-score: 0.9361702127659575; Accuracy: 0.9743589743589743; Next: release-0.16.3
-Classifier: d_tree; Rounds: 42; Precision: 0.88; Recall: 1.0; F-score: 0.9361702127659575; Accuracy: 0.9742489270386266; Next: release-3.0.1-RC0
-Classifier: d_tree; Rounds: 43; Precision: 0.88; Recall: 1.0; F-score: 0.9361702127659575; Accuracy: 0.9741379310344828; Next: release-2.1.0-beta-rc2
-Classifier: d_tree; Rounds: 44; Precision: 0.8979591836734694; Recall: 1.0; F-score: 0.9462365591397849; Accuracy: 0.9783549783549783; Next: release-0.19.1
-Classifier: d_tree; Rounds: 45; Precision: 0.8979591836734694; Recall: 1.0; F-score: 0.9462365591397849; Accuracy: 0.9782608695652174; Next: release-2.5.0
-Classifier: d_tree; Rounds: 46; Precision: 0.8958333333333334; Recall: 1.0; F-score: 0.945054945054945; Accuracy: 0.9781659388646288; Next: release-3.0.0-alpha2-RC0
-Classifier: d_tree; Rounds: 47; Precision: 0.8958333333333334; Recall: 1.0; F-score: 0.945054945054945; Accuracy: 0.9780701754385965; Next: release-2.0.0-alpha-rc1
-Classifier: d_tree; Rounds: 48; Precision: 0.8958333333333334; Recall: 1.0; F-score: 0.945054945054945; Accuracy: 0.9779735682819384; Next: release-2.4.0-rc0
-Classifier: d_tree; Rounds: 49; Precision: 0.8936170212765957; Recall: 1.0; F-score: 0.9438202247191011; Accuracy: 0.9778761061946902; Next: release-2.6.0-rc1
-Classifier: d_tree; Rounds: 50; Precision: 0.8913043478260869; Recall: 1.0; F-score: 0.9425287356321839; Accuracy: 0.9777777777777777; Next: release-0.20.3-rc0
-Classifier: d_tree; Rounds: 51; Precision: 0.8913043478260869; Recall: 1.0; F-score: 0.9425287356321839; Accuracy: 0.9776785714285714; Next: rel/release-2.7.3
-Classifier: d_tree; Rounds: 52; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9775784753363229; Next: release-0.3.2
-Classifier: d_tree; Rounds: 53; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9774774774774775; Next: release-0.16.0
-Classifier: d_tree; Rounds: 54; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9773755656108597; Next: rel/release-2.7.5
-Classifier: d_tree; Rounds: 55; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9772727272727273; Next: branch-0.20.203.0-rc0
-Classifier: d_tree; Rounds: 56; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9771689497716894; Next: release-3.0.0-alpha4-RC0
-Classifier: d_tree; Rounds: 57; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9770642201834863; Next: release-0.3.0
-Classifier: d_tree; Rounds: 58; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9769585253456221; Next: YARN-2928-2016-06-21
-Classifier: d_tree; Rounds: 59; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9768518518518519; Next: release-0.23.0-rc2
-Classifier: d_tree; Rounds: 60; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9767441860465116; Next: release-0.13.1
-Classifier: d_tree; Rounds: 61; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9766355140186916; Next: release-0.20.204.0-rc0
-Classifier: d_tree; Rounds: 62; Precision: 0.8863636363636364; Recall: 1.0; F-score: 0.9397590361445783; Accuracy: 0.9765258215962441; Next: release-2.7.3-RC2
-Classifier: d_tree; Rounds: 63; Precision: 0.8837209302325582; Recall: 1.0; F-score: 0.9382716049382717; Accuracy: 0.9764150943396226; Next: release-2.6.1-RC1
-Classifier: d_tree; Rounds: 64; Precision: 0.8809523809523809; Recall: 1.0; F-score: 0.9367088607594937; Accuracy: 0.976303317535545; Next: feature_YARN-2928-2016-01-20
-Classifier: d_tree; Rounds: 65; Precision: 0.8809523809523809; Recall: 1.0; F-score: 0.9367088607594937; Accuracy: 0.9761904761904762; Next: rel/release-2.6.4
-Classifier: d_tree; Rounds: 66; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.9760765550239234; Next: YARN-5355-branch-2-2017-04-25
-Classifier: d_tree; Rounds: 67; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.9759615384615384; Next: release-0.14.1
-Classifier: d_tree; Rounds: 68; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.9758454106280193; Next: release-2.0.0-alpha-rc0
-Classifier: d_tree; Rounds: 69; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.9757281553398058; Next: release-2.0.2-alpha-rc1
-Classifier: d_tree; Rounds: 70; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.975609756097561; Next: release-2.0.4.1-alpha-rc0
-Classifier: d_tree; Rounds: 71; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.9754901960784313; Next: YARN-5355_branch2-2017-10-17
-Classifier: d_tree; Rounds: 72; Precision: 0.8780487804878049; Recall: 1.0; F-score: 0.9350649350649352; Accuracy: 0.9753694581280788; Next: release-2.6.3-RC0.1
-Classifier: d_tree; Rounds: 73; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9752475247524752; Next: release-0.20.2-rc3
-Classifier: d_tree; Rounds: 74; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9751243781094527; Next: release-2.2.0
-Classifier: d_tree; Rounds: 75; Precision: 0.8717948717948718; Recall: 1.0; F-score: 0.9315068493150686; Accuracy: 0.975; Next: release-0.6.1
-Classifier: d_tree; Rounds: 76; Precision: 0.8717948717948718; Recall: 1.0; F-score: 0.9315068493150686; Accuracy: 0.9748743718592965; Next: release-2.5.0-rc2
-Classifier: d_tree; Rounds: 77; Precision: 0.868421052631579; Recall: 1.0; F-score: 0.9295774647887324; Accuracy: 0.9747474747474747; Next: release-1.1.0
-Classifier: d_tree; Rounds: 78; Precision: 0.868421052631579; Recall: 1.0; F-score: 0.9295774647887324; Accuracy: 0.9746192893401016; Next: release-0.11.0
-Classifier: d_tree; Rounds: 79; Precision: 0.868421052631579; Recall: 1.0; F-score: 0.9295774647887324; Accuracy: 0.9744897959183674; Next: release-2.7.0
-Classifier: d_tree; Rounds: 80; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9743589743589743; Next: release-1.0.4-rc0
-Classifier: d_tree; Rounds: 81; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9742268041237113; Next: release-2.9.0-RC1
-Classifier: d_tree; Rounds: 82; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9740932642487047; Next: release-0.14.2
-Classifier: d_tree; Rounds: 83; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9739583333333334; Next: release-1.1.2-rc4
-Classifier: d_tree; Rounds: 84; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9738219895287958; Next: release-2.0.6-alpha-rc1
-Classifier: d_tree; Rounds: 85; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9736842105263158; Next: release-0.20.1-rc0
-Classifier: d_tree; Rounds: 86; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9735449735449735; Next: release-1.0.3
-Classifier: d_tree; Rounds: 87; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.973404255319149; Next: release-0.23.6
-Classifier: d_tree; Rounds: 88; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9732620320855615; Next: release-2.0.2-alpha
-Classifier: d_tree; Rounds: 89; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9731182795698925; Next: release-2.9.0-RC3
-Classifier: d_tree; Rounds: 90; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.972972972972973; Next: release-0.14.0
-Classifier: d_tree; Rounds: 91; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9728260869565217; Next: release-0.18.1
-Classifier: d_tree; Rounds: 92; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9726775956284153; Next: rel/release-2.8.3
-Classifier: d_tree; Rounds: 93; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9725274725274725; Next: rel/release-2.7.4
-Classifier: d_tree; Rounds: 94; Precision: 0.8611111111111112; Recall: 1.0; F-score: 0.9253731343283582; Accuracy: 0.9723756906077348; Next: release-2.0.2-alpha-rc2
-Classifier: d_tree; Rounds: 95; Precision: 0.8611111111111112; Recall: 1.0; F-score: 0.9253731343283582; Accuracy: 0.9722222222222222; Next: release-1.0.2
-Classifier: d_tree; Rounds: 96; Precision: 0.8611111111111112; Recall: 1.0; F-score: 0.9253731343283582; Accuracy: 0.9720670391061452; Next: release-0.19.2-rc0
-Classifier: d_tree; Rounds: 97; Precision: 0.8611111111111112; Recall: 1.0; F-score: 0.9253731343283582; Accuracy: 0.9719101123595506; Next: release-1.0.0-rc3
-Classifier: d_tree; Rounds: 98; Precision: 0.8611111111111112; Recall: 1.0; F-score: 0.9253731343283582; Accuracy: 0.9717514124293786; Next: release-0.11.2
-Classifier: d_tree; Rounds: 99; Precision: 0.8611111111111112; Recall: 1.0; F-score: 0.9253731343283582; Accuracy: 0.9715909090909091; Next: release-2.1.0-beta-rc1
-Classifier: d_tree; Rounds: 100; Precision: 0.8857142857142857; Recall: 1.0; F-score: 0.9393939393939393; Accuracy: 0.9771428571428571; Next: release-0.23.10-rc0
-Classifier: nb; Rounds: 1; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8248175182481752; Next: release-2.6.3-RC0.1
-Classifier: nb; Rounds: 2; Precision: 0.5102040816326531; Recall: 1.0; F-score: 0.6756756756756758; Accuracy: 0.8241758241758241; Next: release-2.7.3-RC1
-Classifier: nb; Rounds: 3; Precision: 0.5051546391752577; Recall: 1.0; F-score: 0.6712328767123288; Accuracy: 0.8235294117647058; Next: release-2.0.6-alpha-rc1
-Classifier: nb; Rounds: 4; Precision: 0.5104166666666666; Recall: 1.0; F-score: 0.6758620689655173; Accuracy: 0.8265682656826568; Next: release-0.14.4
-Classifier: nb; Rounds: 5; Precision: 0.5104166666666666; Recall: 1.0; F-score: 0.6758620689655173; Accuracy: 0.825925925925926; Next: release-0.20.2-rc1
-Classifier: nb; Rounds: 6; Precision: 0.5104166666666666; Recall: 1.0; F-score: 0.6758620689655173; Accuracy: 0.8252788104089219; Next: release-1.1.0-rc1
-Classifier: nb; Rounds: 7; Precision: 0.49; Recall: 1.0; F-score: 0.6577181208053691; Accuracy: 0.8097014925373134; Next: release-0.19.1
-Classifier: nb; Rounds: 8; Precision: 0.49; Recall: 1.0; F-score: 0.6577181208053691; Accuracy: 0.8089887640449438; Next: release-1.1.2-rc0
-Classifier: nb; Rounds: 9; Precision: 0.49; Recall: 1.0; F-score: 0.6577181208053691; Accuracy: 0.8082706766917294; Next: YARN-5355_branch2-2017-08-31
-Classifier: nb; Rounds: 10; Precision: 0.5104166666666666; Recall: 1.0; F-score: 0.6758620689655173; Accuracy: 0.8226415094339623; Next: HADOOP-12111-moved-to-yetus
-Classifier: nb; Rounds: 11; Precision: 0.5104166666666666; Recall: 1.0; F-score: 0.6758620689655173; Accuracy: 0.821969696969697; Next: release-1.1.0-rc3
-Classifier: nb; Rounds: 12; Precision: 0.5104166666666666; Recall: 1.0; F-score: 0.6758620689655173; Accuracy: 0.8212927756653993; Next: release-2.1.0-beta-rc1
-Classifier: nb; Rounds: 13; Precision: 0.5157894736842106; Recall: 1.0; F-score: 0.6805555555555556; Accuracy: 0.8244274809160306; Next: release-2.1.0-beta
-Classifier: nb; Rounds: 14; Precision: 0.5212765957446809; Recall: 1.0; F-score: 0.6853146853146853; Accuracy: 0.8275862068965517; Next: feature_YARN-2928-2016-01-20
-Classifier: nb; Rounds: 15; Precision: 0.5212765957446809; Recall: 1.0; F-score: 0.6853146853146853; Accuracy: 0.8269230769230769; Next: release-2.7.5-RC0
-Classifier: nb; Rounds: 16; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.8262548262548263; Next: rel/release-3.0.0-alpha3
-Classifier: nb; Rounds: 17; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.8255813953488372; Next: release-1.1.0
-Classifier: nb; Rounds: 18; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.8249027237354085; Next: release-2.0.1-alpha
-Classifier: nb; Rounds: 19; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.82421875; Next: release-2.0.2-alpha-rc2
-Classifier: nb; Rounds: 20; Precision: 0.5217391304347826; Recall: 1.0; F-score: 0.6857142857142856; Accuracy: 0.8274509803921568; Next: release-0.14.2
-Classifier: nb; Rounds: 21; Precision: 0.5217391304347826; Recall: 1.0; F-score: 0.6857142857142856; Accuracy: 0.8267716535433071; Next: release-3.0.0-alpha2-RC0
-Classifier: nb; Rounds: 22; Precision: 0.5217391304347826; Recall: 1.0; F-score: 0.6857142857142856; Accuracy: 0.8260869565217391; Next: release-0.23.4-rc0
-Classifier: nb; Rounds: 23; Precision: 0.5274725274725275; Recall: 1.0; F-score: 0.6906474820143885; Accuracy: 0.8293650793650794; Next: release-2.3.0-rc0
-Classifier: nb; Rounds: 24; Precision: 0.5222222222222223; Recall: 1.0; F-score: 0.6861313868613139; Accuracy: 0.8286852589641435; Next: release-0.4.0
-Classifier: nb; Rounds: 25; Precision: 0.5222222222222223; Recall: 1.0; F-score: 0.6861313868613139; Accuracy: 0.828; Next: release-0.23.6
-Classifier: nb; Rounds: 26; Precision: 0.5280898876404494; Recall: 1.0; F-score: 0.6911764705882353; Accuracy: 0.8313253012048193; Next: release-0.23.11-rc0
-Classifier: nb; Rounds: 27; Precision: 0.5340909090909091; Recall: 1.0; F-score: 0.6962962962962962; Accuracy: 0.8346774193548387; Next: release-0.16.1
-Classifier: nb; Rounds: 28; Precision: 0.5340909090909091; Recall: 1.0; F-score: 0.6962962962962962; Accuracy: 0.8340080971659919; Next: release-2.6.3
-Classifier: nb; Rounds: 29; Precision: 0.5287356321839081; Recall: 1.0; F-score: 0.6917293233082707; Accuracy: 0.8333333333333334; Next: release-0.15.0
-Classifier: nb; Rounds: 30; Precision: 0.5287356321839081; Recall: 1.0; F-score: 0.6917293233082707; Accuracy: 0.8326530612244898; Next: release-0.17.0
-Classifier: nb; Rounds: 31; Precision: 0.5287356321839081; Recall: 1.0; F-score: 0.6917293233082707; Accuracy: 0.8319672131147541; Next: release-2.1.1-beta-rc0
-Classifier: nb; Rounds: 32; Precision: 0.5348837209302325; Recall: 1.0; F-score: 0.6969696969696969; Accuracy: 0.8353909465020576; Next: release-1.1.0-rc0
-Classifier: nb; Rounds: 33; Precision: 0.5348837209302325; Recall: 1.0; F-score: 0.6969696969696969; Accuracy: 0.8347107438016529; Next: release-2.1.0-beta-rc2
-Classifier: nb; Rounds: 34; Precision: 0.5411764705882353; Recall: 1.0; F-score: 0.7022900763358779; Accuracy: 0.8381742738589212; Next: rel/release-2.9.0
-Classifier: nb; Rounds: 35; Precision: 0.5411764705882353; Recall: 1.0; F-score: 0.7022900763358779; Accuracy: 0.8375; Next: release-0.18.2
-Classifier: nb; Rounds: 36; Precision: 0.5411764705882353; Recall: 1.0; F-score: 0.7022900763358779; Accuracy: 0.8368200836820083; Next: release-2.8.0-RC0
-Classifier: nb; Rounds: 37; Precision: 0.5411764705882353; Recall: 1.0; F-score: 0.7022900763358779; Accuracy: 0.8361344537815126; Next: release-0.21.0-rc2
-Classifier: nb; Rounds: 38; Precision: 0.5411764705882353; Recall: 1.0; F-score: 0.7022900763358779; Accuracy: 0.8354430379746836; Next: release-0.20.204.0-rc2
-Classifier: nb; Rounds: 39; Precision: 0.5411764705882353; Recall: 1.0; F-score: 0.7022900763358779; Accuracy: 0.8347457627118644; Next: release-2.0.4-alpha-rc2
-Classifier: nb; Rounds: 40; Precision: 0.5476190476190477; Recall: 1.0; F-score: 0.7076923076923077; Accuracy: 0.8382978723404255; Next: rel/release-2.6.5
-Classifier: nb; Rounds: 41; Precision: 0.5421686746987951; Recall: 1.0; F-score: 0.7031249999999999; Accuracy: 0.8376068376068376; Next: rel/release-3.0.0-alpha2
-Classifier: nb; Rounds: 42; Precision: 0.5421686746987951; Recall: 1.0; F-score: 0.7031249999999999; Accuracy: 0.8369098712446352; Next: feature_YARN-2928-2015-11-09
-Classifier: nb; Rounds: 43; Precision: 0.5421686746987951; Recall: 1.0; F-score: 0.7031249999999999; Accuracy: 0.8362068965517241; Next: release-2.1.1-rc0
-Classifier: nb; Rounds: 44; Precision: 0.5487804878048781; Recall: 1.0; F-score: 0.7086614173228347; Accuracy: 0.8398268398268398; Next: release-2.0.0-alpha
-Classifier: nb; Rounds: 45; Precision: 0.5487804878048781; Recall: 1.0; F-score: 0.7086614173228347; Accuracy: 0.8391304347826087; Next: YARN-5355_branch2-2017-10-14
-Classifier: nb; Rounds: 46; Precision: 0.5487804878048781; Recall: 1.0; F-score: 0.7086614173228347; Accuracy: 0.8384279475982532; Next: release-0.20.205.0-rc2
-Classifier: nb; Rounds: 47; Precision: 0.5487804878048781; Recall: 1.0; F-score: 0.7086614173228347; Accuracy: 0.8377192982456141; Next: rel/release-2.7.2
-Classifier: nb; Rounds: 48; Precision: 0.5432098765432098; Recall: 1.0; F-score: 0.704; Accuracy: 0.8370044052863436; Next: release-2.6.5-RC0
-Classifier: nb; Rounds: 49; Precision: 0.5375; Recall: 1.0; F-score: 0.6991869918699186; Accuracy: 0.8362831858407079; Next: release-0.9.2
-Classifier: nb; Rounds: 50; Precision: 0.5375; Recall: 1.0; F-score: 0.6991869918699186; Accuracy: 0.8355555555555556; Next: release-0.23.4-rc1
-Classifier: nb; Rounds: 51; Precision: 0.5443037974683544; Recall: 1.0; F-score: 0.7049180327868853; Accuracy: 0.8392857142857143; Next: release-0.1.1
-Classifier: nb; Rounds: 52; Precision: 0.5443037974683544; Recall: 1.0; F-score: 0.7049180327868853; Accuracy: 0.8385650224215246; Next: release-2.2.1-rc0
-Classifier: nb; Rounds: 53; Precision: 0.5384615384615384; Recall: 1.0; F-score: 0.7000000000000001; Accuracy: 0.8378378378378378; Next: release-0.23.2-rc0
-Classifier: nb; Rounds: 54; Precision: 0.5384615384615384; Recall: 1.0; F-score: 0.7000000000000001; Accuracy: 0.8371040723981901; Next: feature_YARN-2928_2015-08-24
-Classifier: nb; Rounds: 55; Precision: 0.5384615384615384; Recall: 1.0; F-score: 0.7000000000000001; Accuracy: 0.8363636363636363; Next: release-2.0.2-alpha-rc1
-Classifier: nb; Rounds: 56; Precision: 0.5454545454545454; Recall: 1.0; F-score: 0.7058823529411764; Accuracy: 0.8401826484018264; Next: release-2.0.4-alpha
-Classifier: nb; Rounds: 57; Precision: 0.5526315789473685; Recall: 1.0; F-score: 0.711864406779661; Accuracy: 0.8440366972477065; Next: release-2.6.1-RC1
-Classifier: nb; Rounds: 58; Precision: 0.5466666666666666; Recall: 1.0; F-score: 0.7068965517241379; Accuracy: 0.8433179723502304; Next: release-0.20.0
-Classifier: nb; Rounds: 59; Precision: 0.5466666666666666; Recall: 1.0; F-score: 0.7068965517241379; Accuracy: 0.8425925925925926; Next: release-0.20.3-rc0
-Classifier: nb; Rounds: 60; Precision: 0.5466666666666666; Recall: 1.0; F-score: 0.7068965517241379; Accuracy: 0.8418604651162791; Next: release-2.5.2-RC1
-Classifier: nb; Rounds: 61; Precision: 0.5405405405405406; Recall: 1.0; F-score: 0.7017543859649124; Accuracy: 0.8411214953271028; Next: release-2.8.2-RC1
-Classifier: nb; Rounds: 62; Precision: 0.5405405405405406; Recall: 1.0; F-score: 0.7017543859649124; Accuracy: 0.8403755868544601; Next: YARN-2928-2016-06-21
-Classifier: nb; Rounds: 63; Precision: 0.5405405405405406; Recall: 1.0; F-score: 0.7017543859649124; Accuracy: 0.839622641509434; Next: release-1.2.0
-Classifier: nb; Rounds: 64; Precision: 0.5405405405405406; Recall: 1.0; F-score: 0.7017543859649124; Accuracy: 0.8388625592417062; Next: release-2.0.6-alpha
-Classifier: nb; Rounds: 65; Precision: 0.547945205479452; Recall: 1.0; F-score: 0.7079646017699115; Accuracy: 0.8428571428571429; Next: release-0.19.2
-Classifier: nb; Rounds: 66; Precision: 0.547945205479452; Recall: 1.0; F-score: 0.7079646017699115; Accuracy: 0.8421052631578947; Next: release-2.6.3-RC1
-Classifier: nb; Rounds: 67; Precision: 0.5416666666666666; Recall: 1.0; F-score: 0.7027027027027027; Accuracy: 0.8413461538461539; Next: release-0.20.1
-Classifier: nb; Rounds: 68; Precision: 0.5416666666666666; Recall: 1.0; F-score: 0.7027027027027027; Accuracy: 0.8405797101449275; Next: rel/release-3.0.0
-Classifier: nb; Rounds: 69; Precision: 0.5416666666666666; Recall: 1.0; F-score: 0.7027027027027027; Accuracy: 0.8398058252427184; Next: release-2.4.0-rc0
-Classifier: nb; Rounds: 70; Precision: 0.5352112676056338; Recall: 1.0; F-score: 0.6972477064220183; Accuracy: 0.8390243902439024; Next: release-0.20.203.0-rc0
-Classifier: nb; Rounds: 71; Precision: 0.5352112676056338; Recall: 1.0; F-score: 0.6972477064220183; Accuracy: 0.8382352941176471; Next: release-2.4.0
-Classifier: nb; Rounds: 72; Precision: 0.5285714285714286; Recall: 1.0; F-score: 0.691588785046729; Accuracy: 0.8374384236453202; Next: release-0.9.0
-Classifier: nb; Rounds: 73; Precision: 0.5285714285714286; Recall: 1.0; F-score: 0.691588785046729; Accuracy: 0.8366336633663366; Next: release-2.0.4.1-alpha-rc0
-Classifier: nb; Rounds: 74; Precision: 0.5362318840579711; Recall: 1.0; F-score: 0.6981132075471698; Accuracy: 0.8407960199004975; Next: release-0.6.0
-Classifier: nb; Rounds: 75; Precision: 0.5362318840579711; Recall: 1.0; F-score: 0.6981132075471698; Accuracy: 0.84; Next: release-3.0.0-alpha4-RC0
-Classifier: nb; Rounds: 76; Precision: 0.5362318840579711; Recall: 1.0; F-score: 0.6981132075471698; Accuracy: 0.8391959798994975; Next: release-0.23.9-rc0
-Classifier: nb; Rounds: 77; Precision: 0.5441176470588235; Recall: 1.0; F-score: 0.7047619047619048; Accuracy: 0.8434343434343434; Next: rel/release-2.8.1
-Classifier: nb; Rounds: 78; Precision: 0.5441176470588235; Recall: 1.0; F-score: 0.7047619047619048; Accuracy: 0.8426395939086294; Next: release-0.23.6-rc1
-Classifier: nb; Rounds: 79; Precision: 0.5522388059701493; Recall: 1.0; F-score: 0.7115384615384616; Accuracy: 0.8469387755102041; Next: release-1.1.1-rc0
-Classifier: nb; Rounds: 80; Precision: 0.5522388059701493; Recall: 1.0; F-score: 0.7115384615384616; Accuracy: 0.8461538461538461; Next: release-1.0.0
-Classifier: nb; Rounds: 81; Precision: 0.5522388059701493; Recall: 1.0; F-score: 0.7115384615384616; Accuracy: 0.845360824742268; Next: rel/release-2.6.4
-Classifier: nb; Rounds: 82; Precision: 0.5454545454545454; Recall: 1.0; F-score: 0.7058823529411764; Accuracy: 0.844559585492228; Next: release-3.0.1-RC0
-Classifier: nb; Rounds: 83; Precision: 0.5454545454545454; Recall: 1.0; F-score: 0.7058823529411764; Accuracy: 0.84375; Next: release-0.21.0-rc0
-Classifier: nb; Rounds: 84; Precision: 0.5454545454545454; Recall: 1.0; F-score: 0.7058823529411764; Accuracy: 0.8429319371727748; Next: release-0.10.0
-Classifier: nb; Rounds: 85; Precision: 0.5454545454545454; Recall: 1.0; F-score: 0.7058823529411764; Accuracy: 0.8421052631578947; Next: release-0.1.0
-Classifier: nb; Rounds: 86; Precision: 0.5454545454545454; Recall: 1.0; F-score: 0.7058823529411764; Accuracy: 0.8412698412698413; Next: release-2.5.2
-Classifier: nb; Rounds: 87; Precision: 0.5384615384615384; Recall: 1.0; F-score: 0.7000000000000001; Accuracy: 0.8404255319148937; Next: release-0.23.1-rc2
-Classifier: nb; Rounds: 88; Precision: 0.5384615384615384; Recall: 1.0; F-score: 0.7000000000000001; Accuracy: 0.839572192513369; Next: YARN-7055-2018-03-02
-Classifier: nb; Rounds: 89; Precision: 0.5384615384615384; Recall: 1.0; F-score: 0.7000000000000001; Accuracy: 0.8387096774193549; Next: release-2.7.2-RC1
-Classifier: nb; Rounds: 90; Precision: 0.53125; Recall: 1.0; F-score: 0.6938775510204082; Accuracy: 0.8378378378378378; Next: release-1.1.0-rc5
-Classifier: nb; Rounds: 91; Precision: 0.53125; Recall: 1.0; F-score: 0.6938775510204082; Accuracy: 0.8369565217391305; Next: release-2.4.1
-Classifier: nb; Rounds: 92; Precision: 0.5238095238095238; Recall: 1.0; F-score: 0.6875000000000001; Accuracy: 0.8360655737704918; Next: release-0.3.1
-Classifier: nb; Rounds: 93; Precision: 0.5238095238095238; Recall: 1.0; F-score: 0.6875000000000001; Accuracy: 0.8351648351648352; Next: release-2.8.2-RC0
-Classifier: nb; Rounds: 94; Precision: 0.5238095238095238; Recall: 1.0; F-score: 0.6875000000000001; Accuracy: 0.8342541436464088; Next: release-1.0.4-rc0
-Classifier: nb; Rounds: 95; Precision: 0.5238095238095238; Recall: 1.0; F-score: 0.6875000000000001; Accuracy: 0.8333333333333334; Next: release-0.11.2
-Classifier: nb; Rounds: 96; Precision: 0.5238095238095238; Recall: 1.0; F-score: 0.6875000000000001; Accuracy: 0.8324022346368715; Next: release-2.7.4-RC0
-Classifier: nb; Rounds: 97; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.8314606741573034; Next: release-0.3.2
-Classifier: nb; Rounds: 98; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.8305084745762712; Next: release-0.16.2
-Classifier: nb; Rounds: 99; Precision: 0.5161290322580645; Recall: 1.0; F-score: 0.6808510638297872; Accuracy: 0.8295454545454546; Next: release-2.0.5-alpha-rc0
-Classifier: nb; Rounds: 100; Precision: 0.5245901639344263; Recall: 1.0; F-score: 0.6881720430107526; Accuracy: 0.8342857142857143; Next: release-0.20.2-rc4
-Classifier: svm; Rounds: 1; Precision: 0.22270742358078602; Recall: 1.0; F-score: 0.36428571428571427; Accuracy: 0.35036496350364965; Next: release-0.16.0
-Classifier: svm; Rounds: 2; Precision: 0.5151515151515151; Recall: 1.0; F-score: 0.6799999999999999; Accuracy: 0.8241758241758241; Next: release-2.0.6-alpha-rc0
-Classifier: svm; Rounds: 3; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8125; Next: release-0.20.204-rc1
-Classifier: svm; Rounds: 4; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8118081180811808; Next: release-2.4.0
-Classifier: svm; Rounds: 5; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8148148148148148; Next: release-2.0.4-alpha-rc0
-Classifier: svm; Rounds: 6; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8141263940520446; Next: release-3.0.1-RC0
-Classifier: svm; Rounds: 7; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8134328358208955; Next: release-1.2.0
-Classifier: svm; Rounds: 8; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8127340823970037; Next: release-1.1.0-rc5
-Classifier: svm; Rounds: 9; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8120300751879699; Next: release-1.1.2-rc4
-Classifier: svm; Rounds: 10; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8113207547169812; Next: release-0.23.1-rc0
-Classifier: svm; Rounds: 11; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8106060606060606; Next: release-0.23.9
-Classifier: svm; Rounds: 12; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8098859315589354; Next: release-0.20.203.0-rc0
-Classifier: svm; Rounds: 13; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8091603053435115; Next: release-0.23.1-rc1
-Classifier: svm; Rounds: 14; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8084291187739464; Next: release-1.1.0-rc4
-Classifier: svm; Rounds: 15; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8076923076923077; Next: release-2.8.2-RC0
-Classifier: svm; Rounds: 16; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.806949806949807; Next: release-0.15.3
-Classifier: svm; Rounds: 17; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8062015503875969; Next: release-2.9.0-RC3
-Classifier: svm; Rounds: 18; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8054474708171206; Next: release-2.7.5-RC1
-Classifier: svm; Rounds: 19; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.80859375; Next: release-0.14.1
-Classifier: svm; Rounds: 20; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.807843137254902; Next: rel/release-2.6.4
-Classifier: svm; Rounds: 21; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8110236220472441; Next: release-2.7.2-RC0
-Classifier: svm; Rounds: 22; Precision: 0.5108695652173914; Recall: 1.0; F-score: 0.6762589928057554; Accuracy: 0.8221343873517787; Next: release-2.0.6-alpha
-Classifier: svm; Rounds: 23; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8134920634920635; Next: release-2.6.5-RC0
-Classifier: svm; Rounds: 24; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.6653386454183267; Next: release-2.6.3-RC0
-Classifier: svm; Rounds: 25; Precision: 0.5056179775280899; Recall: 1.0; F-score: 0.6716417910447761; Accuracy: 0.824; Next: release-0.23.8
-Classifier: svm; Rounds: 26; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8192771084337349; Next: release-2.6.1-RC1
-Classifier: svm; Rounds: 27; Precision: 0.5057471264367817; Recall: 1.0; F-score: 0.6717557251908397; Accuracy: 0.8266129032258065; Next: release-0.23.6
-Classifier: svm; Rounds: 28; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8218623481781376; Next: release-2.5.1
-Classifier: svm; Rounds: 29; Precision: 0.5058823529411764; Recall: 1.0; F-score: 0.671875; Accuracy: 0.8292682926829268; Next: release-2.3.0-rc0
-Classifier: svm; Rounds: 30; Precision: 0.5; Recall: 1.0; F-score: 0.6666666666666666; Accuracy: 0.8285714285714286; Next: release-2.0.2-alpha-rc0
-Classifier: svm; Rounds: 31; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9754098360655737; Next: release-0.23.4-rc1
-Classifier: svm; Rounds: 32; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9753086419753086; Next: rel/release-2.7.5
-Classifier: svm; Rounds: 33; Precision: 0.5061728395061729; Recall: 1.0; F-score: 0.6721311475409836; Accuracy: 0.8347107438016529; Next: release-0.23.5-rc0
-Classifier: svm; Rounds: 34; Precision: 0.8723404255319149; Recall: 1.0; F-score: 0.9318181818181819; Accuracy: 0.975103734439834; Next: release-2.7.5-RC0
-Classifier: svm; Rounds: 35; Precision: 0.5063291139240507; Recall: 1.0; F-score: 0.6722689075630253; Accuracy: 0.8375; Next: release-0.23.10
-Classifier: svm; Rounds: 36; Precision: 0.8695652173913043; Recall: 1.0; F-score: 0.9302325581395349; Accuracy: 0.9748953974895398; Next: release-2.6.5-RC1
-Classifier: svm; Rounds: 37; Precision: 0.5064935064935064; Recall: 1.0; F-score: 0.6724137931034482; Accuracy: 0.8403361344537815; Next: release-0.23.4
-Classifier: svm; Rounds: 38; Precision: 0.8666666666666667; Recall: 1.0; F-score: 0.9285714285714286; Accuracy: 0.9746835443037974; Next: release-2.7.3-RC2
-Classifier: svm; Rounds: 39; Precision: 0.5066666666666667; Recall: 1.0; F-score: 0.6725663716814159; Accuracy: 0.8432203389830508; Next: release-0.23.9-rc0
-Classifier: svm; Rounds: 40; Precision: 0.8636363636363636; Recall: 1.0; F-score: 0.9268292682926829; Accuracy: 0.9744680851063829; Next: release-2.0.3-alpha-rc0
-Classifier: svm; Rounds: 41; Precision: 0.8636363636363636; Recall: 1.0; F-score: 0.9268292682926829; Accuracy: 0.9743589743589743; Next: release-2.3.0
-Classifier: svm; Rounds: 42; Precision: 0.8604651162790697; Recall: 1.0; F-score: 0.9249999999999999; Accuracy: 0.9742489270386266; Next: release-0.23.7-rc0
-Classifier: svm; Rounds: 43; Precision: 0.8604651162790697; Recall: 1.0; F-score: 0.9249999999999999; Accuracy: 0.9741379310344828; Next: release-2.0.2-alpha-rc2
-Classifier: svm; Rounds: 44; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8398268398268398; Next: HADOOP-12111-moved-to-yetus
-Classifier: svm; Rounds: 45; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8391304347826087; Next: release-2.4.1-rc0
-Classifier: svm; Rounds: 46; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8427947598253275; Next: release-2.7.4-RC0
-Classifier: svm; Rounds: 47; Precision: 0.8536585365853658; Recall: 1.0; F-score: 0.9210526315789475; Accuracy: 0.9736842105263158; Next: rel/release-2.7.4
-Classifier: svm; Rounds: 48; Precision: 0.85; Recall: 1.0; F-score: 0.9189189189189189; Accuracy: 0.973568281938326; Next: release-0.23.6-rc0
-Classifier: svm; Rounds: 49; Precision: 0.85; Recall: 1.0; F-score: 0.9189189189189189; Accuracy: 0.9734513274336283; Next: release-2.5.0-rc2
-Classifier: svm; Rounds: 50; Precision: 0.8461538461538461; Recall: 1.0; F-score: 0.9166666666666666; Accuracy: 0.9733333333333334; Next: release-2.1.1-beta-rc0
-Classifier: svm; Rounds: 51; Precision: 0.868421052631579; Recall: 1.0; F-score: 0.9295774647887324; Accuracy: 0.9776785714285714; Next: release-2.6.1-RC0
-Classifier: svm; Rounds: 52; Precision: 0.8648648648648649; Recall: 1.0; F-score: 0.927536231884058; Accuracy: 0.9775784753363229; Next: release-2.1.0-beta-rc2
-Classifier: svm; Rounds: 53; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9819819819819819; Next: release-2.0.2-alpha-rc1
-Classifier: svm; Rounds: 54; Precision: 0.8888888888888888; Recall: 1.0; F-score: 0.9411764705882353; Accuracy: 0.9819004524886877; Next: release-2.6.4-RC0
-Classifier: svm; Rounds: 55; Precision: 0.8857142857142857; Recall: 1.0; F-score: 0.9393939393939393; Accuracy: 0.9818181818181818; Next: release-2.4.1
-Classifier: svm; Rounds: 56; Precision: 0.8823529411764706; Recall: 1.0; F-score: 0.9375; Accuracy: 0.9817351598173516; Next: release-2.6.3-RC0.1
-Classifier: svm; Rounds: 57; Precision: 0.8787878787878788; Recall: 1.0; F-score: 0.9354838709677419; Accuracy: 0.981651376146789; Next: release-2.4.0-rc0
-Classifier: svm; Rounds: 58; Precision: 0.49122807017543857; Recall: 1.0; F-score: 0.6588235294117647; Accuracy: 0.8663594470046083; Next: release-2.0.5-alpha-rc2
-Classifier: svm; Rounds: 59; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9814814814814815; Next: branch-2.0.6-alpha-rc0
-Classifier: svm; Rounds: 60; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9813953488372092; Next: release-0.23.6-rc1
-Classifier: svm; Rounds: 61; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9813084112149533; Next: release-0.23.4-rc2
-Classifier: svm; Rounds: 62; Precision: 0.875; Recall: 1.0; F-score: 0.9333333333333333; Accuracy: 0.9812206572769953; Next: release-0.23.8-rc0
-Classifier: svm; Rounds: 63; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8679245283018868; Next: release-2.6.3
-Classifier: svm; Rounds: 64; Precision: 0.8709677419354839; Recall: 1.0; F-score: 0.9310344827586207; Accuracy: 0.981042654028436; Next: release-2.2.1-rc0
-Classifier: svm; Rounds: 65; Precision: 0.8666666666666667; Recall: 1.0; F-score: 0.9285714285714286; Accuracy: 0.9809523809523809; Next: release-2.5.2-RC0
-Classifier: svm; Rounds: 66; Precision: 0.8620689655172413; Recall: 1.0; F-score: 0.9259259259259259; Accuracy: 0.9808612440191388; Next: release-2.1.0-beta-rc1
-Classifier: svm; Rounds: 67; Precision: 0.8928571428571429; Recall: 1.0; F-score: 0.9433962264150945; Accuracy: 0.9855769230769231; Next: 2.0.5-alpha-rc2
-Classifier: svm; Rounds: 68; Precision: 0.8928571428571429; Recall: 1.0; F-score: 0.9433962264150945; Accuracy: 0.9855072463768116; Next: release-2.0.5-alpha
-Classifier: svm; Rounds: 69; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8786407766990292; Next: rel/release-3.0.0-alpha1
-Classifier: svm; Rounds: 70; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8780487804878049; Next: release-2.1.1-rc0
-Classifier: svm; Rounds: 71; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8774509803921569; Next: release-2.2.0
-Classifier: svm; Rounds: 72; Precision: 0.0; Recall: 0.0; F-score: 0.0; Accuracy: 0.8817733990147784; Next: release-2.6.3-RC1
-Classifier: svm; Rounds: 73; Precision: 0.92; Recall: 1.0; F-score: 0.9583333333333334; Accuracy: 0.9900990099009901; Next: rel/release-2.7.2
-Classifier: svm; Rounds: 74; Precision: 0.9166666666666666; Recall: 1.0; F-score: 0.9565217391304348; Accuracy: 0.9900497512437811; Next: release-2.1.0-beta-rc0
-Classifier: svm; Rounds: 75; Precision: 0.9565217391304348; Recall: 1.0; F-score: 0.9777777777777777; Accuracy: 0.995; Next: release-2.5.0-rc0
-Classifier: svm; Rounds: 76; Precision: 0.9545454545454546; Recall: 1.0; F-score: 0.9767441860465117; Accuracy: 0.9949748743718593; Next: release-2.7.3-RC1
-Classifier: svm; Rounds: 77; Precision: 0.9523809523809523; Recall: 1.0; F-score: 0.975609756097561; Accuracy: 0.9949494949494949; Next: release-2.6.0
-Classifier: svm; Rounds: 78; Precision: 0.95; Recall: 1.0; F-score: 0.9743589743589743; Accuracy: 0.9949238578680203; Next: release-2.7.3-RC0
-Classifier: svm; Rounds: 79; Precision: 0.9473684210526315; Recall: 1.0; F-score: 0.972972972972973; Accuracy: 0.9948979591836735; Next: release-2.6.2-RC0
-Classifier: svm; Rounds: 80; Precision: 0.9444444444444444; Recall: 1.0; F-score: 0.9714285714285714; Accuracy: 0.9948717948717949; Next: release-2.7.2-RC2
-Classifier: svm; Rounds: 81; Precision: 0.9411764705882353; Recall: 1.0; F-score: 0.9696969696969697; Accuracy: 0.9948453608247423; Next: release-2.0.4.1-alpha-rc0
-Classifier: svm; Rounds: 82; Precision: 0.9411764705882353; Recall: 1.0; F-score: 0.9696969696969697; Accuracy: 0.9948186528497409; Next: rel/release-2.6.5
-Classifier: svm; Rounds: 83; Precision: 0.9375; Recall: 1.0; F-score: 0.967741935483871; Accuracy: 0.9947916666666666; Next: release-0.23.6-rc1-old
-Classifier: svm; Rounds: 84; Precision: 0.9375; Recall: 1.0; F-score: 0.967741935483871; Accuracy: 0.9947643979057592; Next: release-2.7.0-RC0
-Classifier: svm; Rounds: 85; Precision: 0.9333333333333333; Recall: 1.0; F-score: 0.9655172413793104; Accuracy: 0.9947368421052631; Next: release-0.23.11-rc0
-Classifier: svm; Rounds: 86; Precision: 0.9333333333333333; Recall: 1.0; F-score: 0.9655172413793104; Accuracy: 0.9947089947089947; Next: release-2.1.0-beta
-Classifier: svm; Rounds: 87; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.6.2
-Classifier: svm; Rounds: 88; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.5.2
-Classifier: svm; Rounds: 89; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.5.0-rc1
-Classifier: svm; Rounds: 90; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.0.5-alpha-rc0
-Classifier: svm; Rounds: 91; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.4.1-rc1
-Classifier: svm; Rounds: 92; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-0.23.11
-Classifier: svm; Rounds: 93; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.6.1
-Classifier: svm; Rounds: 94; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.0.4-alpha
-Classifier: svm; Rounds: 95; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: rel/release-3.0.0-alpha3
-Classifier: svm; Rounds: 96; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.2.0-rc0
-Classifier: svm; Rounds: 97; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.0.4-alpha-rc2
-Classifier: svm; Rounds: 98; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.7.1-RC0
-Classifier: svm; Rounds: 99; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-2.7.2-RC1
-Classifier: svm; Rounds: 100; Precision: 1.0; Recall: 1.0; F-score: 1.0; Accuracy: 1.0; Next: release-0.23.4-rc0
+Classifier;Rounds;Precision;Recall;F-score;Support;Accuracy;Next version;
+d_tree;1;0.5204081632653061;1.0;0.6845637583892618;51.0;0.8252788104089219;release-1.0.4;
+d_tree;2;0.5204081632653061;1.0;0.6845637583892618;51.0;0.8246268656716418;release-1.1.2-rc1;
+d_tree;3;0.5204081632653061;1.0;0.6845637583892618;51.0;0.8239700374531835;release-0.20.205.0;
+d_tree;4;0.5204081632653061;1.0;0.6845637583892618;51.0;0.8233082706766918;release-0.23.3-rc0;
+d_tree;5;0.8947368421052632;1.0;0.9444444444444444;51.0;0.9773584905660377;release-2.4.0;
+d_tree;6;0.8928571428571429;1.0;0.9433962264150945;50.0;0.9772727272727273;YARN-5355_branch2-2017-10-17;
+d_tree;7;0.8928571428571429;1.0;0.9433962264150945;50.0;0.9771863117870723;release-2.7.0;
+d_tree;8;0.8909090909090909;1.0;0.9423076923076923;49.0;0.9770992366412213;rel/release-2.8.3;
+d_tree;9;0.8909090909090909;1.0;0.9423076923076923;49.0;0.9770114942528736;release-2.4.1-rc1;
+d_tree;10;0.8888888888888888;1.0;0.9411764705882353;48.0;0.9769230769230769;release-0.9.1;
+d_tree;11;0.8888888888888888;1.0;0.9411764705882353;48.0;0.9768339768339769;YARN-2928-2016-07-08;
+d_tree;12;0.8888888888888888;1.0;0.9411764705882353;48.0;0.9767441860465116;release-0.23.7;
+d_tree;13;0.8888888888888888;1.0;0.9411764705882353;48.0;0.9766536964980544;release-1.1.2-rc0;
+d_tree;14;0.8888888888888888;1.0;0.9411764705882353;48.0;0.9765625;release-2.6.3-RC1;
+d_tree;15;0.8867924528301887;1.0;0.9400000000000001;47.0;0.9764705882352941;release-2.5.0;
+d_tree;16;0.8846153846153846;1.0;0.9387755102040816;46.0;0.9763779527559056;release-1.1.0-rc5;
+d_tree;17;0.8846153846153846;1.0;0.9387755102040816;46.0;0.9762845849802372;release-2.0.2-alpha-rc0;
+d_tree;18;0.8846153846153846;1.0;0.9387755102040816;46.0;0.9761904761904762;release-1.0.2-rc2;
+d_tree;19;0.8846153846153846;1.0;0.9387755102040816;46.0;0.9760956175298805;release-2.6.3-RC0.1;
+d_tree;20;0.8823529411764706;1.0;0.9375;45.0;0.976;release-2.0.4-alpha-rc0;
+d_tree;21;0.8823529411764706;1.0;0.9375;45.0;0.9759036144578314;release-0.11.1;
+d_tree;22;0.8823529411764706;1.0;0.9375;45.0;0.9758064516129032;release-2.1.0-beta-rc1;
+d_tree;23;0.9;1.0;0.9473684210526316;45.0;0.979757085020243;release-0.15.2;
+d_tree;24;0.9;1.0;0.9473684210526316;45.0;0.9796747967479674;release-2.0.5-alpha-rc1;
+d_tree;25;0.9;1.0;0.9473684210526316;45.0;0.9795918367346939;release-0.23.3;
+d_tree;26;0.9;1.0;0.9473684210526316;45.0;0.9795081967213115;release-2.0.2-alpha-rc2;
+d_tree;27;0.9;1.0;0.9473684210526316;45.0;0.9794238683127572;release-2.7.2-RC1;
+d_tree;28;0.8979591836734694;1.0;0.9462365591397849;44.0;0.9793388429752066;release-0.13.1;
+d_tree;29;0.8979591836734694;1.0;0.9462365591397849;44.0;0.979253112033195;release-2.5.0-rc0;
+d_tree;30;0.8958333333333334;1.0;0.945054945054945;43.0;0.9791666666666666;release-0.19.2;
+d_tree;31;0.8958333333333334;1.0;0.945054945054945;43.0;0.9790794979079498;rel/release-2.8.1;
+d_tree;32;0.8958333333333334;1.0;0.945054945054945;43.0;0.9789915966386554;release-1.2.0-rc0;
+d_tree;33;0.8958333333333334;1.0;0.945054945054945;43.0;0.9789029535864979;release-2.8.3-RC0;
+d_tree;34;0.8958333333333334;1.0;0.945054945054945;43.0;0.9788135593220338;release-0.10.0;
+d_tree;35;0.8958333333333334;1.0;0.945054945054945;43.0;0.9787234042553191;rel/release-3.0.0-alpha2;
+d_tree;36;0.8958333333333334;1.0;0.945054945054945;43.0;0.9786324786324786;release-1.1.2-rc5;
+d_tree;37;0.8958333333333334;1.0;0.945054945054945;43.0;0.9785407725321889;release-2.2.0-rc0;
+d_tree;38;0.8936170212765957;1.0;0.9438202247191011;42.0;0.978448275862069;release-0.20.3-rc0;
+d_tree;39;0.8936170212765957;1.0;0.9438202247191011;42.0;0.9783549783549783;release-2.0.4-alpha-rc1;
+d_tree;40;0.8936170212765957;1.0;0.9438202247191011;42.0;0.9782608695652174;release-0.1.1;
+d_tree;41;0.8936170212765957;1.0;0.9438202247191011;42.0;0.9781659388646288;release-0.3.2;
+d_tree;42;0.8936170212765957;1.0;0.9438202247191011;42.0;0.9780701754385965;release-0.13.0;
+d_tree;43;0.8936170212765957;1.0;0.9438202247191011;42.0;0.9779735682819384;release-2.3.0;
+d_tree;44;0.8913043478260869;1.0;0.9425287356321839;41.0;0.9778761061946902;release-2.7.5-RC1;
+d_tree;45;0.8888888888888888;1.0;0.9411764705882353;40.0;0.9777777777777777;release-2.1.1-beta-rc0;
+d_tree;46;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9821428571428571;release-0.23.6-rc0;
+d_tree;47;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9820627802690582;release-0.21.0-rc2;
+d_tree;48;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9819819819819819;release-1.0.2;
+d_tree;49;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9819004524886877;release-0.16.1;
+d_tree;50;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9818181818181818;rel/release-3.0.0-alpha1;
+d_tree;51;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9817351598173516;YARN-2928-2016-06-21;
+d_tree;52;0.9090909090909091;1.0;0.9523809523809523;40.0;0.981651376146789;release-1.1.0-rc1;
+d_tree;53;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9815668202764977;release-0.15.1;
+d_tree;54;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9814814814814815;release-3.0.1-RC0;
+d_tree;55;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9813953488372092;release-0.23.11-rc0;
+d_tree;56;0.9090909090909091;1.0;0.9523809523809523;40.0;0.9813084112149533;release-2.1.1-rc0;
+d_tree;57;0.9302325581395349;1.0;0.963855421686747;40.0;0.9859154929577465;release-2.7.3-RC1;
+d_tree;58;0.9285714285714286;1.0;0.962962962962963;39.0;0.9858490566037735;release-0.20.2-rc1;
+d_tree;59;0.9285714285714286;1.0;0.962962962962963;39.0;0.985781990521327;release-2.6.5-RC1;
+d_tree;60;0.926829268292683;1.0;0.9620253164556963;38.0;0.9857142857142858;release-2.6.0-rc0;
+d_tree;61;0.925;1.0;0.961038961038961;37.0;0.9856459330143541;release-2.9.0-RC0;
+d_tree;62;0.925;1.0;0.961038961038961;37.0;0.9855769230769231;release-2.5.0-rc2;
+d_tree;63;0.9230769230769231;1.0;0.9600000000000001;36.0;0.9855072463768116;release-0.23.6-rc1;
+d_tree;64;0.9230769230769231;1.0;0.9600000000000001;36.0;0.9854368932038835;release-0.23.9-rc0;
+d_tree;65;0.9230769230769231;1.0;0.9600000000000001;36.0;0.9853658536585366;release-0.23.0;
+d_tree;66;0.9230769230769231;1.0;0.9600000000000001;36.0;0.9852941176470589;release-0.9.0;
+d_tree;67;0.9230769230769231;1.0;0.9600000000000001;36.0;0.9852216748768473;release-2.1.0-beta;
+d_tree;68;0.9473684210526315;1.0;0.972972972972973;36.0;0.9900990099009901;release-2.6.1-RC1;
+d_tree;69;0.9459459459459459;1.0;0.9722222222222222;35.0;0.9900497512437811;release-2.0.3-alpha;
+d_tree;70;0.9459459459459459;1.0;0.9722222222222222;35.0;0.99;release-1.2.1-rc0;
+d_tree;71;0.9459459459459459;1.0;0.9722222222222222;35.0;0.9899497487437185;release-1.0.2-rc1;
+d_tree;72;0.9459459459459459;1.0;0.9722222222222222;35.0;0.98989898989899;release-0.11.2;
+d_tree;73;0.9459459459459459;1.0;0.9722222222222222;35.0;0.9898477157360406;release-0.23.8;
+d_tree;74;0.9459459459459459;1.0;0.9722222222222222;35.0;0.9897959183673469;release-1.1.0-rc4;
+d_tree;75;0.9459459459459459;1.0;0.9722222222222222;35.0;0.9897435897435898;rel/release-2.7.3;
+d_tree;76;0.9444444444444444;1.0;0.9714285714285714;34.0;0.9896907216494846;release-0.20.2-rc2;
+d_tree;77;0.9444444444444444;1.0;0.9714285714285714;34.0;0.9896373056994818;release-0.18.2;
+d_tree;78;0.9444444444444444;1.0;0.9714285714285714;34.0;0.9895833333333334;release-0.23.1;
+d_tree;79;0.9444444444444444;1.0;0.9714285714285714;34.0;0.9895287958115183;release-2.5.2;
+d_tree;80;0.9428571428571428;1.0;0.9705882352941176;33.0;0.9894736842105263;release-2.6.1-RC0;
+d_tree;81;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9894179894179894;release-0.20.204.0-rc2;
+d_tree;82;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9893617021276596;release-0.15.0;
+d_tree;83;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9893048128342246;release-0.22.0-rc0;
+d_tree;84;0.9411764705882353;1.0;0.9696969696969697;32.0;0.989247311827957;release-2.0.0-alpha;
+d_tree;85;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9891891891891892;YARN-7055-2018-03-02;
+d_tree;86;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9891304347826086;release-3.0.0-alpha1-RC0;
+d_tree;87;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9890710382513661;release-0.20.0;
+d_tree;88;0.9411764705882353;1.0;0.9696969696969697;32.0;0.989010989010989;YARN-5355-branch-2-2017-04-25;
+d_tree;89;0.9411764705882353;1.0;0.9696969696969697;32.0;0.988950276243094;release-0.7.1;
+d_tree;90;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9888888888888889;release-0.23.5;
+d_tree;91;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9888268156424581;rel/release-3.0.0;
+d_tree;92;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9887640449438202;release-3.0.0-alpha2-RC0;
+d_tree;93;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9887005649717514;release-0.20.204.0;
+d_tree;94;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9886363636363636;release-2.8.0-RC1;
+d_tree;95;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9885714285714285;release-0.7.0;
+d_tree;96;0.9411764705882353;1.0;0.9696969696969697;32.0;0.9885057471264368;release-2.5.0-rc1;
+d_tree;97;0.9393939393939394;1.0;0.96875;31.0;0.9884393063583815;release-2.2.0;
+d_tree;98;0.9375;1.0;0.967741935483871;30.0;0.9883720930232558;release-2.1.0-beta-rc2;
+d_tree;99;0.967741935483871;1.0;0.9836065573770492;30.0;0.9941520467836257;release-0.3.0;
+d_tree;100;0.967741935483871;1.0;0.9836065573770492;30.0;0.9941176470588236;release-0.20.204.0-rc3;
+nb;1;0.22466960352422907;1.0;0.3669064748201439;51.0;0.34572490706319703;rel/release-2.7.2;
+nb;2;0.22123893805309736;1.0;0.36231884057971014;50.0;0.34328358208955223;release-2.0.4-alpha-rc1;
+nb;3;0.2222222222222222;1.0;0.3636363636363636;50.0;0.3445692883895131;release-2.0.3-alpha-rc0;
+nb;4;0.22321428571428573;1.0;0.36496350364963503;50.0;0.3458646616541353;YARN-2928-2016-07-10;
+nb;5;0.22321428571428573;1.0;0.36496350364963503;50.0;0.3433962264150943;0.92RC0;
+nb;6;0.5263157894736842;1.0;0.6896551724137931;50.0;0.8295454545454546;release-1.1.0-rc3;
+nb;7;0.5263157894736842;1.0;0.6896551724137931;50.0;0.8288973384030418;rel/release-3.0.0-alpha1;
+nb;8;0.5263157894736842;1.0;0.6896551724137931;50.0;0.8282442748091603;release-2.6.5-RC1;
+nb;9;0.5212765957446809;1.0;0.6853146853146853;49.0;0.8275862068965517;release-2.6.3-RC0.1;
+nb;10;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8269230769230769;release-2.0.0-alpha;
+nb;11;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8262548262548263;release-0.21.0-rc2;
+nb;12;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8255813953488372;release-0.20.3-rc1;
+nb;13;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8249027237354085;release-2.0.4.1-alpha-rc0;
+nb;14;0.5217391304347826;1.0;0.6857142857142856;48.0;0.828125;release-0.20.1;
+nb;15;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8235294117647058;release-1.2.0-rc0;
+nb;16;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8228346456692913;release-1.1.0-rc5;
+nb;17;0.5161290322580645;1.0;0.6808510638297872;48.0;0.8221343873517787;release-2.4.0;
+nb;18;0.5108695652173914;1.0;0.6762589928057554;47.0;0.8214285714285714;release-0.23.1-rc1;
+nb;19;0.5108695652173914;1.0;0.6762589928057554;47.0;0.8207171314741036;release-2.6.1-RC0;
+nb;20;0.5054945054945055;1.0;0.6715328467153284;46.0;0.82;release-0.20.204.0-rc2;
+nb;21;0.35384615384615387;1.0;0.5227272727272727;46.0;0.6626506024096386;release-2.0.2-alpha-rc2;
+nb;22;0.35658914728682173;1.0;0.5257142857142858;46.0;0.6653225806451613;release-2.6.3;
+nb;23;0.3515625;1.0;0.5202312138728323;45.0;0.6639676113360324;release-1.0.0-rc2;
+nb;24;0.3515625;1.0;0.5202312138728323;45.0;0.6626016260162602;release-0.3.1;
+nb;25;0.3515625;1.0;0.5202312138728323;45.0;0.6612244897959184;release-3.0.0-RC0;
+nb;26;0.5056179775280899;1.0;0.6716417910447761;45.0;0.819672131147541;YARN-5355-branch-2-2016-11-06;
+nb;27;0.5056179775280899;1.0;0.6716417910447761;45.0;0.8189300411522634;release-0.23.5-rc0;
+nb;28;0.5113636363636364;1.0;0.6766917293233083;45.0;0.8223140495867769;YARN-5355-2017-04-25;
+nb;29;0.5113636363636364;1.0;0.6766917293233083;45.0;0.8215767634854771;release-1.0.3-rc0;
+nb;30;0.5113636363636364;1.0;0.6766917293233083;45.0;0.8208333333333333;release-1.0.2;
+nb;31;0.5113636363636364;1.0;0.6766917293233083;45.0;0.8200836820083682;release-0.23.6-rc1-old;
+nb;32;0.5172413793103449;1.0;0.6818181818181819;45.0;0.8235294117647058;release-2.8.0-RC1;
+nb;33;0.5172413793103449;1.0;0.6818181818181819;45.0;0.8227848101265823;release-2.6.5-RC0;
+nb;34;0.5116279069767442;1.0;0.676923076923077;44.0;0.8220338983050848;release-2.3.0;
+nb;35;0.5058823529411764;1.0;0.671875;43.0;0.8212765957446808;rel/release-2.6.4;
+nb;36;0.5;1.0;0.6666666666666666;42.0;0.8205128205128205;rel/release-3.0.0-alpha2;
+nb;37;0.5060240963855421;1.0;0.6719999999999999;42.0;0.8240343347639485;release-0.23.10;
+nb;38;0.5121951219512195;1.0;0.6774193548387097;42.0;0.8275862068965517;YARN-7055-2018-03-02;
+nb;39;0.5121951219512195;1.0;0.6774193548387097;42.0;0.8268398268398268;release-2.1.0-beta;
+nb;40;0.5185185185185185;1.0;0.6829268292682926;42.0;0.8304347826086956;release-0.20.1-rc0;
+nb;41;0.5185185185185185;1.0;0.6829268292682926;42.0;0.8296943231441049;release-2.8.3-RC0;
+nb;42;0.5185185185185185;1.0;0.6829268292682926;42.0;0.8289473684210527;release-2.5.2;
+nb;43;0.5125;1.0;0.6776859504132231;41.0;0.8281938325991189;release-0.4.0;
+nb;44;0.5125;1.0;0.6776859504132231;41.0;0.827433628318584;release-0.6.1;
+nb;45;0.5125;1.0;0.6776859504132231;41.0;0.8266666666666667;release-3.0.0-beta1-RC0;
+nb;46;0.5125;1.0;0.6776859504132231;41.0;0.8258928571428571;YARN-2928-2016-07-08;
+nb;47;0.5125;1.0;0.6776859504132231;41.0;0.8251121076233184;release-0.13.0;
+nb;48;0.5125;1.0;0.6776859504132231;41.0;0.8243243243243243;release-0.16.2;
+nb;49;0.5125;1.0;0.6776859504132231;41.0;0.8235294117647058;release-1.2.0-rc1;
+nb;50;0.5125;1.0;0.6776859504132231;41.0;0.8227272727272728;release-0.15.0;
+nb;51;0.5125;1.0;0.6776859504132231;41.0;0.821917808219178;release-2.0.6-alpha;
+nb;52;0.5189873417721519;1.0;0.6833333333333332;41.0;0.8256880733944955;release-0.19.2;
+nb;53;0.5189873417721519;1.0;0.6833333333333332;41.0;0.8248847926267281;release-0.23.0-rc1;
+nb;54;0.5125;1.0;0.6776859504132231;41.0;0.8194444444444444;release-0.18.3;
+nb;55;0.5125;1.0;0.6776859504132231;41.0;0.8186046511627907;release-0.23.8;
+nb;56;0.5189873417721519;1.0;0.6833333333333332;41.0;0.822429906542056;HADOOP-12111-moved-to-yetus;
+nb;57;0.5256410256410257;1.0;0.689075630252101;41.0;0.8262910798122066;release-0.20.3-rc0;
+nb;58;0.5256410256410257;1.0;0.689075630252101;41.0;0.8254716981132075;release-2.7.4-RC0;
+nb;59;0.5194805194805194;1.0;0.6837606837606837;40.0;0.8246445497630331;release-1.1.2-rc3;
+nb;60;0.5194805194805194;1.0;0.6837606837606837;40.0;0.8238095238095238;release-2.4.1;
+nb;61;0.5131578947368421;1.0;0.6782608695652175;39.0;0.8229665071770335;release-2.8.0-RC3;
+nb;62;0.5131578947368421;1.0;0.6782608695652175;39.0;0.8221153846153846;release-0.23.7-rc0;
+nb;63;0.52;1.0;0.6842105263157895;39.0;0.8260869565217391;rel/release-2.9.0;
+nb;64;0.52;1.0;0.6842105263157895;39.0;0.8252427184466019;release-2.5.1;
+nb;65;0.5135135135135135;1.0;0.6785714285714285;38.0;0.824390243902439;release-0.20.1-rc1;
+nb;66;0.5135135135135135;1.0;0.6785714285714285;38.0;0.8235294117647058;release-0.16.0;
+nb;67;0.5135135135135135;1.0;0.6785714285714285;38.0;0.8226600985221675;release-2.0.6-alpha-rc0;
+nb;68;0.5205479452054794;1.0;0.6846846846846847;38.0;0.8267326732673267;release-2.0.5-alpha-rc2;
+nb;69;0.5277777777777778;1.0;0.6909090909090909;38.0;0.8308457711442786;release-0.23.4-rc0;
+nb;70;0.5352112676056338;1.0;0.6972477064220183;38.0;0.835;release-2.7.5-RC1;
+nb;71;0.5285714285714286;1.0;0.691588785046729;37.0;0.8341708542713567;release-2.9.0-RC0;
+nb;72;0.5285714285714286;1.0;0.691588785046729;37.0;0.8333333333333334;release-0.17.1;
+nb;73;0.5285714285714286;1.0;0.691588785046729;37.0;0.8324873096446701;release-2.0.2-alpha-rc0;
+nb;74;0.5362318840579711;1.0;0.6981132075471698;37.0;0.8367346938775511;release-2.6.2;
+nb;75;0.5294117647058824;1.0;0.6923076923076924;36.0;0.8358974358974359;release-0.23.3-rc0;
+nb;76;0.5373134328358209;1.0;0.6990291262135923;36.0;0.8402061855670103;release-0.23.3;
+nb;77;0.5454545454545454;1.0;0.7058823529411764;36.0;0.844559585492228;release-2.9.0-RC1;
+nb;78;0.5454545454545454;1.0;0.7058823529411764;36.0;0.84375;release-2.0.2-alpha;
+nb;79;0.5538461538461539;1.0;0.712871287128713;36.0;0.8481675392670157;release-1.1.0-rc2;
+nb;80;0.5538461538461539;1.0;0.712871287128713;36.0;0.8473684210526315;release-1.1.1;
+nb;81;0.5538461538461539;1.0;0.712871287128713;36.0;0.8465608465608465;release-1.0.0-rc3;
+nb;82;0.5538461538461539;1.0;0.712871287128713;36.0;0.8457446808510638;release-2.7.3-RC1;
+nb;83;0.546875;1.0;0.7070707070707071;35.0;0.8449197860962567;release-1.0.1;
+nb;84;0.546875;1.0;0.7070707070707071;35.0;0.8440860215053764;release-2.4.1-rc1;
+nb;85;0.5396825396825397;1.0;0.7010309278350516;34.0;0.8432432432432433;release-0.14.2;
+nb;86;0.5396825396825397;1.0;0.7010309278350516;34.0;0.842391304347826;rel/release-3.0.0;
+nb;87;0.5396825396825397;1.0;0.7010309278350516;34.0;0.8415300546448088;release-2.0.4-alpha-rc2;
+nb;88;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8461538461538461;release-0.12.0;
+nb;89;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8453038674033149;release-1.1.0;
+nb;90;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8444444444444444;release-0.21.0-rc0;
+nb;91;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8435754189944135;release-0.23.1-rc0;
+nb;92;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8426966292134831;release-0.13.1;
+nb;93;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8418079096045198;release-0.20.2;
+nb;94;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8409090909090909;release-0.20.203.0-rc1;
+nb;95;0.5483870967741935;1.0;0.7083333333333333;34.0;0.84;release-0.14.1;
+nb;96;0.5483870967741935;1.0;0.7083333333333333;34.0;0.8390804597701149;release-2.6.2-RC0;
+nb;97;0.5409836065573771;1.0;0.7021276595744682;33.0;0.838150289017341;release-2.5.0-rc2;
+nb;98;0.5333333333333333;1.0;0.6956521739130436;32.0;0.8372093023255814;release-0.20.2-rc3;
+nb;99;0.5333333333333333;1.0;0.6956521739130436;32.0;0.8362573099415205;release-1.1.0-rc4;
+nb;100;0.5333333333333333;1.0;0.6956521739130436;32.0;0.8352941176470589;release-0.16.4;
+svm;1;0.22466960352422907;1.0;0.3669064748201439;51.0;0.34572490706319703;release-0.20.205.0-rc1;
+svm;2;0.5204081632653061;1.0;0.6845637583892618;51.0;0.8246268656716418;rel/release-2.7.5;
+svm;3;0.5154639175257731;1.0;0.6802721088435374;50.0;0.8239700374531835;YARN-5355-2017-04-25;
+svm;4;0.5154639175257731;1.0;0.6802721088435374;50.0;0.8233082706766918;release-2.6.3-RC0.1;
+svm;5;0.5104166666666666;1.0;0.6758620689655173;49.0;0.8226415094339623;rel/release-3.0.0-alpha3;
+svm;6;0.5104166666666666;1.0;0.6758620689655173;49.0;0.821969696969697;release-0.23.6;
+svm;7;0.5157894736842106;1.0;0.6805555555555556;49.0;0.8250950570342205;release-2.5.2-RC1;
+svm;8;0.5106382978723404;1.0;0.676056338028169;48.0;0.8244274809160306;release-1.1.2-rc4;
+svm;9;0.5106382978723404;1.0;0.676056338028169;48.0;0.8237547892720306;release-0.12.0;
+svm;10;0.5106382978723404;1.0;0.676056338028169;48.0;0.823076923076923;rel/release-2.7.3;
+svm;11;0.5053763440860215;1.0;0.6714285714285714;47.0;0.8223938223938224;release-0.23.5;
+svm;12;0.5108695652173914;1.0;0.6762589928057554;47.0;0.8255813953488372;release-1.0.3-rc0;
+svm;13;0.5108695652173914;1.0;0.6762589928057554;47.0;0.8249027237354085;release-0.6.1;
+svm;14;0.5108695652173914;1.0;0.6762589928057554;47.0;0.82421875;release-0.23.6-rc0;
+svm;15;0.5164835164835165;1.0;0.6811594202898552;47.0;0.8274509803921568;rel/release-2.7.2;
+svm;16;0.5111111111111111;1.0;0.676470588235294;46.0;0.8267716535433071;release-0.14.1;
+svm;17;0.5111111111111111;1.0;0.676470588235294;46.0;0.8260869565217391;release-0.23.9-rc0;
+svm;18;0.5168539325842697;1.0;0.6814814814814816;46.0;0.8293650793650794;release-2.0.3-alpha;
+svm;19;0.0;0.0;0.0;46.0;0.8167330677290837;release-2.7.3-RC1;
+svm;20;0.5172413793103449;1.0;0.6818181818181819;45.0;0.832;release-2.1.0-beta-rc1;
+svm;21;0.9;1.0;0.9473684210526316;45.0;0.9799196787148594;release-2.7.4-RC0;
+svm;22;0.5176470588235295;1.0;0.682170542635659;44.0;0.8346774193548387;release-2.5.0-rc1;
+svm;23;0.5119047619047619;1.0;0.6771653543307087;43.0;0.8340080971659919;release-2.5.0;
+svm;24;0.5060240963855421;1.0;0.6719999999999999;42.0;0.8333333333333334;release-2.7.2-RC0;
+svm;25;0.5;1.0;0.6666666666666666;41.0;0.8326530612244898;release-0.20.2-rc2;
+svm;26;0.5;1.0;0.6666666666666666;41.0;0.8319672131147541;release-2.0.6-alpha;
+svm;27;0.5061728395061729;1.0;0.6721311475409836;41.0;0.8353909465020576;release-2.0.2-alpha-rc1;
+svm;28;0.5125;1.0;0.6776859504132231;41.0;0.8388429752066116;release-0.23.4;
+svm;29;0.8913043478260869;1.0;0.9425287356321839;41.0;0.979253112033195;release-2.0.4-alpha-rc1;
+svm;30;0.8913043478260869;1.0;0.9425287356321839;41.0;0.9791666666666666;release-2.0.6-alpha-rc1;
+svm;31;0.0;0.0;0.0;41.0;0.8242677824267782;release-2.1.1-beta-rc0;
+svm;32;0.0;0.0;0.0;41.0;0.8235294117647058;release-2.6.2-RC0;
+svm;33;0.0;0.0;0.0;40.0;0.8270042194092827;rel/release-2.7.4;
+svm;34;0.8863636363636364;1.0;0.9397590361445783;39.0;0.9788135593220338;release-0.23.7;
+svm;35;0.0;0.0;0.0;39.0;0.8297872340425532;release-2.3.0-rc0;
+svm;36;0.8837209302325582;1.0;0.9382716049382717;38.0;0.9786324786324786;release-0.23.6-rc1-old;
+svm;37;0.8837209302325582;1.0;0.9382716049382717;38.0;0.9785407725321889;release-2.1.0-beta;
+svm;38;0.0;0.0;0.0;38.0;0.8318965517241379;release-2.3.0;
+svm;39;0.9024390243902439;1.0;0.9487179487179488;37.0;0.9826839826839827;release-2.6.5-RC0;
+svm;40;0.9;1.0;0.9473684210526316;36.0;0.9826086956521739;2.0.5-alpha-rc2;
+svm;41;0.9;1.0;0.9473684210526316;36.0;0.982532751091703;release-2.6.0;
+svm;42;0.8974358974358975;1.0;0.945945945945946;35.0;0.9824561403508771;release-0.23.5-rc0;
+svm;43;0.8974358974358975;1.0;0.945945945945946;35.0;0.9823788546255506;release-2.7.1-RC0;
+svm;44;0.8947368421052632;1.0;0.9444444444444444;34.0;0.9823008849557522;release-0.23.4-rc1;
+svm;45;0.8947368421052632;1.0;0.9444444444444444;34.0;0.9822222222222222;release-2.5.0-rc0;
+svm;46;0.8918918918918919;1.0;0.9428571428571428;33.0;0.9821428571428571;HADOOP-12111-moved-to-yetus;
+svm;47;0.9166666666666666;1.0;0.9565217391304348;33.0;0.9865470852017937;release-0.23.3;
+svm;48;0.9166666666666666;1.0;0.9565217391304348;33.0;0.9864864864864865;release-2.4.1-rc0;
+svm;49;0.9142857142857143;1.0;0.955223880597015;32.0;0.9864253393665159;release-0.23.6-rc1;
+svm;50;0.9142857142857143;1.0;0.955223880597015;32.0;0.9863636363636363;release-2.1.1-rc0;
+svm;51;0.0;0.0;0.0;32.0;0.8538812785388128;release-2.7.5-RC0;
+svm;52;0.9393939393939394;1.0;0.96875;31.0;0.9908256880733946;release-2.7.0;
+svm;53;0.9375;1.0;0.967741935483871;30.0;0.9907834101382489;release-2.0.5-alpha-rc1;
+svm;54;0.9375;1.0;0.967741935483871;30.0;0.9907407407407407;release-2.6.4-RC0;
+svm;55;0.9354838709677419;1.0;0.9666666666666666;29.0;0.9906976744186047;release-2.0.4-alpha-rc0;
+svm;56;0.9354838709677419;1.0;0.9666666666666666;29.0;0.9906542056074766;rel/release-2.6.4;
+svm;57;0.9333333333333333;1.0;0.9655172413793104;28.0;0.9906103286384976;release-0.23.8-rc0;
+svm;58;0.9333333333333333;1.0;0.9655172413793104;28.0;0.9905660377358491;release-2.6.1-RC1;
+svm;59;0.9310344827586207;1.0;0.9642857142857143;27.0;0.990521327014218;release-0.23.10-rc0;
+svm;60;0.9310344827586207;1.0;0.9642857142857143;27.0;0.9904761904761905;release-2.5.0-rc2;
+svm;61;0.9285714285714286;1.0;0.962962962962963;26.0;0.9904306220095693;release-2.0.4-alpha-rc2;
+svm;62;0.9285714285714286;1.0;0.962962962962963;26.0;0.9903846153846154;release-2.2.0-rc0;
+svm;63;0.9259259259259259;1.0;0.9615384615384615;25.0;0.9903381642512077;release-0.23.10;
+svm;64;0.9259259259259259;1.0;0.9615384615384615;25.0;0.9902912621359223;release-2.7.3-RC2;
+svm;65;0.9230769230769231;1.0;0.9600000000000001;24.0;0.9902439024390244;release-2.0.4.1-alpha-rc0;
+svm;66;0.9230769230769231;1.0;0.9600000000000001;24.0;0.9901960784313726;release-2.7.5-RC1;
+svm;67;0.92;1.0;0.9583333333333334;23.0;0.9901477832512315;release-0.23.7-rc0;
+svm;68;0.92;1.0;0.9583333333333334;23.0;0.9900990099009901;rel/release-2.6.5;
+svm;69;0.9166666666666666;1.0;0.9565217391304348;22.0;0.9900497512437811;release-2.0.5-alpha;
+svm;70;0.9166666666666666;1.0;0.9565217391304348;22.0;0.99;release-2.1.0-beta-rc0;
+svm;71;1.0;0.5;0.6666666666666666;22.0;0.9447236180904522;release-2.2.1-rc0;
+svm;72;0.9545454545454546;1.0;0.9767441860465117;21.0;0.9949494949494949;release-2.1.0-beta-rc2;
+svm;73;1.0;1.0;1.0;21.0;1.0;release-2.6.3-RC1;
+svm;74;1.0;1.0;1.0;20.0;1.0;release-2.6.3-RC0;
+svm;75;1.0;1.0;1.0;19.0;1.0;release-3.0.1-RC0;
+svm;76;1.0;1.0;1.0;19.0;1.0;release-2.6.2;
+svm;77;1.0;1.0;1.0;18.0;1.0;release-2.8.0-RC2;
+svm;78;1.0;1.0;1.0;18.0;1.0;rel/release-2.8.2;
+svm;79;1.0;1.0;1.0;18.0;1.0;release-2.0.6-alpha-rc0;
+svm;80;1.0;1.0;1.0;18.0;1.0;YARN-7055-2018-03-02;
+svm;81;1.0;1.0;1.0;18.0;1.0;YARN-2928-2016-06-21;
+svm;82;1.0;1.0;1.0;18.0;1.0;release-2.6.1;
+svm;83;1.0;1.0;1.0;17.0;1.0;release-2.0.2-alpha-rc0;
+svm;84;1.0;1.0;1.0;17.0;1.0;release-0.23.11;
+svm;85;1.0;1.0;1.0;17.0;1.0;release-2.4.0-rc0;
+svm;86;1.0;1.0;1.0;16.0;1.0;release-2.2.0;
+svm;87;1.0;1.0;1.0;15.0;1.0;release-2.6.5-RC1;
+svm;88;1.0;1.0;1.0;14.0;1.0;release-2.0.5-alpha-rc2;
+svm;89;1.0;1.0;1.0;14.0;1.0;release-3.0.0-alpha2-RC0;
+svm;90;1.0;1.0;1.0;14.0;1.0;release-2.6.3;
+svm;91;1.0;1.0;1.0;13.0;1.0;release-0.23.9;
+svm;92;1.0;1.0;1.0;13.0;1.0;release-0.23.11-rc0;
+svm;93;1.0;1.0;1.0;13.0;1.0;release-0.23.8;
+svm;94;1.0;1.0;1.0;13.0;1.0;release-2.7.2-RC1;
+svm;95;1.0;1.0;1.0;12.0;1.0;release-2.6.0-rc1;
+svm;96;1.0;1.0;1.0;11.0;1.0;release-2.5.2;
+svm;97;1.0;1.0;1.0;10.0;1.0;rel/release-3.0.0;
+svm;98;1.0;1.0;1.0;10.0;1.0;release-2.7.3-RC0;
+svm;99;1.0;1.0;1.0;9.0;1.0;release-2.0.4-alpha;
+svm;100;1.0;1.0;1.0;9.0;1.0;release-2.7.2-RC2;

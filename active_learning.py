@@ -19,8 +19,8 @@ def determine_vulnerability_status(results, vulnerable_versions, training_versio
     :param dict results: structured calculated features for all assessed versions
     :param list of str vulnerable_versions: the vulnerable versions oracle
     :param list of str training_versions: list of versions to be included on the training data
-    :return: next version to be inserted in the training model (smaller certainty)
-    :rtype: str
+    :return: current metrics and next version information
+    :rtype: (list of float, list of float, str, float)
     """
 
     def d_tree(randomness):
@@ -72,6 +72,7 @@ def determine_vulnerability_status(results, vulnerable_versions, training_versio
     # Get next training version from weighted sample
     next_version_index = get_weighed_sample(entropies, k_sampling)
     next_train_version = versions_test[next_version_index]
+    next_train_version_entropy = entropies[next_version_index]
 
     # Keep training labels in results too
     for version in training_versions:
@@ -82,7 +83,7 @@ def determine_vulnerability_status(results, vulnerable_versions, training_versio
     not_vulnerable_metrics, vulnerable_metrics = calculate_metrics(true_vulnerability, committee_prediction)
 
     # Return next version to be inserted into the training model
-    return not_vulnerable_metrics, vulnerable_metrics, next_train_version
+    return not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy
 
 
 def get_versions_labels(json_file):
@@ -170,8 +171,9 @@ def calculate_metrics(truth, predictions):
         Calculates precision, recall, fscore, support and accuracy given two comparable lists
     :param [] truth: array with correct target values
     :param [] predictions: array with values to be avaluated
-    :return: a list with 5 float values in this order: [precision, recall, fscore, support, accuracy]
-    :rtype: list of float
+    :return: lists for vulnerable and non-vulnerable metrics with 5 float values in this order:
+             [precision, recall, fscore, support, accuracy]
+    :rtype: (list of float, list of float)
     """
     accuracy = accuracy_score(truth, predictions)
     metrics = numpy.array(precision_recall_fscore_support(truth, predictions))

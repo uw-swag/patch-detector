@@ -230,6 +230,13 @@ def process_arguments():
     )
 
     parser.add_argument(
+        '--features',
+        type=argparse.FileType('r'),
+        metavar='path',
+        help='Features values to be evaluated for active learning'
+    )
+
+    parser.add_argument(
         '--additions-threshold',
         type=float,
         default=0.5,
@@ -307,24 +314,28 @@ def main():
         )
     )
 
-    version_results = None
-
     if config.method == 'line_ratios':
         print("Running line ratios method")
         version_results = run(config)
         determine_vulnerability_status(config, version_results)
+
+        if version_results:
+            json.dump(version_results, config.results, sort_keys=True, indent=4)
+
     elif config.method == 'active_learning':
         print("Running active learning method")
-        config.results = run(config)
+        config.features = open(config.results.name, "r")
+        version_results = run(config)
+
+        json.dump(version_results, config.results, sort_keys=True, indent=4)
+
+        config.results = version_results
 
         if config.vulnerable_versions and config.training_versions:
             active_learning_rounds.run_active_learning_rounds(config)
 
     else:
         print("Running method not correctly defined.")
-
-    if version_results:
-        json.dump(version_results, config.results, sort_keys=True, indent=4)
 
 
 if __name__ == '__main__':

@@ -33,7 +33,7 @@ def run_active_learning_with_classifier(calculated_features, vulnerable_versions
     rounds = 0
 
     while len(calculated_features) > len(training_versions) and rounds < 100:
-        not_vulnerable_metrics, vulnerable_metrics, next_train_version = \
+        not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy = \
             active_learning.determine_vulnerability_status(calculated_features,
                                                            vulnerable_versions,
                                                            training_versions,
@@ -44,7 +44,7 @@ def run_active_learning_with_classifier(calculated_features, vulnerable_versions
         fscore = vulnerable_metrics[2]
         support = vulnerable_metrics[3]
         accuracy = vulnerable_metrics[4]
-        print("{};{};{};{};{};{};{};{};".format(
+        print("{};{};{};{};{};{};{};{};{};".format(
             classifier,
             rounds,
             precision,
@@ -52,7 +52,8 @@ def run_active_learning_with_classifier(calculated_features, vulnerable_versions
             fscore,
             support,
             accuracy,
-            next_train_version))
+            next_train_version,
+            next_train_version_entropy))
         training_versions.append(next_train_version)
 
 

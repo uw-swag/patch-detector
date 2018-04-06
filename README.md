@@ -42,3 +42,7 @@ For a complete list of options:
 ```console
 python runner.py -h
 ```
+
+## Experiments
+
+All experiments data and results can be found under the `experiments` folder. To replicate experiments, simply run the `run_experiments.sh` script.

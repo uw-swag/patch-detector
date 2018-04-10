@@ -157,10 +157,9 @@ class TestActiveLearning(unittest.TestCase):
         expected_entropies = numpy.array([0, 0.721, 0.971, 0.971, 0.721, 0])
 
         # When
-        calculated_votes, calculated_entropies = active_learning.calculate_entropies(predictions)
+        calculated_entropies = active_learning.calculate_entropies(predictions)
 
         # Then
-        self.assertTrue(numpy.equal(expected_votes, calculated_votes).all())
         self.assertTrue(numpy.isclose(expected_entropies, calculated_entropies, atol=0.001).all())
 
     def test_metrics_calculation(self):

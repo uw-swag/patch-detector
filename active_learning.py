@@ -10,19 +10,73 @@ from sklearn.metrics import precision_recall_fscore_support
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import VotingClassifier
 
 
-def determine_vulnerability_status(results, vulnerable_versions, training_versions, classifier="d_tree"):
+def determine_vulnerability_status(features, vulnerable_versions, training_versions, classifier="d_tree"):
     """
-        Using train labels from file, predicts if versions in results are vulnerable using calculated features.
+        Using train labels from file, predicts if versions in from result features are vulnerable using calculated features.
         Input dictionary is modified to add "vulnerable" key (bool)
-    :param dict results: structured calculated features for all assessed versions
+    :param dict features: structured calculated features for all assessed versions
     :param list of str vulnerable_versions: the vulnerable versions oracle
     :param list of str training_versions: list of versions to be included on the training data
+    :param str classifier: the classifier type to be used in the committee. Valid values: "d_tree", "nb", "svm"
     :return: current metrics and next version information
     :rtype: (list of float, list of float, str, float)
     """
 
+    # Setup data for model
+    features_train, labels_train, features_test, labels_test, versions_test = preprocess_features(features,
+                                                                                                  vulnerable_versions,
+                                                                                                  training_versions)
+
+    committee_prediction, entropies = committee_classify(features_train, labels_train, features_test, classifier)
+
+    not_vulnerable_metrics, vulnerable_metrics = build_evaluation(committee_prediction, entropies, features,
+                                                                  versions_test, vulnerable_versions)
+
+    # Get next training version from weighted sample
+    next_version_index = get_weighed_sample(entropies)
+    next_train_version = versions_test[next_version_index]
+    next_train_version_entropy = entropies[next_version_index]
+
+    # Keep training labels in results too
+    for version in training_versions:
+        features[version]["vulnerable"] = (version in vulnerable_versions)
+        features[version]["entropy"] = 0.0
+
+    # Return next version to be inserted into the training model
+    return not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy
+
+
+def build_evaluation(committee_prediction, entropies, features, versions_test, vulnerable_versions):
+
+    # Evaluate results
+    true_vulnerability = []
+    for index, version in enumerate(versions_test):
+        features[version]["vulnerable"] = bool(committee_prediction[index])
+        features[version]["entropy"] = entropies[index]
+
+        # Compute correctness for versions in committee_prediction for metrics calculation
+        true_vulnerability.append(version in vulnerable_versions)
+
+    # Training versions are not considered for accuracy calculation
+    not_vulnerable_metrics, vulnerable_metrics = calculate_metrics(true_vulnerability, committee_prediction)
+
+    return not_vulnerable_metrics, vulnerable_metrics
+
+
+def committee_classify(features_train, labels_train, features_test, classifier="d_tree", n_classifiers=5):
+    """
+        Using an ensamble committee, classifies and returns calculated entropies for given test features.
+    :param numpy.array features_train: array with features to train the classifiers
+    :param list of int labels_train: list of labels to train the classifiers
+    :param numpy.array features_test: array with features to be classified
+    :param str classifier: the classifier type to be used in the committee. Valid values: "d_tree", "nb", "svm"
+    :param int n_classifiers: number of classifiers to be created in the committee
+    :return: a tuple with predictions and calculated entropies
+    :rtype: (list of int, numpy.array)
+    """
     def d_tree(randomness):
         return DecisionTreeClassifier(criterion="entropy", splitter="random", random_state=randomness)
 
@@ -35,55 +89,28 @@ def determine_vulnerability_status(results, vulnerable_versions, training_versio
 
     classifier_calls = {"d_tree": d_tree, "nb": nb, "svm": svm}
 
-    # Setup data for model
-    features_train, labels_train, features_test, labels_test, versions_test = preprocess_features(results,
-                                                                                                  vulnerable_versions,
-                                                                                                  training_versions)
-
     # Necessary to scale features for svm
     if classifier == "svm":
         scaler = preprocessing.StandardScaler().fit(features_train)
         features_train = scaler.transform(features_train)
         features_test = scaler.transform(features_test)
 
-    n_classifiers = 5   # number of classifiers
-    k_sampling = 5      # number to get weighted sample
-    predictions = []    # array of resulting predictions from the classifiers in the committee
-
+    estimators = []
     for i in range(n_classifiers):
-        # Train and fit model
-        clf = classifier_calls[classifier](i)
-        clf.fit(features_train, labels_train)
+        # Initialize classifiers for the ensamble
+        estimators.append((classifier + str(i), classifier_calls[classifier](i)))
 
-        # Get predictions
-        predictions.append(clf.predict(features_test).tolist())
+    # Fit and predict
+    eclf = VotingClassifier(estimators=estimators, voting="hard", n_jobs=-1)
+    eclf.fit(features_train, labels_train)
+    prediction = eclf.predict(features_test)
 
-    committee_prediction, entropies = calculate_entropies(numpy.array(predictions))
+    # Calculate entropies. Individual votes array needs to transpose for calculating entropies with classifiers in
+    # the axis 0.
+    individual_votes = numpy.transpose(eclf.transform(features_test))
+    entropies = calculate_entropies(individual_votes)
 
-    # Evaluate results
-    true_vulnerability = []
-    for index, version in enumerate(versions_test):
-        results[version]["vulnerable"] = bool(committee_prediction[index])
-        results[version]["entropy"] = entropies[index]
-
-        # Compute correctness for versions in committee_prediction for metrics calculation
-        true_vulnerability.append(version in vulnerable_versions)
-
-    # Get next training version from weighted sample
-    next_version_index = get_weighed_sample(entropies, k_sampling)
-    next_train_version = versions_test[next_version_index]
-    next_train_version_entropy = entropies[next_version_index]
-
-    # Keep training labels in results too
-    for version in training_versions:
-        results[version]["vulnerable"] = (version in vulnerable_versions)
-        results[version]["entropy"] = 0.0
-
-    # Training versions are not considered for accuracy calculation
-    not_vulnerable_metrics, vulnerable_metrics = calculate_metrics(true_vulnerability, committee_prediction)
-
-    # Return next version to be inserted into the training model
-    return not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy
+    return prediction, entropies
 
 
 def get_versions_labels(json_file):
@@ -147,8 +174,8 @@ def calculate_entropies(predictions):
         This entropy calculates the disagreement ratio between classifiers (entropy), and classifies with the majority
         of votes from all classifiers.
     :param numpy.array predictions: the numpy array with predictions form all classifiers in the shape (n_classifiers x data points)
-    :return: a tuple with the classification from the majority of classifiers and respective entropies
-    :rtype: (numpy.array, numpy.array)
+    :return: an array with calculated entropies
+    :rtype: numpy.array
     """
     n_classifiers = predictions.shape[0]
     positive_counts = predictions.sum(axis=0)
@@ -161,9 +188,8 @@ def calculate_entropies(predictions):
     # https://en.wikipedia.org/wiki/Entropy_(information_theory)
     entropies = numpy.negative(positive_ratio * numpy.ma.log2(positive_ratio).filled(0) +
                                negative_ratio * numpy.ma.log2(negative_ratio).filled(0))
-    votes = (positive_ratio > negative_ratio)
 
-    return votes, entropies
+    return entropies
 
 
 def calculate_metrics(truth, predictions):
@@ -192,7 +218,7 @@ def calculate_metrics(truth, predictions):
     return not_vulnerable_metrics, vulnerable_metrics
 
 
-def get_weighed_sample(entropies, sampling_weight):
+def get_weighed_sample(entropies, sampling_weight=5):
     """
         From a list of entropies, selects randomly a sample from the top sampling weight.
     :param list of float entropies: a list of entropy values

@@ -121,7 +121,7 @@ class TestActiveLearning(unittest.TestCase):
         self.assertListEqual(labels_test, expected_labels_test)
         self.assertListEqual(versions_test, expected_versions_test)
 
-    def test_determine_vulnerability_status(self):
+    def test_active_learning(self):
         # Given
         training_versions = ["acra-4.3.1", "acra-4.4.0"]
         assessed_version = "Acra-5.0.2"
@@ -129,13 +129,16 @@ class TestActiveLearning(unittest.TestCase):
         expected_vulnerable_metrics = [0, 0, 0, 0, 0]
         expected_next_train_version = "Acra-5.0.2"
         expected_next_train_version_entropy = 0.0
+        expected_classification = "FP"
 
         # When
         with open(self.test_file_path, 'r') as versions_file:
             vulnerable_versions = active_learning.get_versions_from_file(versions_file)
-        nv_metrics, v_metrics, next_train_version, next_train_version_entropy = active_learning.determine_vulnerability_status(self.features,
-                                                                                                   vulnerable_versions,
-                                                                                                   training_versions)
+        nv_metrics, v_metrics, next_train_version, next_train_version_entropy, classification = \
+            active_learning.active_learning_prediction(
+                self.features,
+                vulnerable_versions,
+                training_versions)
 
         # Then
         self.assertTrue(self.features[assessed_version]["vulnerable"])
@@ -144,6 +147,7 @@ class TestActiveLearning(unittest.TestCase):
         self.assertListEqual(v_metrics, expected_vulnerable_metrics)
         self.assertEqual(next_train_version, expected_next_train_version)
         self.assertEqual(next_train_version_entropy, expected_next_train_version_entropy)
+        self.assertEqual(classification, expected_classification)
 
     def test_entropy_calculation(self):
         # Given

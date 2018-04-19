@@ -12,7 +12,7 @@ def run_active_learning_rounds(config):
     calculated_features = json.load(config.features)
     vulnerable_versions = active_learning.get_versions_from_file(config.vulnerable_versions)
 
-    print("Classifier;Rounds;Precision;Recall;F-score;Support;Accuracy;Next version;")
+    print("Classifier;Rounds;Precision;Recall;F-score;Support;Accuracy;Next version;Entropy;Classification;")
 
     # run active learning for all classifier types
     for classifier in ["d_tree", "nb", "svm"]:
@@ -33,18 +33,18 @@ def run_active_learning_with_classifier(calculated_features, vulnerable_versions
     rounds = 0
 
     while len(calculated_features) > len(training_versions) and rounds < 100:
-        not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy = \
-            active_learning.determine_vulnerability_status(calculated_features,
-                                                           vulnerable_versions,
-                                                           training_versions,
-                                                           classifier)
+        not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy, classification = \
+            active_learning.active_learning_prediction(calculated_features,
+                                                       vulnerable_versions,
+                                                       training_versions,
+                                                       classifier)
         rounds += 1
         precision = vulnerable_metrics[0]
         recall = vulnerable_metrics[1]
         fscore = vulnerable_metrics[2]
         support = vulnerable_metrics[3]
         accuracy = vulnerable_metrics[4]
-        print("{};{};{};{};{};{};{};{};{};".format(
+        print("{};{};{};{};{};{};{};{};{};{};".format(
             classifier,
             rounds,
             precision,
@@ -53,7 +53,8 @@ def run_active_learning_with_classifier(calculated_features, vulnerable_versions
             support,
             accuracy,
             next_train_version,
-            next_train_version_entropy))
+            next_train_version_entropy,
+            classification))
         training_versions.append(next_train_version)
 
 

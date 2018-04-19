@@ -13,7 +13,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import VotingClassifier
 
 
-def determine_vulnerability_status(features, vulnerable_versions, training_versions, classifier="d_tree"):
+def active_learning_prediction(features, vulnerable_versions, training_versions, classifier="d_tree"):
     """
         Using train labels from file, predicts if versions in from result features are vulnerable using calculated features.
         Input dictionary is modified to add "vulnerable" key (bool)
@@ -22,7 +22,7 @@ def determine_vulnerability_status(features, vulnerable_versions, training_versi
     :param list of str training_versions: list of versions to be included on the training data
     :param str classifier: the classifier type to be used in the committee. Valid values: "d_tree", "nb", "svm"
     :return: current metrics and next version information
-    :rtype: (list of float, list of float, str, float)
+    :rtype: (list of float, list of float, str, float, str)
     """
 
     # Setup data for model
@@ -40,17 +40,22 @@ def determine_vulnerability_status(features, vulnerable_versions, training_versi
     next_train_version = versions_test[next_version_index]
     next_train_version_entropy = entropies[next_version_index]
 
+    # Get classification type for evaluation purposes
+    if committee_prediction[next_version_index]:
+        classification = "TP" if next_train_version in vulnerable_versions else "FP"
+    else:
+        classification = "TN" if next_train_version not in vulnerable_versions else "FN"
+
     # Keep training labels in results too
     for version in training_versions:
         features[version]["vulnerable"] = (version in vulnerable_versions)
         features[version]["entropy"] = 0.0
 
     # Return next version to be inserted into the training model
-    return not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy
+    return not_vulnerable_metrics, vulnerable_metrics, next_train_version, next_train_version_entropy, classification
 
 
 def build_evaluation(committee_prediction, entropies, features, versions_test, vulnerable_versions):
-
     # Evaluate results
     true_vulnerability = []
     for index, version in enumerate(versions_test):
@@ -77,6 +82,7 @@ def committee_classify(features_train, labels_train, features_test, classifier="
     :return: a tuple with predictions and calculated entropies
     :rtype: (list of int, numpy.array)
     """
+
     def d_tree(randomness):
         return DecisionTreeClassifier(criterion="entropy", splitter="random", random_state=randomness)
 
@@ -142,7 +148,7 @@ def preprocess_features(features, vulnerable_versions, training_versions):
     :param [str] vulnerable_versions: oracle vulnerable versions
     :param [str] training_versions: versions to collect features for the training model
     :return: a tuple with train features, train labels, test features, test labels and test versions
-    :rtype: (numpy.array, list of str, numpy.array, list of str, list of str)
+    :rtype: (numpy.array, list of int, numpy.array, list of int, list of str)
     """
 
     features_train = []
@@ -253,12 +259,11 @@ def process_arguments():
     )
 
     parser.add_argument(
-        '--versions-labels',
-        default=None,
+        '--vulnerable-versions',
         type=argparse.FileType('r'),
+        required=True,
         metavar='path',
-        help='Path to the json file with active learning training data with format { "version" : "vulnerable|not '
-             'vulnerable"} '
+        help='The file path with a list of vulnerable versions to be used in the active learning process'
     )
 
     parser.add_argument(
@@ -274,11 +279,12 @@ def process_arguments():
 def main():
     config = process_arguments()
 
-    print("Processing features from file {} with training versions {} ...".format(config.features, config.versions_labels))
+    print("Processing features from file {} with training versions {} ...".format(config.features,
+                                                                                  config.vulnerable_versions))
 
     calculated_features = json.load(config.features)
 
-    next_version = determine_vulnerability_status(calculated_features, config.versions_labels)
+    next_version = active_learning_prediction(calculated_features, config.vulnerable_versions)
 
     if calculated_features:
         json.dump(calculated_features, config.results, sort_keys=True, indent=4)

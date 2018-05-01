@@ -1,0 +1,6 @@
+{
+  "host":     "localhost",
+  "username": "username",
+  "password": "password",
+  "queue":    "queue_name"
+}

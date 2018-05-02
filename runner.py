@@ -99,14 +99,17 @@ def run_git(config, detection_call):
     else:
         start_version = pkg_resources.SetuptoolsLegacyVersion('0.0.0')
 
+    versions = []
     if config.versions:
-        if os.path.exists(config.versions):
-            with open(config.versions, 'r') as file:
-                versions = file.read().strip().split('\n')
-        else:
+        try:
+            if os.path.exists(config.versions):
+                with open(config.versions, 'r') as file:
+                    versions = file.read().strip().split('\n')
+            else:
+                versions = config.versions.strip().split(',')
+        except TypeError:
             versions = config.versions.strip().split(',')
     else:
-        versions = []
         for tag in repo.tags:
             if start_version <= pkg_resources.parse_version(tag.name):
                 versions.append(tag.name)
@@ -214,7 +217,7 @@ def determine_vulnerability_status(config, version_results):
             result['vulnerable'] = 'indeterminate'
 
 
-def process_arguments():
+def process_arguments(args=None):
     parser = argparse.ArgumentParser(
         description='''
             Checkout each version of a codebase and run a patch check
@@ -271,7 +274,7 @@ def process_arguments():
 
     parser.add_argument(
         '--method',
-        default='active_learning',
+        default='line_ratios',
         option_strings=['line_ratios','active_learning'],
         metavar='line_ratios|active_learning',
         help='Which method to be applied for detecting patch deployment'
@@ -303,7 +306,7 @@ def process_arguments():
         help='Path to the root of the project repository'
     )
 
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def main():

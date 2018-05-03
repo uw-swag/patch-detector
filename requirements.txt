@@ -10,3 +10,4 @@ scipy>=1.0.0
 graphviz
 -e git://github.com/cassianomonteiro/javalang.git@1664d3fc89e5a3bb01f2e1792a251601c275c5f8#egg=javalang
 pika==0.11.2
+pymongo==3.6.1

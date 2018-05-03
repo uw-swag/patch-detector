@@ -5,7 +5,8 @@ import pika
 import json
 
 
-def connect(credentials, host, queue):
+def connect(host, username, password, queue):
+    credentials = pika.PlainCredentials(username, password)
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, credentials=credentials))
     channel = connection.channel()
     success = channel.queue_declare(queue=queue)
@@ -18,9 +19,9 @@ def connect(credentials, host, queue):
     return channel, connection
 
 
-def send_message(host, credentials, queue, message):
+def send_message(host, username, password, queue, message):
 
-    channel, connection = connect(credentials, host, queue)
+    channel, connection = connect(host, username, password, queue)
     success = channel.basic_publish(exchange='', routing_key=queue, body=json.dumps(message))
     connection.close()
 
@@ -29,7 +30,7 @@ def send_message(host, credentials, queue, message):
         exit(1)
 
 
-def listen_messages(host, credentials, queue, handler):
+def listen_messages(host, username, password, queue, handler):
 
     def callback(ch, method, properties, body):
         handled = handler(body)
@@ -38,7 +39,7 @@ def listen_messages(host, credentials, queue, handler):
         else:
             ch.basic_reject(delivery_tag=method.delivery_tag)
 
-    channel, connection = connect(credentials, host, queue)
+    channel, connection = connect(host, username, password, queue)
     success = channel.basic_consume(callback, queue=queue, no_ack=False)
 
     if not success:
@@ -75,22 +76,24 @@ def main():
 
     # Usage example of send/listen to messages
 
-    host = config["host"]
-    credentials = pika.PlainCredentials(username=config["username"], password=config["password"])
-    queue = config["queue"]
+    host = config["rabbitmq_host"]
+    username = config["rabbitmq_username"]
+    password = config["rabbitmq_password"]
+    queue = config["rabbitmq_queue"]
 
     message = {"address": "http://github.com",
                "commits": ["asdfsdg", "afdgsfgrgdfs", "ghhgfdasdgfh"],
+               "vulnerability_id" : "CVE-001",
                "versions": ["1.0.0", "2.0.0"]}
 
-    send_message(host, credentials, queue, message)
+    send_message(host, username, password, queue, message)
 
     def handle_body(body):
         received_msg = json.loads(body)
         print("Received {}".format(received_msg))
         return True
 
-    listen_messages(host, credentials, queue, handle_body)
+    listen_messages(host, username, password, queue, handle_body)
 
 
 if __name__ == '__main__':

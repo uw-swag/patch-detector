@@ -49,7 +49,7 @@ def dump_results(version_results):
             print('{0}: {1}'.format(file, str(ratio)))
 
 
-def run(config):
+def run(config, detection_call):
     full_path = os.path.abspath(config.project)
 
     git_path = os.path.join(full_path, '.git')
@@ -57,7 +57,7 @@ def run(config):
     cvs_path = os.path.join(full_path, '.cvs')
 
     if os.path.exists(git_path):
-        return run_git(config)
+        return run_git(config, detection_call)
     elif os.path.exists(svn_path):
         return run_svn(config)
     elif os.path.exists(cvs_path):
@@ -66,7 +66,15 @@ def run(config):
         return run_dir(config)
 
 
-def run_git(config):
+def run_git(config, detection_call):
+    """
+        Run detection method with the provided patch for the provided repo on the provided versions (or all versions
+        if none provided).
+    :param config: Config object with all parameters
+    :param detection_call: Visitor callback method to evaluate each version in a form detection(config)
+    :return: a results dictionary
+    :rtype: dict
+    """
     sha1_regex = re.compile('([a-f0-9]{40})')
 
     full_path = os.path.abspath(config.project)
@@ -91,14 +99,17 @@ def run_git(config):
     else:
         start_version = pkg_resources.SetuptoolsLegacyVersion('0.0.0')
 
+    versions = []
     if config.versions:
-        if os.path.exists(config.versions):
-            with open(config.versions, 'r') as file:
-                versions = file.read().strip().split('\n')
-        else:
+        try:
+            if os.path.exists(config.versions):
+                with open(config.versions, 'r') as file:
+                    versions = file.read().strip().split('\n')
+            else:
+                versions = config.versions.strip().split(',')
+        except TypeError:
             versions = config.versions.strip().split(',')
     else:
-        versions = []
         for tag in repo.tags:
             if start_version <= pkg_resources.parse_version(tag.name):
                 versions.append(tag.name)
@@ -150,10 +161,8 @@ def run_git(config):
 
             config.patch = diffs
 
-            if config.method == 'line_ratios':
-                version_results[version] = detector.run(config)
-            elif config.method == 'active_learning':
-                version_results[version] = clone_detector.evaluate_version(config)
+            # Call visitor detection method on current version with parameters in the config dictionary
+            version_results[version] = detection_call(config)
 
             repo.git.checkout(active_branch, force=True)
 
@@ -208,7 +217,7 @@ def determine_vulnerability_status(config, version_results):
             result['vulnerable'] = 'indeterminate'
 
 
-def process_arguments():
+def process_arguments(args=None):
     parser = argparse.ArgumentParser(
         description='''
             Checkout each version of a codebase and run a patch check
@@ -265,7 +274,7 @@ def process_arguments():
 
     parser.add_argument(
         '--method',
-        default='active_learning',
+        default='line_ratios',
         option_strings=['line_ratios','active_learning'],
         metavar='line_ratios|active_learning',
         help='Which method to be applied for detecting patch deployment'
@@ -297,7 +306,7 @@ def process_arguments():
         help='Path to the root of the project repository'
     )
 
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def main():
@@ -316,7 +325,7 @@ def main():
 
     if config.method == 'line_ratios':
         print("Running line ratios method")
-        version_results = run(config)
+        version_results = run(config, detector.run)
         determine_vulnerability_status(config, version_results)
 
         if version_results:
@@ -325,7 +334,7 @@ def main():
     elif config.method == 'active_learning':
         print("Running active learning method")
         config.features = open(config.results.name, "r")
-        version_results = run(config)
+        version_results = run(config, clone_detector.evaluate_version)
 
         json.dump(version_results, config.results, sort_keys=True, indent=4)
 

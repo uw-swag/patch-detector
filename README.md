@@ -23,6 +23,8 @@ The goal of this method is to achieve high precision and recall rates of __vulne
 Install python, pip and and virtual environment with dependencies described on requirements.txt. Instructions for that are available at
 https://packaging.python.org/guides/installing-using-pip-and-virtualenv/.
 
+Install and configure RabbitMQ as per https://www.rabbitmq.com/download.html.
+
 ### Running
 
 This will run the line ratios method for the given patch to all tagged versions in the git repo at the give project folder.

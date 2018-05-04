@@ -1,0 +1,10 @@
+{
+  "rabbitmq_host":      "localhost",
+  "rabbitmq_username":  "username",
+  "rabbitmq_password":  "password",
+  "rabbitmq_queue":     "queue_name",
+  "mongodb_host":       "localhost",
+  "mongodb_username":   "username",
+  "mongodb_password":   "password",
+  "mongodb_database":   "DatabaseName"
+}

@@ -6,6 +6,7 @@ import json
 
 
 def connect(host, username, password, queue):
+
     credentials = pika.PlainCredentials(username, password)
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, credentials=credentials))
     channel = connection.channel()
@@ -31,7 +32,14 @@ def send_message(host, username, password, queue, message):
 
 
 def listen_messages(host, username, password, queue, handler):
-
+    """
+        Listen to RabbitMQ messages and execute handler on received message body
+    :param host: RabbitMQ host
+    :param username: RabbitMQ username
+    :param password: RabbitMQ password
+    :param queue: RabbitMQ queue to listen
+    :param handler: function to handle message with signature handle(str: body)
+    """
     def callback(ch, method, properties, body):
         handled = handler(body)
         if handled:
@@ -81,9 +89,9 @@ def main():
     password = config["rabbitmq_password"]
     queue = config["rabbitmq_queue"]
 
-    message = {"address": "http://github.com",
-               "commits": ["asdfsdg", "afdgsfgrgdfs", "ghhgfdasdgfh"],
-               "vulnerability_id" : "CVE-001",
+    message = {"repo_address": "https://github.com/uw-swag/patch-detector.git",
+               "commits": ["2daedbcb53cccfdf22d24dbff2e10312a179ea72", "878be37af5644fcfabb12babe253283f7de4cfee"],
+               "vulnerability_id": "CVE-001",
                "versions": ["1.0.0", "2.0.0"]}
 
     send_message(host, username, password, queue, message)

@@ -6,6 +6,16 @@ from pymongo.errors import ConnectionFailure
 
 
 def wrap_mongo_objects(repo_address, vulnerability_id, patch_commit_hash, patch_evaluation_results):
+    """
+        Converts patch detector results into objects insertable into a MongoDB. Objects can be identified by
+        (repo_address, vulnerability_id, patch_commit_hash).
+    :param repo_address: github repository address
+    :param vulnerability_id: an ID such as CVE-0001
+    :param patch_commit_hash: the commit hash from github
+    :param patch_evaluation_results: the results dict object from patch_detector
+    :return: MongoDB objects
+    :rtype: list of dict
+    """
     objs = []
 
     for version, results in patch_evaluation_results.items():
@@ -35,7 +45,7 @@ def save_vulnerability_results(host, username, password, database, repo_address,
         # The ismaster command is cheap.
         client.admin.command('ismaster')
     except ConnectionFailure:
-        print("Server not available")
+        print("Mongo server not available")
         return False
 
     collection = db.vulnerabilities
@@ -44,9 +54,16 @@ def save_vulnerability_results(host, username, password, database, repo_address,
 
     if mongo_objects and len(mongo_objects) > 0:
         insert_result = collection.insert_many(mongo_objects)
-        return len(insert_result.inserted_ids) > 0
+
+        success = len(insert_result.inserted_ids) > 0
+
+        if success:
+            print("Persisted vulnerability {} with hash {}".format(vulnerability_id, patch_commit_hash))
     else:
-        return True
+        print("Nothing persisted from vulnerability {} with hash {}".format(vulnerability_id, patch_commit_hash))
+        success = True
+
+    return success
 
 
 def process_arguments():

@@ -103,6 +103,17 @@ class TestCloneDetector(unittest.TestCase):
         self.assertListEqual(old_code, expected_old_code)
         self.assertListEqual(new_code, expected_new_code)
 
+    def test_compare(self):
+
+        # Given
+        line1 = "                byte[] mac = MAC.mac(buf.toByteArray());"
+        line2 = "            byte[] mac = MAC.mac(buf.toByteArray());"
+
+        # When
+        lines_are_equal = detector.compare(line1, line2)
+
+        # Then
+        self.assertTrue(lines_are_equal)
 
 if __name__ == '__main__':
     unittest.main()

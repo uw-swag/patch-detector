@@ -23,7 +23,8 @@ def connect(host, username, password, queue):
 def send_message(host, username, password, queue, message):
 
     channel, connection = connect(host, username, password, queue)
-    success = channel.basic_publish(exchange='', routing_key=queue, body=json.dumps(message))
+    body = json.dumps(message, ensure_ascii=False).encode("utf-8")
+    success = channel.basic_publish(exchange='', routing_key=queue, body=body)
     connection.close()
 
     if not success:
@@ -41,7 +42,7 @@ def listen_messages(host, username, password, queue, handler):
     :param handler: function to handle message with signature handle(str: body)
     """
     def callback(ch, method, properties, body):
-        handled = handler(body)
+        handled = handler(body.decode("utf-8"))
         if handled:
             ch.basic_ack(delivery_tag=method.delivery_tag)
         else:

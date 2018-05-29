@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import argparse
+import sys
+import threading
 
 import pika
 import json
@@ -8,9 +10,11 @@ import json
 def connect(host, username, password, queue):
 
     credentials = pika.PlainCredentials(username, password)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, credentials=credentials, heartbeat=0))
+    connection_parameters = pika.ConnectionParameters(host=host,
+                                                      credentials=credentials)
+    connection = pika.BlockingConnection(connection_parameters)
     channel = connection.channel()
-    success = channel.queue_declare(queue=queue)
+    success = channel.queue_declare(queue=queue, durable=True)
 
     if not success:
         print("ERROR: Could not create/access queue.")
@@ -41,12 +45,18 @@ def listen_messages(host, username, password, queue, handler):
     :param queue: RabbitMQ queue to listen
     :param handler: function to handle message with signature handle(str: body)
     """
-    def callback(ch, method, properties, body):
+
+    # Call handler in another thread to avoid blocking pika's thread
+    # This is needed to ensure the connection won't drop during long tasks
+    def thread_callback(ch, method, properties, body):
         handled = handler(body.decode("utf-8"))
         if handled:
             ch.basic_ack(delivery_tag=method.delivery_tag)
         else:
             ch.basic_reject(delivery_tag=method.delivery_tag)
+
+    def callback(ch, method, properties, body):
+        threading.Thread(target=thread_callback, args=(ch, method, properties, body)).start()
 
     channel, connection = connect(host, username, password, queue)
     success = channel.basic_consume(callback, queue=queue, no_ack=False)

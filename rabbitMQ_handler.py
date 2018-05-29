@@ -8,7 +8,7 @@ import json
 def connect(host, username, password, queue):
 
     credentials = pika.PlainCredentials(username, password)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, credentials=credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, credentials=credentials, heartbeat=0))
     channel = connection.channel()
     success = channel.queue_declare(queue=queue)
 

@@ -5,6 +5,6 @@ PIDFile=/tmp/line_ratio_consumer.pid
 Restart=always
 KillSignal=SIGQUIT
 WorkingDirectory=/patch-detector/
-ExecStart=/patch-detector/line_ratio_consumer.py
+ExecStart=/patch-detector/venv/bin/python /patch-detector/line_ratio_consumer.py
 [Install]
 WantedBy=multi-user.target

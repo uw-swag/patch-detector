@@ -108,7 +108,7 @@ def main():
 
     # Checking saved results
     client = MongoClient("mongodb://{}:{}@{}:27017".format(username, password, host))
-    db = client.VulnerabilityDetection
+    db = client[database]
 
     try:
         # The ismaster command is cheap.
@@ -119,7 +119,7 @@ def main():
     collection = db.vulnerabilities
 
     for obj in collection.find():
-        print(obj)
+        print("{};{};{}".format(obj["vulnerability_id"], obj["version"], obj["results"]["vulnerable"]))
 
 
 if __name__ == '__main__':

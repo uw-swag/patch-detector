@@ -15,7 +15,7 @@ def connect(host, username, password, queue):
                                                       credentials=credentials)
     connection = pika.BlockingConnection(connection_parameters)
     channel = connection.channel()
-    channel.basic_qos(prefetch_size=multiprocessing.cpu_count())
+    channel.basic_qos(prefetch_count=multiprocessing.cpu_count())
     success = channel.queue_declare(queue=queue, durable=True)
 
     if not success:

@@ -15,11 +15,12 @@ import rabbitMQ_handler
 import runner
 
 
-def consume(github_address, commit_hashes, persister, versions=None):
+def consume(github_address, vulnerability_id, commit_hashes, persister, versions=None):
     """
         Consume information from a patch_detection task (message from RabbitMQ queue) to run patch_detector and
         save results with persister.
     :param github_address: github repository address
+    :param vulnerability_id: the ID of the vulnerability
     :param commit_hashes: list of commit hashes from github to extract patches for evaluation
     :param persister: function to save results with signature handle(str: commit_hash, dict: patch_detector_results)
     :param versions: selected tags on github to be evaluated. If None provided, all tags are evaluated.
@@ -54,7 +55,7 @@ def consume(github_address, commit_hashes, persister, versions=None):
         runner.determine_vulnerability_status(config, version_results)
 
         # 6. Save to database
-        persister(commit_hash, version_results)
+        persister(github_address, vulnerability_id, commit_hash, version_results)
         # print(version_results)
 
     # 7. Delete temp resources
@@ -109,11 +110,9 @@ def main():
     mongodb_password = config["mongodb_password"]
     mongodb_database = config["mongodb_database"]
 
-    github_address = None
-    vulnerability_id = None
 
     # Persister call
-    def persist_to_mongo(commit_hash, results):
+    def persist_to_mongo(github_address, vulnerability_id, commit_hash, results):
         mongo_handler.save_vulnerability_results(mongodb_host, mongodb_username, mongodb_password, mongodb_database,
                                                  github_address, vulnerability_id, commit_hash, results)
 
@@ -122,9 +121,8 @@ def main():
         received_msg = json.loads(body)
         print("Dequeued message {}".format(received_msg))
 
-        nonlocal github_address, vulnerability_id
         github_address, commit_hashes, vulnerability_id, versions = unpack_message(received_msg)
-        consume(github_address, commit_hashes, persist_to_mongo, versions)
+        consume(github_address, vulnerability_id, commit_hashes, persist_to_mongo, versions)
 
         return True
 

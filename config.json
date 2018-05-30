@@ -1,10 +1,10 @@
 {
-  "rabbitmq_host": "appcrawler00.watgamer.uwaterloo.ca",
-  "rabbitmq_username": "application",
-  "rabbitmq_password": "softwarearchitecturegroup",
+  "rabbitmq_host": "localhost",
+  "rabbitmq_username": "username",
+  "rabbitmq_password": "password",
   "rabbitmq_queue": "patch_detector_queue",
-  "mongodb_host": "appcrawler00.watgamer.uwaterloo.ca",
-  "mongodb_username": "application",
-  "mongodb_password": "softwarearchitecturegroup",
+  "mongodb_host": "localhost",
+  "mongodb_username": "username",
+  "mongodb_password": "password",
   "mongodb_database": "PatchDetector"
 }

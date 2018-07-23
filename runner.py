@@ -71,7 +71,7 @@ def run_git(config, detection_call):
         Run detection method with the provided patch for the provided repo on the provided versions (or all versions
         if none provided).
     :param config: Config object with all parameters
-    :param detection_call: Visitor callback method to evaluate each version in a form detection(config)
+    :param detection_call: Visitor callback method to evaluate each version in a form detection(config, version_diff)
     :return: a results dictionary
     :rtype: dict
     """
@@ -133,17 +133,18 @@ def run_git(config, detection_call):
 
     try:
         for version in versions:
-            if version in repo.branches:
-                repo.git.branch('-D', version)
-
-            if config.debug:
-                print('Checking out {0}'.format(version))
 
             if version not in repo.tags:
                 raise ValueError('No such version "{}"'.format(version))
-            repo.git.reset('--hard')
-            repo.git.clean('-df')
-            repo.git.checkout(version, force=True)
+
+            # Get the version commit and diff it with the fixed version (the patch hash)
+            # The "a" side is the evaluated version, the "b" side is the patch
+            # The diff shows what "a" needs to become "b"
+            # The diff is a instance of 'git.diff.DiffIndex'
+            # The object 'git.diff.DiffIndex' is an array of objects 'git.diff.Diff'
+            # The object 'git.diff.Diff' prints the diff, so I can parse it as a patch
+            commit = repo.commit(version)
+            version_diff = commit.diff(sha, create_patch=True)
 
             diffs = []
             for diff in patch:
@@ -162,9 +163,7 @@ def run_git(config, detection_call):
             config.patch = diffs
 
             # Call visitor detection method on current version with parameters in the config dictionary
-            version_results[version] = detection_call(config)
-
-            repo.git.checkout(active_branch, force=True)
+            version_results[version] = detection_call(config, version_diff)
 
             if config.debug:
                 print('Removing {0}'.format(version))
@@ -180,9 +179,6 @@ def run_git(config, detection_call):
         raise
     finally:
         print('\r', end='')
-        repo.git.reset('--hard')
-        repo.git.clean('-df')
-        repo.git.checkout(active_branch, force=True)
 
     return version_results
 

@@ -5,7 +5,7 @@ import json
 import os
 import sys
 
-import chardet
+import git
 import yaml
 
 import util
@@ -40,7 +40,7 @@ def compare(first, second):
     return all(token in second.strip().split() for token in first.strip().split())
 
 
-def run(config):
+def run(config, version_diffs):
     total_patch_additions = 0
     total_patch_deletions = 0
 
@@ -49,19 +49,19 @@ def run(config):
 
     ratios = {}
 
-    confident = False
+    confident = True
 
-    for diff in config.patch:
-        new_source_path = os.path.join(config.project, diff.header.path)
-        old_source_path = os.path.join(config.project, diff.header.old_path)
+    for patch_diff in config.patch:
+        new_source_path = patch_diff.header.path
+        old_source_path = patch_diff.header.old_path
 
-        full_path = os.path.abspath(new_source_path)
-        if os.path.exists(full_path):
+        full_path = new_source_path
+        if full_path in [d.b_path for d in version_diffs]:
             if config.debug:
                 print('Found {0}'.format(full_path))
         else:
-            full_path = os.path.abspath(old_source_path)
-            if os.path.exists(full_path):
+            full_path = old_source_path
+            if full_path in [d.b_path for d in version_diffs]:
                 if config.debug:
                     print('WARNING: Found file at old path: {0}'.format(
                         full_path
@@ -70,91 +70,99 @@ def run(config):
         if blacklisted(full_path) or not whitelisted(full_path):
             continue
 
-        ratios[diff.header.path] = {}
+        ratios[patch_diff.header.path] = {}
 
-        detected_deletions = 0
-        detected_additions = 0
+        detected_file_deletions = 0
+        detected_file_additions = 0
 
-        deletions, additions, one_line_change, prev_line, next_line = split_changes(diff)
+        patch_deletions, patch_additions, patch_one_line_change, patch_prev_line, patch_next_line = split_changes(
+            patch_diff)
 
-        if one_line_change and config.debug:
+        if patch_one_line_change and config.debug:
             print('One line change for {0}'.format(full_path))
-            print('BEFORE: {0}'.format(prev_line))
-            print('AFTER: {0}'.format(next_line))
+            print('BEFORE: {0}'.format(patch_prev_line))
+            print('AFTER: {0}'.format(patch_next_line))
 
-        if os.path.exists(full_path):
-            # We are confident if we find *any* of the files in the changeset
-            confident = True
+        found = False
 
-            file = open(full_path, 'rb')
-            detection = chardet.detect(file.read())
+        for version_diff in version_diffs:
 
-            if config.debug:
-                print('{0}: encoding is {1} with {2} confidence'.format(
-                    full_path, detection['encoding'], detection['confidence']
-                ))
+            # b_path is the path that will become the fix_patch after applying the diff to the evaluated version
+            if full_path == version_diff.b_path:
 
-            file.close()
+                found = True
 
-            with open(full_path, 'r', encoding=detection['encoding']) as file:
-                source = file.readlines()
+                # Need to format the diff as a string parseable by whatthepatch
+                version_patch = "--- {}\n+++ {}\n{}".format(full_path,
+                                                            full_path,
+                                                            str(version_diff.diff).replace("b'", "", 1).replace("\\n", "\n"))
+
+                version_diff_patch = util.load_patch(version_patch)
 
                 # In the case of a one line change, we also look for the lines
                 # immediately preceding and following the changed line.
-                if one_line_change:
-                    for index, line in enumerate(source):
-                        if line.strip() == prev_line.strip() and \
-                                index + 2 < len(source) and \
-                                source[index + 2].strip() == next_line.strip():
-                            if additions and compare(additions[0], source[index + 1]):
-                                detected_additions += 1
+                if patch_one_line_change:
+
+                    for index, line in enumerate(version_diff_patch[0].changes):
+                        if line[2] == patch_prev_line and \
+                                index + 2 < len(version_diff_patch[0].changes) and \
+                                version_diff_patch[0].changes[index + 2][2] == patch_next_line:
+                            if patch_additions and compare(patch_additions[0], version_diff_patch[0].changes[index + 1][2]):
+                                detected_file_additions += 1
                                 break
-                            elif deletions and not compare(deletions[0], source[index + 1]):
-                                detected_deletions += 1
+                            elif patch_deletions and not compare(patch_deletions[0], version_diff_patch[0].changes[index + 1][2]):
+                                detected_file_deletions += 1
                                 break
                 else:
-                    for addition in additions:
-                        for line in source:
-                            if compare(addition, line):
-                                detected_additions += 1
+
+                    d2, a2, o2, p2, n2 = split_changes(version_diff_patch[0])
+
+                    # Keep a search index so it always searches forward
+                    search_index = 0
+                    for deletion in patch_deletions:
+                        for i in range(search_index, len(d2)):
+                            if deletion == d2[i]:
+                                search_index = i
+                                detected_file_deletions += 1
                                 break
 
-                    for deletion in deletions:
-                        found = False
-                        for line in source:
-                            if compare(deletion, line):
-                                found = True
+                    # Keep a search index so it always searches forward
+                    search_index = 0
+                    for addition in patch_additions:
+                        for i in range(search_index, len(a2)):
+                            if addition == a2[i]:
+                                search_index = i
+                                detected_file_additions += 1
                                 break
 
-                        if not found:
-                            detected_deletions += 1
-        else:
+                break
+
+        if not found:
             if config.debug:
                 print('WARNING: File {0} does not exist'.format(full_path))
 
-        detected_patch_additions += detected_additions
-        detected_patch_deletions += detected_deletions
+        total_file_additions = len(patch_additions)
+        total_file_deletions = len(patch_deletions)
 
-        total_additions = len(additions)
-        total_deletions = len(deletions)
+        detected_patch_additions += detected_file_additions
+        detected_patch_deletions += detected_file_deletions
 
-        total_patch_additions += total_additions
-        total_patch_deletions += total_deletions
+        total_patch_additions += total_file_additions
+        total_patch_deletions += total_file_deletions
 
-        assert detected_additions <= total_additions
-        assert detected_deletions <= total_deletions
+        # Detected means things that are missing from the evaluated version.
+        # So the ratio comes from the difference from the total (original).
+        added_ratio = (total_file_additions - detected_file_additions) / total_file_additions if total_file_additions > 0 else None
+        deleted_ratio = (total_file_deletions - detected_file_deletions) / total_file_deletions if total_file_deletions > 0 else None
 
-        added = detected_additions / total_additions if total_additions > 0 else None
-        deleted = detected_deletions / total_deletions if total_deletions > 0 else None
-
-        ratios[diff.header.path]['additions'] = added
-        ratios[diff.header.path]['deletions'] = deleted
-        ratios[diff.header.path]['status'] = diff.header.status
+        ratios[patch_diff.header.path]['additions'] = added_ratio
+        ratios[patch_diff.header.path]['deletions'] = deleted_ratio
+        ratios[patch_diff.header.path]['status'] = patch_diff.header.status
 
     result = {
         'overall': {
-            'additions': detected_patch_additions / total_patch_additions if total_patch_additions > 0 else None,
-            'deletions': detected_patch_deletions / total_patch_deletions if total_patch_deletions > 0 else None,
+            'additions': (total_patch_additions - detected_patch_additions) / total_patch_additions if total_patch_additions > 0 else None,
+            'deletions': (total_patch_deletions - detected_patch_deletions) / total_patch_deletions if total_patch_deletions > 0 else None,
             'confident': confident
         },
         'breakdown': ratios
@@ -226,8 +234,7 @@ def split_changes(diff, keep_unchanged=False):
 def process_arguments():
     parser = argparse.ArgumentParser(
         description='''
-            Test if a given patch has already been applied to a project's
-            codebase.
+            Run detector algorithm for a given patch on a given version.
         '''
     )
 
@@ -235,6 +242,16 @@ def process_arguments():
         '--debug',
         action='store_true',
         help='Turn on debugging'
+    )
+
+    parser.add_argument(
+        '--version',
+        help='Version to be evaluated'
+    )
+
+    parser.add_argument(
+        '--fix-hash',
+        help='Patch commit hash'
     )
 
     parser.add_argument(
@@ -253,8 +270,13 @@ def process_arguments():
 
 def main():
     config = process_arguments()
+
+    repo = git.Repo(config.project)
+    commit = repo.commit(config.version)
+    diff = commit.diff(config.fix_hash, create_patch=True)
+
     config.patch = util.load_patch(config.patch.read())
-    print(json.dumps(run(config), indent=4))
+    print(json.dumps(run(config, diff), indent=4))
 
 
 if __name__ == '__main__':

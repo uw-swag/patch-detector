@@ -93,9 +93,8 @@ def run(config, version_diffs):
                 found = True
 
                 # Need to format the diff as a string parseable by whatthepatch
-                version_patch = "--- {}\n+++ {}\n{}".format(full_path,
-                                                            full_path,
-                                                            str(version_diff.diff).replace("b'", "", 1).replace("\\n", "\n"))
+                stripped_changes = str(version_diff.diff).replace("b'", "", 1).replace("b\"", "", 1).replace("\\n", "\n")
+                version_patch = "--- {}\n+++ {}\n{}".format(full_path, full_path, stripped_changes)
 
                 version_diff_patch = util.load_patch(version_patch)
 

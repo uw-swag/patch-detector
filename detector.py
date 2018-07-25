@@ -225,7 +225,7 @@ def split_changes(diff, keep_unchanged=False):
     deletions = list(filter(lambda x: x not in raw_additions, raw_deletions)) if not keep_unchanged else raw_deletions
     additions = list(filter(lambda x: x not in raw_deletions, raw_additions)) if not keep_unchanged else raw_additions
 
-    one_line_change = bool(len(raw_additions) == 1) ^ bool(len(raw_deletions) == 1)
+    one_line_change = len(raw_additions) + len(raw_deletions) == 1
 
     return deletions, additions, one_line_change, prev_line, next_line
 

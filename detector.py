@@ -75,13 +75,7 @@ def run(config, version_diffs):
         detected_file_deletions = 0
         detected_file_additions = 0
 
-        patch_deletions, patch_additions, patch_one_line_change, patch_prev_line, patch_next_line = split_changes(
-            patch_diff)
-
-        if patch_one_line_change and config.debug:
-            print('One line change for {0}'.format(full_path))
-            print('BEFORE: {0}'.format(patch_prev_line))
-            print('AFTER: {0}'.format(patch_next_line))
+        patch_deletions, patch_additions, _, _, _ = split_changes(patch_diff)
 
         found = False
 
@@ -98,41 +92,25 @@ def run(config, version_diffs):
 
                 version_diff_patch = util.load_patch(version_patch)
 
-                # In the case of a one line change, we also look for the lines
-                # immediately preceding and following the changed line.
-                if patch_one_line_change:
+                version_deletions, version_additions, _, _, _ = split_changes(version_diff_patch[0])
 
-                    for index, line in enumerate(version_diff_patch[0].changes):
-                        if line[2] == patch_prev_line and \
-                                index + 2 < len(version_diff_patch[0].changes) and \
-                                version_diff_patch[0].changes[index + 2][2] == patch_next_line:
-                            if patch_additions and compare(patch_additions[0], version_diff_patch[0].changes[index + 1][2]):
-                                detected_file_additions += 1
-                                break
-                            elif patch_deletions and not compare(patch_deletions[0], version_diff_patch[0].changes[index + 1][2]):
-                                detected_file_deletions += 1
-                                break
-                else:
+                # Keep a search index so it always searches forward
+                search_index = 0
+                for deletion in patch_deletions:
+                    for i in range(search_index, len(version_deletions)):
+                        if deletion == version_deletions[i]:
+                            search_index = i
+                            detected_file_deletions += 1
+                            break
 
-                    d2, a2, o2, p2, n2 = split_changes(version_diff_patch[0])
-
-                    # Keep a search index so it always searches forward
-                    search_index = 0
-                    for deletion in patch_deletions:
-                        for i in range(search_index, len(d2)):
-                            if deletion == d2[i]:
-                                search_index = i
-                                detected_file_deletions += 1
-                                break
-
-                    # Keep a search index so it always searches forward
-                    search_index = 0
-                    for addition in patch_additions:
-                        for i in range(search_index, len(a2)):
-                            if addition == a2[i]:
-                                search_index = i
-                                detected_file_additions += 1
-                                break
+                # Keep a search index so it always searches forward
+                search_index = 0
+                for addition in patch_additions:
+                    for i in range(search_index, len(version_additions)):
+                        if addition == version_additions[i]:
+                            search_index = i
+                            detected_file_additions += 1
+                            break
 
                 break
 

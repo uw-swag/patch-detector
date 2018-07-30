@@ -1,7 +1,7 @@
 import argparse
 import json
 
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 from pymongo.errors import ConnectionFailure
 
 
@@ -53,9 +53,14 @@ def save_vulnerability_results(host, username, password, database, repo_address,
     mongo_objects = wrap_mongo_objects(repo_address, vulnerability_id, patch_commit_hash, patch_evaluation_results)
 
     if mongo_objects and len(mongo_objects) > 0:
-        insert_result = collection.insert_many(mongo_objects)
 
-        success = len(insert_result.inserted_ids) > 0
+        bulk_requests = [UpdateOne({"repository": mongo_obj["repository"],
+                                    "vulnerability_id": mongo_obj["vulnerability_id"],
+                                    "version": mongo_obj["version"]}, {"$set": mongo_obj}, upsert=True)
+                         for mongo_obj in mongo_objects]
+
+        bulk_result = collection.bulk_write(bulk_requests)
+        success = (bulk_result.inserted_count + bulk_result.upserted_count) > 0
 
         if success:
             print("Persisted vulnerability {} with hash {}".format(vulnerability_id, patch_commit_hash))
@@ -85,7 +90,6 @@ def process_arguments():
 
 
 def main():
-
     args = process_arguments()
     config = json.load(args.config)
 

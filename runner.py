@@ -203,12 +203,21 @@ def determine_vulnerability_status(config, version_results):
             additions = result['overall']['additions']
             deletions = result['overall']['deletions']
 
-            result['vulnerable'] = False
+            result['vulnerable'] = True
 
-            if additions is not None and additions < config.additions_threshold:
-                result['vulnerable'] = True
-            if deletions is not None and deletions < config.deletions_threshold:
-                result['vulnerable'] = True
+            # Nothing found
+            if deletions is None and additions is None:
+                result['vulnerable'] = False
+            # No deletions in patch
+            elif deletions is None and additions >= config.additions_threshold:
+                result['vulnerable'] = False
+            # All deletions detected or no files found is considered not vulnerable, even if no additions are detected
+            elif deletions is not None and deletions == 1.0:
+                result['vulnerable'] = False
+            # Detected deletions and additions under the threshold
+            elif deletions is not None and deletions >= config.deletions_threshold and \
+                    additions is not None and additions >= config.additions_threshold:
+                result['vulnerable'] = False
         else:
             result['vulnerable'] = 'indeterminate'
 
@@ -271,7 +280,7 @@ def process_arguments(args=None):
     parser.add_argument(
         '--method',
         default='line_ratios',
-        option_strings=['line_ratios','active_learning'],
+        option_strings=['line_ratios', 'active_learning'],
         metavar='line_ratios|active_learning',
         help='Which method to be applied for detecting patch deployment'
     )
@@ -312,11 +321,11 @@ def main():
             {0}Project:{3} {2}
             {0}  Patch:{3} {1}
         '''.format(
-            Color.BOLD,
-            os.path.basename(config.patch.name),
-            os.path.abspath(config.project),
-            Color.END
-        )
+        Color.BOLD,
+        os.path.basename(config.patch.name),
+        os.path.abspath(config.project),
+        Color.END
+    )
     )
 
     if config.method == 'line_ratios':

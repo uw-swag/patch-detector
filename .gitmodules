@@ -7,3 +7,6 @@
 [submodule "experiments/cloudstack"]
 	path = experiments/cloudstack
 	url = https://github.com/apache/cloudstack.git
+[submodule "experiments/jenkins"]
+	path = experiments/jenkins
+	url = https://github.com/jenkinsci/jenkins.git

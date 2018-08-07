@@ -205,17 +205,7 @@ def determine_vulnerability_status(config, version_results):
 
             result['vulnerable'] = True
 
-            # Nothing found
-            if deletions is None and additions is None:
-                result['vulnerable'] = False
-            # No deletions in patch
-            elif deletions is None and additions >= config.additions_threshold:
-                result['vulnerable'] = False
-            # All deletions detected or no files found is considered not vulnerable, even if no additions are detected
-            elif deletions is not None and deletions == 1.0:
-                result['vulnerable'] = False
-            # Detected deletions and additions under the threshold
-            elif deletions is not None and deletions >= config.deletions_threshold and \
+            if deletions is not None and deletions >= config.deletions_threshold and \
                     additions is not None and additions >= config.additions_threshold:
                 result['vulnerable'] = False
         else:

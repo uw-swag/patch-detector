@@ -95,7 +95,7 @@ def resolve_path(repo, first, second, path, debug=False):
                 raise Exception('found more than 1 matching diff')
 
             for diff in commit.diff(prev):
-                if diff.renamed and diff.b_path == path:
+                if debug and diff.renamed and diff.b_path == path:
                     print('found potential rename: ' + diff.b_path)
 
             prev = commit

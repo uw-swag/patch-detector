@@ -206,9 +206,9 @@ def determine_vulnerability_status(config, version_results):
             result['vulnerable'] = True
 
             # Deletions None is the same as 1
-            # Additions None is the same as 1
+            # Additions None is the same as 0
             if (deletions is None or (deletions is not None and deletions >= config.deletions_threshold)) and \
-                    (additions is None or (additions is not None and additions >= config.additions_threshold)):
+                    (additions is not None and additions >= config.additions_threshold):
                 result['vulnerable'] = False
         else:
             result['vulnerable'] = 'indeterminate'

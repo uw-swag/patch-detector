@@ -9,7 +9,6 @@ import json
 
 
 def connect(host, username, password, queue):
-
     credentials = pika.PlainCredentials(username, password)
     connection_parameters = pika.ConnectionParameters(host=host,
                                                       credentials=credentials)
@@ -27,7 +26,6 @@ def connect(host, username, password, queue):
 
 
 def send_message(host, username, password, queue, message):
-
     channel, connection = connect(host, username, password, queue)
     body = json.dumps(message, ensure_ascii=False).encode("utf-8")
     success = channel.basic_publish(exchange='', routing_key=queue, body=body)
@@ -87,34 +85,66 @@ def process_arguments():
         help='JSON config file'
     )
 
+    parser.add_argument(
+        'vulnerability_id',
+        help='The unique vulnerability ID, e.g. CVE-2015-3251'
+    )
+
+    parser.add_argument(
+        'repo_address',
+        help='Git address of the software repository'
+    )
+
+    parser.add_argument(
+        'commit',
+        help='Hash of the fix commit in the repository (patch).'
+    )
+
+    parser.add_argument(
+        'versions',
+        type=str,
+        nargs='*',
+        help='Versions to be evaluated (optional). If none provided, all tags will be evaluated.'
+    )
+
     return parser.parse_args()
 
 
 def main():
-
     args = process_arguments()
     config = json.load(args.config)
-
-    # Usage example of send/listen to messages
 
     host = config["rabbitmq_host"]
     username = config["rabbitmq_username"]
     password = config["rabbitmq_password"]
     queue = config["rabbitmq_queue"]
 
-    message = {"repo_address": "https://github.com/uw-swag/patch-detector.git",
-               "commits": ["2daedbcb53cccfdf22d24dbff2e10312a179ea72", "878be37af5644fcfabb12babe253283f7de4cfee"],
-               "vulnerability_id": "CVE-001",
-               "versions": ["1.0.0", "2.0.0"]}
+    # Usage example of sending messages
+    # messages = [
+    #     {"repo_address": "https://github.com/uw-swag/patch-detector.git",
+    #      "commits": ["2daedbcb53cccfdf22d24dbff2e10312a179ea72", "878be37af5644fcfabb12babe253283f7de4cfee"],
+    #      "vulnerability_id": "CVE-001",
+    #      "versions": ["1.0.0", "2.0.0"]}
+    # ]
 
-    send_message(host, username, password, queue, message)
+    messages = [
+        {"repo_address": args.repo_address,
+         "commits": [args.commit],
+         "vulnerability_id": args.vulnerability_id,
+         "versions": args.versions}
+    ]
 
-    def handle_body(body):
-        received_msg = json.loads(body)
-        print("Received {}".format(received_msg))
-        return True
+    for message in messages:
+        send_message(host, username, password, queue, message)
+        print("Sent message {}".format(message))
 
-    listen_messages(host, username, password, queue, handle_body)
+    # Usage example of listening to messages
+    # def handle_body(body):
+    #     received_msg = json.loads(body)
+    #     print("Received {}".format(received_msg))
+    #     return True
+    #
+    # listen_messages(host, username, password, queue, handle_body)
 
 
 if __name__ == '__main__':

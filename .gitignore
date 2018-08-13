@@ -89,8 +89,7 @@ ENV/
 .ropeproject
 
 # Project specific files
-cloudstack/
-hadoop/
-httpd/
-jenkins/
-
+experiments/cloudstack/
+experiments/hadoop/
+experiments/httpd/
+experiments/jenkins/

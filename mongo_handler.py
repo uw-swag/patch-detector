@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 
 from pymongo import MongoClient, UpdateOne
 from pymongo.errors import ConnectionFailure
@@ -74,7 +75,7 @@ def save_vulnerability_results(host, username, password, database, repo_address,
 def process_arguments():
     parser = argparse.ArgumentParser(
         description='''
-            MongoDB persister
+            MongoDB persister. Default main run dumps data from MongoDB into CSV.
         '''
     )
 
@@ -98,17 +99,17 @@ def main():
     password = config["mongodb_password"]
     database = config["mongodb_database"]
 
-    # Usage example of saving to MongoDB
-    vulnerability_results = {
-        '1.0.0': {'overall': {'additions': 0.0, 'deletions': 0.3333333333333333, 'confident': True}, 'breakdown': {
-            'runner.py': {'additions': 0.0, 'deletions': 0.3333333333333333, 'status': 'unchanged'}},
-                  'vulnerable': True},
-        '2.0.0': {'overall': {'additions': 0.0, 'deletions': 0.0, 'confident': True},
-                  'breakdown': {'runner.py': {'additions': 0.0, 'deletions': 0.0, 'status': 'unchanged'}},
-                  'vulnerable': True}}
-
-    save_vulnerability_results(host, username, password, database,
-                               "repo_git", "NVD-001", "hash1", vulnerability_results)
+    # # Usage example of saving to MongoDB
+    # vulnerability_results = {
+    #     '1.0.0': {'overall': {'additions': 0.0, 'deletions': 0.3333333333333333, 'confident': True}, 'breakdown': {
+    #         'runner.py': {'additions': 0.0, 'deletions': 0.3333333333333333, 'status': 'unchanged'}},
+    #               'vulnerable': True},
+    #     '2.0.0': {'overall': {'additions': 0.0, 'deletions': 0.0, 'confident': True},
+    #               'breakdown': {'runner.py': {'additions': 0.0, 'deletions': 0.0, 'status': 'unchanged'}},
+    #               'vulnerable': True}}
+    #
+    # save_vulnerability_results(host, username, password, database,
+    #                            "repo_git", "NVD-001", "hash1", vulnerability_results)
 
     # Checking saved results
     client = MongoClient("mongodb://{}:{}@{}:27017".format(username, password, host))
@@ -121,9 +122,71 @@ def main():
         print("Server not available")
 
     collection = db.vulnerabilities
+    dump_vulnerabilities(collection)
+
+
+def dump_vulnerabilities(collection):
+
+    # Regex to strip versions in format x.x.x...
+    version_regex = re.compile('\d+(\.\d+)+.*')
+
+    # CSV header
+    print("CVE ID;"
+          "Version;"
+          "Stripped version;"
+          "Additions ratio;"
+          "Deletions ratio;"
+          "Patch-detector vulnerable result;"
+          "Oracle vulnerable result;"
+          "True positive;"
+          "True negative;"
+          "False positive;"
+          "False negative")
 
     for obj in collection.find():
-        print("{};{};{}".format(obj["vulnerability_id"], obj["version"], obj["results"]["vulnerable"]))
+
+        stripped_version = version_regex.search(obj["version"].replace("_", "."))
+
+        # Do not print tags that don't express a clear version
+        if stripped_version:
+
+            oracle = get_oracle(obj["vulnerability_id"], obj["version"])
+            true_positive = int(bool(obj["results"]["vulnerable"]) == oracle and oracle is True)
+            true_negative = int(bool(obj["results"]["vulnerable"]) == oracle and oracle is False)
+            false_positive = int(bool(obj["results"]["vulnerable"]) != oracle and oracle is False)
+            false_negative = int(bool(obj["results"]["vulnerable"]) != oracle and oracle is True)
+
+            print("{};{};{};{};{};{};{};{};{};{};{}".format(obj["vulnerability_id"],
+                                                            obj["version"],
+                                                            stripped_version.group(),
+                                                            obj["results"]['overall']['additions'],
+                                                            obj["results"]['overall']['deletions'],
+                                                            obj["results"]["vulnerable"],
+                                                            oracle,
+                                                            true_positive,
+                                                            true_negative,
+                                                            false_positive,
+                                                            false_negative))
+
+
+# Static variable to keep vulnerabilities map in memory
+vulnerabilities_map = {}
+
+
+def get_oracle(vulnerability_id, version):
+    vulnerabilities_folder = "experiments/vulnerabilities/"
+
+    if vulnerability_id in vulnerabilities_map:
+        vulnerable_versions = vulnerabilities_map[vulnerability_id]
+    else:
+        file = vulnerabilities_folder + vulnerability_id + "_vulnerability.txt"
+
+        with open(file, 'r') as f:
+            vulnerable_versions = [line.strip() for line in f.readlines()]
+
+        vulnerabilities_map[vulnerability_id] = vulnerable_versions
+
+    return version in vulnerable_versions
 
 
 if __name__ == '__main__':

@@ -56,7 +56,6 @@ def consume(github_address, vulnerability_id, commit_hashes, persister, versions
 
         # 6. Save to database
         persister(github_address, vulnerability_id, commit_hash, version_results)
-        # print(version_results)
 
     # 7. Delete temp resources
     shutil.rmtree(temp_folder)
@@ -93,12 +92,17 @@ def process_arguments():
         help='JSON config file'
     )
 
+    parser.add_argument(
+        '--single-run',
+        nargs='*',
+        metavar='parameter',
+        help='Perform a single run locally with given parameters vulnerability_id repo_address commit VERSION_1 ... VERSION_N'
+    )
+
     return parser.parse_args()
 
 
-def main():
-    args = process_arguments()
-    config = json.load(args.config)
+def listen_messages():
 
     rabbitmq_host = config["rabbitmq_host"]
     rabbitmq_username = config["rabbitmq_username"]
@@ -109,7 +113,6 @@ def main():
     mongodb_username = config["mongodb_username"]
     mongodb_password = config["mongodb_password"]
     mongodb_database = config["mongodb_database"]
-
 
     # Persister call
     def persist_to_mongo(github_address, vulnerability_id, commit_hash, results):
@@ -130,5 +133,26 @@ def main():
                                      handle_message_body)
 
 
+def single_run(args):
+
+    def persister(github_address, vulnerability_id, commit_hash, results):
+        print(results)
+
+    vulnerability_id = args.single_run[0]
+    repo_address = args.single_run[1]
+    commit_hashes = [args.single_run[2]]
+    versions = args.single_run[3:]
+    versions = ",".join(versions) if (versions is not None and len(versions) > 0) else None
+
+    consume(repo_address, vulnerability_id, commit_hashes, persister, versions)
+
+
 if __name__ == '__main__':
-    main()
+
+    args = process_arguments()
+    config = json.load(args.config)
+
+    if args.single_run:
+        single_run(args)
+    else:
+        listen_messages(config)

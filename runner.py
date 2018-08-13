@@ -271,8 +271,8 @@ def process_arguments(args=None):
 
     parser.add_argument(
         '--method',
-        default='line_ratios',
-        option_strings=['line_ratios', 'active_learning'],
+        default='diff_ratios',
+        option_strings=['diff_ratios', 'active_learning'],
         metavar='line_ratios|active_learning',
         help='Which method to be applied for detecting patch deployment'
     )
@@ -320,8 +320,8 @@ def main():
     )
     )
 
-    if config.method == 'line_ratios':
-        print("Running line ratios method")
+    if config.method == 'diff_ratios':
+        print("Running diff ratios method")
         version_results = run(config, detector.run)
         determine_vulnerability_status(config, version_results)
 

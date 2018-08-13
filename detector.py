@@ -253,7 +253,14 @@ def main():
     diff = commit.diff(config.fix_hash, create_patch=True)
 
     config.patch = util.load_patch(config.patch.read())
-    print(json.dumps(run(config, diff), indent=4))
+    results = {config.version: run(config, diff)}
+
+    from runner import determine_vulnerability_status
+    config.additions_threshold = 0.5
+    config.deletions_threshold = 0.25
+    determine_vulnerability_status(config, results)
+
+    print(json.dumps(results, indent=4))
 
 
 if __name__ == '__main__':

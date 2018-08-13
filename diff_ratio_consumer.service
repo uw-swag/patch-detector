@@ -1,10 +1,10 @@
 [Unit]
 Description=Python script to run patch_detector listening to messages from RabbitMQ and storing to MongoDB
 [Service]
-PIDFile=/tmp/line_ratio_consumer.pid
+PIDFile=/tmp/diff_ratio_consumer.pid
 Restart=always
 KillSignal=SIGQUIT
 WorkingDirectory=/patch-detector/
-ExecStart=/patch-detector/venv/bin/python /patch-detector/line_ratio_consumer.py
+ExecStart=/patch-detector/venv/bin/python /patch-detector/diff_ratio_consumer.py
 [Install]
 WantedBy=multi-user.target

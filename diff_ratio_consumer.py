@@ -30,34 +30,37 @@ def consume(github_address, vulnerability_id, commit_hashes, persister, versions
     temp_patch_filename = "temp_file_" + str(random.randint(0, sys.maxsize)) + ".patch"
     repo = git.Repo.clone_from(github_address, temp_folder)
 
-    # 2. Process all given commit hashes
+    patch = ""
+
+    # 2. Process all given commit hashes into a single patch
     for commit_hash in commit_hashes:
 
-        # 3. Get patch from hash
         try:
-            patch = repo.git.show(commit_hash)
-
-            with open(temp_patch_filename, "w") as patch_file:
-                patch_file.write(patch)
+            # 3. Get patch from hash
+            patch += repo.git.show(commit_hash) + "\n\n"
 
         except git.GitCommandError:
             # Just ignore hash error
             print("Warning: commit hash {} not found.".format(commit_hash))
             continue
 
-        # 4. Create config object
-        args = [temp_patch_filename, repo.working_dir]
-        config = runner.process_arguments(args)
-        config.versions = versions
+    # 4. Save patch to file
+    with open(temp_patch_filename, "w") as patch_file:
+        patch_file.write(patch)
 
-        # 5. Run evaluation
-        version_results = runner.run_git(config, detector.run)
-        runner.determine_vulnerability_status(config, version_results)
+    # 5. Create config object
+    args = [temp_patch_filename, repo.working_dir]
+    config = runner.process_arguments(args)
+    config.versions = versions
 
-        # 6. Save to database
-        persister(github_address, vulnerability_id, commit_hash, version_results)
+    # 6. Run evaluation
+    version_results = runner.run_git(config, detector.run)
+    runner.determine_vulnerability_status(config, version_results)
 
-    # 7. Delete temp resources
+    # 7. Save to database
+    persister(github_address, vulnerability_id, commit_hash, version_results)
+
+    # 8. Delete temp resources
     shutil.rmtree(temp_folder)
     os.remove(temp_patch_filename)
 

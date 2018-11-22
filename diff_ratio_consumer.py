@@ -4,7 +4,7 @@ import argparse
 import json
 import os
 import random
-import shutil
+import re
 import sys
 
 import git
@@ -25,14 +25,11 @@ def consume(github_address, vulnerability_id, commit_hashes, persister, versions
     :param persister: function to save results with signature handle(str: commit_hash, dict: patch_detector_results)
     :param versions: selected tags on github to be evaluated. If None provided, all tags are evaluated.
     """
-    # 1. Clone git repo
-    temp_folder = "temp_folder_" + str(random.randint(0, sys.maxsize))
-    temp_patch_filename = "temp_file_" + str(random.randint(0, sys.maxsize)) + ".patch"
-    repo = git.Repo.clone_from(github_address, temp_folder)
-
-    patch = ""
+    # 1. Get git repo
+    repo = clone_or_open_repo(github_address)
 
     # 2. Process all given commit hashes into a single patch
+    patch = ""
     for commit_hash in commit_hashes:
 
         try:
@@ -40,11 +37,12 @@ def consume(github_address, vulnerability_id, commit_hashes, persister, versions
             patch += repo.git.show(commit_hash) + "\n\n"
 
         except git.GitCommandError:
-            # Just ignore hash error
-            print("Warning: commit hash {} not found.".format(commit_hash))
-            continue
+            # Maybe repo is being cloned by another thread.
+            # Return False to put it back on the queue
+            return False
 
     # 4. Save patch to file
+    temp_patch_filename = "temp_file_" + str(random.randint(0, sys.maxsize)) + ".patch"
     with open(temp_patch_filename, "w") as patch_file:
         patch_file.write(patch)
 
@@ -58,11 +56,12 @@ def consume(github_address, vulnerability_id, commit_hashes, persister, versions
     runner.determine_vulnerability_status(config, version_results)
 
     # 7. Save to database
-    persister(github_address, vulnerability_id, commit_hash, version_results)
+    success = persister(github_address, vulnerability_id, commit_hash, version_results)
 
     # 8. Delete temp resources
-    shutil.rmtree(temp_folder)
     os.remove(temp_patch_filename)
+    
+    return success
 
 
 def unpack_message(message):
@@ -78,6 +77,17 @@ def unpack_message(message):
     versions = ",".join(message["versions"]) if ("versions" in message and len(message["versions"]) > 0) else None
 
     return github_address, commit_hashes, vulnerability_id, versions
+
+
+def clone_or_open_repo(repo_address):
+
+    # Get a normalized folder name for the repo address
+    folder_name = re.sub("\.|/", "_", re.sub("http(s)*://", "", repo_address))
+
+    if os.isdir(folder_name):
+        return git.Repo(path=folder_name)
+    else:
+        return git.Repo.clone_from(repo_address, folder_name)
 
 
 def process_arguments():
@@ -119,7 +129,7 @@ def listen_messages():
 
     # Persister call
     def persist_to_mongo(github_address, vulnerability_id, commit_hash, results):
-        mongo_handler.save_vulnerability_results(mongodb_host, mongodb_username, mongodb_password, mongodb_database,
+        return mongo_handler.save_vulnerability_results(mongodb_host, mongodb_username, mongodb_password, mongodb_database,
                                                  github_address, vulnerability_id, commit_hash, results)
 
     # Consumer call
@@ -128,9 +138,7 @@ def listen_messages():
         print("Dequeued message {}".format(received_msg))
 
         github_address, commit_hashes, vulnerability_id, versions = unpack_message(received_msg)
-        consume(github_address, vulnerability_id, commit_hashes, persist_to_mongo, versions)
-
-        return True
+        return consume(github_address, vulnerability_id, commit_hashes, persist_to_mongo, versions)
 
     rabbitMQ_handler.listen_messages(rabbitmq_host, rabbitmq_username, rabbitmq_password, rabbitmq_queue,
                                      handle_message_body)

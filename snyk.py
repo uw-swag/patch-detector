@@ -2,6 +2,28 @@ import argparse
 import json
 
 import rabbitMQ_handler
+from VersionComparisonClass import CheckVersion
+
+# Static variable to keep vulnerabilities map in memory
+SNYK_VULNERABILITIES_MAP = None #Stores CVE:{Package#:XXX, Version:XXX}
+
+
+def get_oracle_data(vulnerabilities_id, version_to_check):
+    """
+    Caches the Vulnerability.json in VULNERABILITIES_MAP
+    Access the package name, range from the map.
+    Uses the CheckVersion class from VersionComaprisonClass.py to compare the
+    version to the range.
+    Returns bool.
+    """
+    global SNYK_VULNERABILITIES_MAP
+    if SNYK_VULNERABILITIES_MAP is None:
+        with open("VulnerabilityMap.json") as f:
+            SNYK_VULNERABILITIES_MAP = json.load(f)
+    vulnerability_details = SNYK_VULNERABILITIES_MAP[vulnerabilities_id]
+    VersionRange = vulnerability_details['Versions']
+    version_comparison_obj = CheckVersion(VersionRange, version_to_check)
+    return version_comparison_obj.CheckVersionInRange()
 
 
 def build_vulnerability_map(snyk_data):

@@ -1,47 +1,23 @@
 import argparse
 import json
+
 import rabbitMQ_handler
 
 
-def process_arguments():
-    parser = argparse.ArgumentParser(
-        description='''
-            Handle SNYK data
-        '''
-    )
-
-    parser.add_argument(
-        '--config',
-        default='config.json',
-        type=argparse.FileType('r'),
-        metavar='path',
-        help='JSON config file'
-    )
-
-    parser.add_argument(
-        '--file',
-        type=argparse.FileType('r'),
-        required=True,
-        metavar='path',
-        help='JSON SNYK data file'
-    )
-
-    return parser.parse_args()
+def build_vulnerability_map(snyk_data):
+    vulnerability_details = {}  # SNYK_ID:{package_name:XXX, version:XXX}
+    for package in snyk_data:
+        for vulnerability in snyk_data[package]:
+            snyk_ID = vulnerability['id']
+            vulnerability_details[snyk_ID] = {}
+            vulnerability_details[snyk_ID]['PackageName'] = package
+            vulnerability_details[snyk_ID]['Version'] = [vulnerability_range for
+                                                         vulnerability_range in
+                                                         vulnerability['semver']['vulnerable']]
+    return vulnerability_details
 
 
-if __name__ == '__main__':
-
-    args = process_arguments()
-
-    config = json.load(args.config)
-
-    host = config["rabbitmq_host"]
-    username = config["rabbitmq_username"]
-    password = config["rabbitmq_password"]
-    queue = config["rabbitmq_queue"]
-
-    snyk_data = json.load(args.file)
-
+def enqueue_messages(snyk_data):
     for item in snyk_data:
         for vulnerability in snyk_data[item]:
 
@@ -73,3 +49,54 @@ if __name__ == '__main__':
 
                 rabbitMQ_handler.send_message(host, username, password, queue, message)
                 print("Sent {};{};{};{}".format(snyk_id, cve_id, repo_address + ".git", commit_hashes))
+
+
+def process_arguments():
+    parser = argparse.ArgumentParser(
+        description='''
+            Handle SNYK data
+        '''
+    )
+
+    parser.add_argument(
+        '--config',
+        default='config.json',
+        type=argparse.FileType('r'),
+        metavar='path',
+        help='JSON config file'
+    )
+
+    parser.add_argument(
+        '--vulnerability-map',
+        action='store_true',
+        help='Dumps vulnerability map from SNYK data to a JSON file'
+    )
+
+    parser.add_argument(
+        '--file',
+        type=argparse.FileType('r'),
+        required=True,
+        metavar='path',
+        help='JSON SNYK data file'
+    )
+
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+
+    args = process_arguments()
+
+    config = json.load(args.config)
+    data = json.load(args.file)
+
+    host = config["rabbitmq_host"]
+    username = config["rabbitmq_username"]
+    password = config["rabbitmq_password"]
+    queue = config["rabbitmq_queue"]
+
+    if args.vulnerability_map:
+        with open("VulnerabilityMap.json", 'w') as f:
+            json.dump(build_vulnerability_map(data), f, indent=4)
+    else:
+        enqueue_messages(data)

@@ -84,7 +84,7 @@ def clone_or_open_repo(repo_address):
     # Get a normalized folder name for the repo address
     folder_name = re.sub("\.|/", "_", re.sub("http(s)*://", "", repo_address))
 
-    if os.isdir(folder_name):
+    if os.path.isdir(folder_name):
         return git.Repo(path=folder_name)
     else:
         return git.Repo.clone_from(repo_address, folder_name)

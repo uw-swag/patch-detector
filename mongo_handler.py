@@ -1,10 +1,15 @@
 import argparse
 import json
 import re
+import semantic_version
+from VersionComparisonClass import CheckVersion
 
 from pymongo import MongoClient, UpdateOne
 from pymongo.errors import ConnectionFailure
 
+
+# Static variable to keep vulnerabilities map in memory
+SNYK_VULNERABILITIES_MAP = None #Stores CVE:{Package#:XXX, Version:XXX}
 
 def wrap_mongo_objects(repo_address, vulnerability_id, patch_commit_hash, patch_evaluation_results):
     """
@@ -168,10 +173,7 @@ def dump_vulnerabilities(collection):
                                                             false_positive,
                                                             false_negative))
 
-
-# Static variable to keep vulnerabilities map in memory
 vulnerabilities_map = {}
-
 
 def get_oracle(vulnerability_id, version):
     vulnerabilities_folder = "experiments/vulnerabilities/"
@@ -186,7 +188,28 @@ def get_oracle(vulnerability_id, version):
 
         vulnerabilities_map[vulnerability_id] = vulnerable_versions
 
-    return version in vulnerable_versions
+    if version not in vulnerable_versions:
+        return get_oracle_SNYK_data(vulnerability_id, version)
+    else:
+        return True
+
+def get_oracle_SNYK_data(vulnerabilities_id, versionToCheck):
+    """
+    Caches the Vulnerability.json in VULNERABILITIES_MAP
+    Access the package name, range from the map. 
+    Uses the CheckVersion class from VersionComaprisonClass.py to compare the 
+    version to the range. 
+    Returns bool.
+    """
+    global SNYK_VULNERABILITIES_MAP 
+    if SNYK_VULNERABILITIES_MAP is None:
+        with open("experiments/vulnerabilities/VulnerabilityMap.json") as f:
+            SNYK_VULNERABILITIES_MAP = json.load(f)
+    VulnerabilityDetails = SNYK_VULNERABILITIES_MAP[vulnerabilities_id]
+    Package = VulnerabilityDetails['PackageName']
+    VersionRange = VulnerabilityDetails['Versions']
+    VersionComparisonObj = CheckVersion(VersionRange, versionToCheck)
+    return VersionComparisonObj.CheckVersionInRange()    
 
 
 if __name__ == '__main__':

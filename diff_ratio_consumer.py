@@ -115,7 +115,7 @@ def process_arguments():
     return parser.parse_args()
 
 
-def listen_messages():
+def listen_messages(config):
 
     rabbitmq_host = config["rabbitmq_host"]
     rabbitmq_username = config["rabbitmq_username"]

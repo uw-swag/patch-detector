@@ -15,7 +15,7 @@ import rabbitMQ_handler
 import runner
 
 
-def consume(github_address, vulnerability_id, commit_hashes, persister, versions=None):
+def consume(github_address, vulnerability_id, cve_id, commit_hashes, persister, versions=None):
     """
         Consume information from a patch_detection task (message from RabbitMQ queue) to run patch_detector and
         save results with persister.
@@ -56,7 +56,7 @@ def consume(github_address, vulnerability_id, commit_hashes, persister, versions
     runner.determine_vulnerability_status(config, version_results)
 
     # 7. Save to database
-    success = persister(github_address, vulnerability_id, commit_hash, version_results)
+    success = persister(github_address, vulnerability_id, cve_id, commit_hash, version_results)
 
     # 8. Delete temp resources
     os.remove(temp_patch_filename)
@@ -74,9 +74,10 @@ def unpack_message(message):
     github_address = message["repo_address"]
     commit_hashes = message["commits"]
     vulnerability_id = message["vulnerability_id"]
+    cve_id = message.get("cve_id","")
     versions = ",".join(message["versions"]) if ("versions" in message and len(message["versions"]) > 0) else None
 
-    return github_address, commit_hashes, vulnerability_id, versions
+    return github_address, commit_hashes, vulnerability_id, cve_id, versions
 
 
 def clone_or_open_repo(repo_address):
@@ -128,17 +129,18 @@ def listen_messages(config):
     mongodb_database = config["mongodb_database"]
 
     # Persister call
-    def persist_to_mongo(github_address, vulnerability_id, commit_hash, results):
-        return mongo_handler.save_vulnerability_results(mongodb_host, mongodb_username, mongodb_password, mongodb_database,
-                                                 github_address, vulnerability_id, commit_hash, results)
+    def persist_to_mongo(github_address, vulnerability_id, cve_id, commit_hash, results):
+        return mongo_handler.save_vulnerability_results(mongodb_host, mongodb_username, mongodb_password,
+                                                        mongodb_database, github_address, vulnerability_id, cve_id,
+                                                        commit_hash, results)
 
     # Consumer call
     def handle_message_body(body):
         received_msg = json.loads(body)
         print("Dequeued message {}".format(received_msg))
 
-        github_address, commit_hashes, vulnerability_id, versions = unpack_message(received_msg)
-        return consume(github_address, vulnerability_id, commit_hashes, persist_to_mongo, versions)
+        github_address, commit_hashes, vulnerability_id, cve_id, versions = unpack_message(received_msg)
+        return consume(github_address, vulnerability_id, cve_id, commit_hashes, persist_to_mongo, versions)
 
     rabbitMQ_handler.listen_messages(rabbitmq_host, rabbitmq_username, rabbitmq_password, rabbitmq_queue,
                                      handle_message_body)
@@ -146,7 +148,7 @@ def listen_messages(config):
 
 def single_run(args):
 
-    def persister(github_address, vulnerability_id, commit_hash, results):
+    def persister(github_address, vulnerability_id, cve_id, commit_hash, results):
         print(results)
 
     vulnerability_id = args.single_run[0]

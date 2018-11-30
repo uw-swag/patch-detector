@@ -52,11 +52,16 @@ def consume(github_address, vulnerability_id, cve_id, commit_hashes, persister, 
     config.versions = versions
 
     # 6. Run evaluation
+    success = False
     version_results = runner.run_git(config, detector.run)
-    runner.determine_vulnerability_status(config, version_results)
+
+    if version_results is not None:
+        runner.determine_vulnerability_status(config, version_results)
+        success = True
 
     # 7. Save to database
-    success = persister(github_address, vulnerability_id, cve_id, commit_hash, version_results)
+    if success:
+        success = persister(github_address, vulnerability_id, cve_id, commit_hash, version_results)
 
     # 8. Delete temp resources
     os.remove(temp_patch_filename)

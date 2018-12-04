@@ -1,5 +1,9 @@
 import argparse
 import json
+import os
+import re
+
+import git
 
 import rabbitMQ_handler
 from VersionComparisonClass import CheckVersion
@@ -39,7 +43,10 @@ def build_vulnerability_map(snyk_data):
     return vulnerability_details
 
 
-def enqueue_messages(snyk_data):
+def parse_snyk(snyk_data):
+
+    parsed_messages = []
+
     for item in snyk_data:
         for vulnerability in snyk_data[item]:
 
@@ -69,8 +76,35 @@ def enqueue_messages(snyk_data):
                 message = {'repo_address': repo_address + ".git", 'commits': commit_hashes,
                            'vulnerability_id': snyk_id, 'versions': [], "cve_id": cve_id}
 
+                parsed_messages.append(message)
+
                 rabbitMQ_handler.send_message(host, username, password, queue, message)
                 print("Sent {};{};{};{}".format(snyk_id, cve_id, repo_address + ".git", commit_hashes))
+
+    return parsed_messages
+
+
+def enqueue_messages(snyk_data):
+    messages = parse_snyk(snyk_data)
+    for message in messages:
+        # Send message to processing queue
+        rabbitMQ_handler.send_message(host, username, password, queue, message)
+        print("Sent {};{};{};{}".format(message["vulnerability_id"],
+                                        message["cve_id"],
+                                        message["repo_address"],
+                                        message["commits"]))
+
+def clone_repos(snyk_data):
+    messages = parse_snyk(snyk_data)
+
+    for message in messages:
+        repo_address = message["repo_address"]
+
+        # Get a normalized folder name for the repo address
+        folder_name = re.sub("\.|/", "_", re.sub("http(s)*://", "", repo_address))
+
+        if not os.path.isdir(folder_name):
+            git.Repo.clone_from(repo_address, folder_name)
 
 
 def process_arguments():
@@ -92,6 +126,12 @@ def process_arguments():
         '--vulnerability-map',
         action='store_true',
         help='Dumps vulnerability map from SNYK data to a JSON file'
+    )
+
+    parser.add_argument(
+        '--clone-repos',
+        action='store_true',
+        help='Clones all repos locally.'
     )
 
     parser.add_argument(
@@ -120,5 +160,7 @@ if __name__ == '__main__':
     if args.vulnerability_map:
         with open("VulnerabilityMap.json", 'w') as f:
             json.dump(build_vulnerability_map(data), f, indent=4)
+    elif args.clone_repos:
+        clone_repos(data)
     else:
         enqueue_messages(data)

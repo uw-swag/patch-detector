@@ -75,11 +75,8 @@ def parse_snyk(snyk_data):
             if repo_address != "" and len(commit_hashes) > 0:
                 message = {'repo_address': repo_address + ".git", 'commits': commit_hashes,
                            'vulnerability_id': snyk_id, 'versions': [], "cve_id": cve_id}
-
                 parsed_messages.append(message)
 
-                rabbitMQ_handler.send_message(host, username, password, queue, message)
-                print("Sent {};{};{};{}".format(snyk_id, cve_id, repo_address + ".git", commit_hashes))
 
     return parsed_messages
 
@@ -105,6 +102,7 @@ def clone_repos(snyk_data):
 
         if not os.path.isdir(folder_name):
             git.Repo.clone_from(repo_address, folder_name)
+            print("Cloned {}".format(repo_address))
 
 
 def process_arguments():
@@ -136,7 +134,7 @@ def process_arguments():
 
     parser.add_argument(
         '--file',
-        type=argparse.FileType('r'),
+        type=argparse.FileType('r', encoding='utf-8'),
         required=True,
         metavar='path',
         help='JSON SNYK data file'

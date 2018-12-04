@@ -67,6 +67,8 @@ def save_vulnerability_results(host, username, password, database, repo_address,
 
         if success:
             print("Persisted vulnerability {} with hash {}".format(vulnerability_id, patch_commit_hash))
+        else:
+            print("Vulnerability {} not persisted".format(vulnerability_id))
     else:
         print("Nothing persisted from vulnerability {} with hash {}".format(vulnerability_id, patch_commit_hash))
         success = True

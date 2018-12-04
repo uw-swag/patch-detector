@@ -61,7 +61,7 @@ def consume(github_address, vulnerability_id, cve_id, commit_hashes, persister, 
 
     # 7. Save to database
     if success:
-        success = persister(github_address, vulnerability_id, cve_id, commit_hash, version_results)
+        success = persister(github_address, vulnerability_id, cve_id, ",".join(commit_hashes), version_results)
 
     # 8. Delete temp resources
     os.remove(temp_patch_filename)

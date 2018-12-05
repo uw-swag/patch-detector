@@ -145,7 +145,13 @@ def listen_messages(config):
         print("Dequeued message {}".format(received_msg))
 
         github_address, commit_hashes, vulnerability_id, cve_id, versions = unpack_message(received_msg)
-        return consume(github_address, vulnerability_id, cve_id, commit_hashes, persist_to_mongo, versions)
+        success = consume(github_address, vulnerability_id, cve_id, commit_hashes, persist_to_mongo, versions)
+
+        # Keep failed messages into an error queue
+        if not success:
+            rabbitMQ_handler.send_message(rabbitmq_host, rabbitmq_username, rabbitmq_password,
+                                          rabbitmq_queue + "_error", received_msg)
+        return True
 
     rabbitMQ_handler.listen_messages(rabbitmq_host, rabbitmq_username, rabbitmq_password, rabbitmq_queue,
                                      handle_message_body)

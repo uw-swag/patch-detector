@@ -77,7 +77,6 @@ def parse_snyk(snyk_data):
                            'vulnerability_id': snyk_id, 'versions': [], "cve_id": cve_id}
                 parsed_messages.append(message)
 
-
     return parsed_messages
 
 
@@ -90,6 +89,7 @@ def enqueue_messages(snyk_data):
                                         message["cve_id"],
                                         message["repo_address"],
                                         message["commits"]))
+
 
 def clone_repos(snyk_data):
     messages = parse_snyk(snyk_data)

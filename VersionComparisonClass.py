@@ -1,5 +1,6 @@
 import semantic_version as sv
 import os
+import operator
 import re
 
 
@@ -51,7 +52,8 @@ class CheckVersion():
         """
         Version = re.search(self.regexVersionPattern, versionToCheck).group(
             1)  # Only select the first version group in case the suffix has another 1.2..
-        
+        #print("VersionNumber###", Version)
+
         VersionParts = versionToCheck.split(Version)
         Prefix = ''.join(i for i in VersionParts[0] if i.isalnum())
         Suffix = ''.join(i for i in VersionParts[1] if i.isalnum())
@@ -65,6 +67,8 @@ class CheckVersion():
         '''
         VersionNumber = re.search(self.regexVersionPattern, versionPoint).group(
             1)  # Only select the first version group in case the suffix has another 1.2..
+
+        #print("VersionNumber###", VersionNumber)
         VersionParts = versionPoint.split(VersionNumber)
         Prefix = ''.join(i for i in VersionParts[0] if i.isalnum())
         Suffix = ''.join(i for i in VersionParts[1] if i.isalnum())
@@ -79,15 +83,32 @@ class CheckVersion():
         FinalVersion = self.reconstructVersion(VersionNumber, Bracket=Bracket, Prefix=Prefix, Suffix=Suffix)
         return FinalVersion
 
+    def FixLeadingZeros(self, Version):
+        """
+        Some versions are checked as XX.0X.XXX
+        This when referenced with SNYK data only shows XX.X.XXX
+        Example: 1.01.11 can be inferred as 1.11.11 as is the semantic version convention.
+        """
+        NewVersion = []
+        for i in Version:
+            if i[0] == '0' and i[1:]:
+                i = i[1:]
+            NewVersion.append(i)
+        #print("NEW VERSION: ", NewVersion)
+        return '.'.join(NewVersion)
+        
     def reconstructVersion(self, Version, Bracket=None, Prefix=None, Suffix=None):
+        
         VersionList = []
         #Standardizing versions
         if '_' in Version:
             Version = Version.split('_')
-            Version = '.'.join(Version)
         elif "-" in Version:
             Version = Version.split('-')
-            Version = '.'.join(Version)
+        elif "." in Version:
+            Version = Version.split('.')
+        Version = self.FixLeadingZeros(Version)
+
         VersionList.append(Version)
         if Suffix:
             VersionList.append(Suffix)
@@ -114,9 +135,14 @@ class CheckVersion():
                 if sv.Version.coerce(versionPoint[1:-1]) == self.VersionToCheck:
                     return True
             else:
-                VersionRangeList.append(self.UnpackRange(versionPoint))  # Checks range of vulnerabilities
+                OperatorDict = {'<=':operator.le, '<':operator.lt, '>': operator.gt, '>=':operator.ge}
+                VersionCombination = self.UnpackRange(versionPoint)
+                VersionRangeList.append(VersionCombination)  # Checks range of vulnerabilities
                 if len(VersionRangeList) == 2:
-                    if self.VersionToCheck in sv.Spec(','.join(VersionRangeList)):
+                    LowerRangeSign, LowerRangeVersion = VersionRangeList[0]
+                    UpperRangeSign, UpperRangeVersion = VersionRangeList[1]
+                    if OperatorDict[LowerRangeSign](self.VersionToCheck, LowerRangeVersion) and \
+                            OperatorDict[UpperRangeSign](self.VersionToCheck, UpperRangeVersion):
                         return True
                     VersionRangeList = []
         return False
@@ -129,15 +155,18 @@ class CheckVersion():
         versionPoint = self.FixLonelyBracket(versionPoint)
 
         versionPoint = self.VersionRangePrefixHelper(versionPoint)
+        #TODO
+        #Return sign and raw value
+        #Then check manually if the version falls between the given ranges
 
         if versionPoint[0] == '[':
-            return '>=' + str(sv.Version.coerce(versionPoint[1:]))
+            return ('>=', sv.Version.coerce(versionPoint[1:]))
         elif versionPoint[0] == '(':
-            return '>' + str(sv.Version.coerce(versionPoint[1:]))
+            return ('>', sv.Version.coerce(versionPoint[1:]))
         elif versionPoint[-1] == ']':
-            return '<=' + str(sv.Version.coerce(versionPoint[:-1]))
+            return ('<=', sv.Version.coerce(versionPoint[:-1]))
         elif versionPoint[-1] == ')':
-            return '<' + str(sv.Version.coerce(versionPoint[:-1]))
+            return ('<', sv.Version.coerce(versionPoint[:-1]))
         else:
             with open(self.ManualInspectionFileName, 'a') as f:
                 f.write("Weird version range (part): " + versionPoint + "\nComplete version range: " + str(
@@ -158,7 +187,7 @@ class CheckVersion():
         return versionPoint
 
     def __str__(self):
-        PrintStatement = "Checking {} in {}".format(str(self.VersionToCheck), str(self.RawVersionRange))
+        PrintStatement = "Checking {} in {}".format(str(self.RawVersionToCheck), str(self.RawVersionRange))
         return PrintStatement
 
 
@@ -166,9 +195,11 @@ if __name__ == "__main__":
     """
     Test
     """
-    VersionRange = ['[3.2-alpha,3.3-beta-2)']
-    Versions = CheckVersion(VersionRange, '3.3-alpha')
 
+    VersionRange = ['[,2-67-1-jacksondatabind), [2.7,2.7.9.1), [2.8,2.8.10), [2.9.0.pr1,2.9.0)']
+    Versions = CheckVersion(VersionRange, '2-4-6-1-jacksondatabind')
+    print(Versions)
+    print(Versions.CheckVersionInRange())
     print("Checking {} in {}".format('3.3-alpha', str(VersionRange)))
     print(Versions.CheckVersionInRange() == True)
 
